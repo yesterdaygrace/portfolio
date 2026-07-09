@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail, MapPin, ArrowUpRight } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { cn } from "@/lib/utils";
@@ -38,6 +38,14 @@ const LINKS: ContactLink[] = [
     description: "Direct contact",
     href: socialLinks.email,
     icon: Mail,
+    color: "hover:border-indigo-500/30",
+  },
+  {
+    platform: "Instagram",
+    handle: `@${profile.instagramUsername}`,
+    description: "Direct contact",
+    href: socialLinks.instagram,
+    icon: Instagram,
     color: "hover:border-indigo-500/30",
   },
 ];

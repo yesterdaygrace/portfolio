@@ -6,6 +6,7 @@ export const profile = {
   summary:
     "This portfolio highlights real repositories, engineering decisions, and open-source work from my GitHub profile.",
   githubUsername: "yesterdaygrace",
+  instagramUsername: "kevinnchanssa",
   email: "kevinvandieselchansa@gmail.com",
   linkedinUrl: "https://www.linkedin.com/in/kevin-van-diesel-chansa/",
   location: "Salatiga, Central Java, Indonesia",
@@ -16,6 +17,7 @@ export const socialLinks = {
   github: `https://github.com/${profile.githubUsername}`,
   linkedin: profile.linkedinUrl,
   email: `mailto:${profile.email}`,
+  instagram: `https://www.instagram.com/${profile.instagramUsername}`,
 } as const;
 
 export const projectSettings = {

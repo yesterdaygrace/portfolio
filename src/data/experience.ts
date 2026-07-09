@@ -4,7 +4,7 @@ export const experiences: Experience[] = [
   {
     id: "fullstack-dev",
     role: "Fullstack Web Developer",
-    company: "DAPENSE",
+    company: "Dana Pensiun Sekolah Kristen",
     period: "Aug 2024 – Dec 2025",
     location: "Remote",
     type: "Contract",

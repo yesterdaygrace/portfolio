@@ -19,6 +19,7 @@ const SOCIAL_LINKS = [
   { icon: Github, href: socialLinks.github, label: "GitHub" },
   { icon: Linkedin, href: socialLinks.linkedin, label: "LinkedIn" },
   { icon: Mail, href: socialLinks.email, label: "Email" },
+  { icon: Mail, href: socialLinks.instagram, label: "Instagram" },
 ] as const;
 
 export default function Navbar() {
