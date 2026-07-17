@@ -2,6 +2,7 @@ import { skillCategories } from "@/data/skills";
 import SectionHeader from "@/components/ui/SectionHeader";
 import GSAPReveal from "@/components/ui/GSAPReveal";
 import * as Icons from "lucide-react";
+import { useState } from "react";
 
 // Maps skill name → Simple Icons slug (https://simpleicons.org)
 const ICON_MAP: Record<string, string> = {
@@ -21,7 +22,6 @@ const ICON_MAP: Record<string, string> = {
   "Nginx": "nginx",
   "Bash Scripting": "gnubash",
   "Git & GitHub": "github",
-  "SSH Management": "openssh",
   "SSL/TLS": "letsencrypt",
   "React": "react",
   "Node.js": "nodedotjs",
@@ -31,20 +31,39 @@ const ICON_MAP: Record<string, string> = {
   "GraphQL": "graphql",
 };
 
-function SkillBadge({ name }: { name: string }) {
+function SkillIcon({ name }: { name: string }) {
   const slug = ICON_MAP[name];
+  const [tooltip, setTooltip] = useState(false);
+
+  if (slug) {
+    return (
+      <div
+        className="relative flex items-center justify-center"
+        onMouseEnter={() => setTooltip(true)}
+        onMouseLeave={() => setTooltip(false)}
+      >
+        <div className="w-9 h-9 rounded-lg bg-[#0d0d0d] border border-[#1e1e1e] hover:border-indigo-500/50 flex items-center justify-center transition-colors cursor-default">
+          <img
+            src={`https://cdn.simpleicons.org/${slug}/a5b4fc`}
+            alt={name}
+            width={18}
+            height={18}
+            className="opacity-80 hover:opacity-100 transition-opacity"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+          />
+        </div>
+        {tooltip && (
+          <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#1a1a1a] border border-[#2a2a2a] text-neutral-200 text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap z-10 pointer-events-none">
+            {name}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Fallback: text badge for skills without a logo
   return (
-    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs text-neutral-300 bg-[#0d0d0d] border border-[#1e1e1e] rounded-md hover:border-indigo-500/40 transition-colors">
-      {slug && (
-        <img
-          src={`https://cdn.simpleicons.org/${slug}/a5b4fc`}
-          alt=""
-          width={12}
-          height={12}
-          className="shrink-0 opacity-90"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-        />
-      )}
+    <span className="px-2.5 py-1 text-[11px] text-neutral-400 bg-[#0d0d0d] border border-[#1e1e1e] rounded-md font-mono leading-none">
       {name}
     </span>
   );
@@ -66,19 +85,19 @@ export default function TechStack() {
                   key={category.id}
                   className="reveal-item bg-black border border-[#1e1e1e] hover:border-[#2a2a2a] p-6 rounded-xl transition-all group"
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-[#111] border border-[#2a2a2a] flex items-center justify-center group-hover:border-indigo-500/50 transition-colors">
-                      <Icon size={18} className="text-indigo-400" />
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-9 h-9 rounded-lg bg-[#111] border border-[#2a2a2a] flex items-center justify-center group-hover:border-indigo-500/50 transition-colors">
+                      <Icon size={16} className="text-indigo-400" />
                     </div>
                     <div>
-                      <h3 className="text-base font-medium text-neutral-100">{category.name}</h3>
-                      <p className="text-xs text-neutral-500">{category.description}</p>
+                      <h3 className="text-sm font-semibold text-neutral-100 tracking-tight">{category.name}</h3>
+                      <p className="text-[11px] text-neutral-500 font-mono mt-0.5">{category.description}</p>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mt-4">
+                  <div className="flex flex-wrap gap-2">
                     {category.skills.map((skill) => (
-                      <SkillBadge key={skill.name} name={skill.name} />
+                      <SkillIcon key={skill.name} name={skill.name} />
                     ))}
                   </div>
                 </div>
