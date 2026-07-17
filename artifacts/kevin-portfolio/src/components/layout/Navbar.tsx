@@ -53,13 +53,20 @@ export default function Navbar() {
       }
     }
 
-    // Active section — walk sections in reverse, first one above fold wins
+    // Active section — if at (or very near) page bottom, snap to last section
+    const atBottom =
+      docHeight > 0 && scrollY >= docHeight - 8;
+
     let next = "hero";
-    for (const id of [...SECTION_IDS].reverse()) {
-      const el = document.getElementById(id);
-      if (el && scrollY >= el.offsetTop - 120) {
-        next = id;
-        break;
+    if (atBottom) {
+      next = SECTION_IDS[SECTION_IDS.length - 1];
+    } else {
+      for (const id of [...SECTION_IDS].reverse()) {
+        const el = document.getElementById(id);
+        if (el && scrollY >= el.offsetTop - 120) {
+          next = id;
+          break;
+        }
       }
     }
 
