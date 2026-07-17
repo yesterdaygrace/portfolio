@@ -74,6 +74,19 @@ function App() {
       }
     });
 
+    // ── Global snap — small scroll completes the slide automatically ─────────
+    ScrollTrigger.create({
+      trigger: spacer,
+      start: 'top top',
+      end: 'bottom bottom',
+      snap: {
+        snapTo: 1 / (PANELS.length - 1), // evenly spaced snap points per panel
+        duration: { min: 0.35, max: 0.65 },
+        delay: 0.05,                       // fires quickly after scroll stops
+        ease: 'power2.inOut',
+      },
+    });
+
     const onResize = () => ScrollTrigger.refresh();
     window.addEventListener('resize', onResize);
 
