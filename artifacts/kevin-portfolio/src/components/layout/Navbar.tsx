@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Github, Linkedin, Mail, Instagram, Menu, X, Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { profile, socialLinks } from "@/data/profile";
@@ -20,39 +20,79 @@ const SOCIAL_LINKS = [
   { icon: Instagram, href: socialLinks.instagram, label: "Instagram" },
 ] as const;
 
+const SECTION_IDS = ["hero", "about", "experience", "stack", "projects", "github-activity", "contact"];
+
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeSection, setActiveSection] = useState("hero");
+  // Only mobile menu uses React state — it's user-triggered, not scroll-driven
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // DOM refs for scroll-driven updates (no re-renders)
+  const headerRef = useRef<HTMLElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const navLinkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const activeSectionRef = useRef("hero");
 
   const handleScroll = useCallback(() => {
     const scrollY = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    setScrolled(scrollY > 10);
-    setScrollProgress(docHeight > 0 ? (scrollY / docHeight) * 100 : 0);
 
-    const sections = ["hero", "about", "experience", "stack", "projects", "github-activity", "contact"];
-    for (const id of [...sections].reverse()) {
+    // Progress bar — direct DOM, no state
+    if (progressRef.current) {
+      const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+      progressRef.current.style.width = `${pct}%`;
+    }
+
+    // Backdrop — toggle classes directly on the element
+    if (headerRef.current) {
+      if (scrollY > 10) {
+        headerRef.current.classList.add("bg-black/90", "backdrop-blur-xl", "border-b", "border-[#161616]");
+        headerRef.current.classList.remove("bg-transparent");
+      } else {
+        headerRef.current.classList.remove("bg-black/90", "backdrop-blur-xl", "border-b", "border-[#161616]");
+        headerRef.current.classList.add("bg-transparent");
+      }
+    }
+
+    // Active section — walk sections in reverse, first one above fold wins
+    let next = "hero";
+    for (const id of [...SECTION_IDS].reverse()) {
       const el = document.getElementById(id);
-      if (el && scrollY >= el.offsetTop - 100) {
-        setActiveSection(id);
+      if (el && scrollY >= el.offsetTop - 120) {
+        next = id;
         break;
       }
+    }
+
+    if (next !== activeSectionRef.current) {
+      // Deactivate old link
+      const old = navLinkRefs.current[activeSectionRef.current];
+      if (old) {
+        old.classList.remove("text-indigo-400", "bg-indigo-500/10");
+        old.classList.add("text-neutral-500");
+      }
+      // Activate new link
+      const cur = navLinkRefs.current[next];
+      if (cur) {
+        cur.classList.add("text-indigo-400", "bg-indigo-500/10");
+        cur.classList.remove("text-neutral-500");
+      }
+      activeSectionRef.current = next;
     }
   }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // sync on mount
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  // Entrance animation for Navbar
+  // Entrance animation — runs once, doesn't conflict with scroll
   useEffect(() => {
+    if (!headerRef.current) return;
     gsap.fromTo(
-      ".navbar-anim",
-      { y: -50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", stagger: 0.1 }
+      headerRef.current,
+      { y: -60, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }
     );
   }, []);
 
@@ -66,16 +106,15 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 navbar-anim",
-          scrolled ? "bg-black/90 backdrop-blur-xl border-b border-[#161616]" : "bg-transparent"
-        )}
+        ref={headerRef}
+        className="fixed top-0 left-0 right-0 z-50 bg-transparent transition-colors duration-300"
       >
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-6">
+          {/* Logo */}
           <a
             href="#hero"
             onClick={(e) => scrollTo("#hero", e)}
-            className="flex items-center gap-2 group flex-shrink-0 navbar-anim"
+            className="flex items-center gap-2 group flex-shrink-0"
           >
             <div className="w-6 h-6 bg-indigo-600 rounded flex items-center justify-center group-hover:bg-indigo-500 transition-colors">
               <Terminal size={12} className="text-black" />
@@ -86,18 +125,20 @@ export default function Navbar() {
             </span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-0.5 flex-1 justify-center navbar-anim">
+          {/* Nav links */}
+          <nav className="hidden md:flex items-center gap-0.5 flex-1 justify-center">
             {NAV_LINKS.map((link) => {
               const id = link.href.replace("#", "");
-              const isActive = activeSection === id;
+              const isInitialActive = id === "hero";
               return (
                 <a
                   key={link.href}
                   href={link.href}
+                  ref={(el) => { navLinkRefs.current[id] = el; }}
                   onClick={(e) => scrollTo(link.href, e)}
                   className={cn(
-                    "px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-150",
-                    isActive
+                    "px-3 py-1.5 text-xs font-medium rounded-md transition-colors duration-150",
+                    isInitialActive
                       ? "text-indigo-400 bg-indigo-500/10"
                       : "text-neutral-500 hover:text-neutral-200 hover:bg-[#111]"
                   )}
@@ -108,7 +149,8 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="hidden md:flex items-center gap-1 flex-shrink-0 navbar-anim">
+          {/* Social icons */}
+          <div className="hidden md:flex items-center gap-1 flex-shrink-0">
             {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
@@ -123,23 +165,27 @@ export default function Navbar() {
             ))}
           </div>
 
+          {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden w-8 h-8 flex items-center justify-center text-neutral-400 navbar-anim"
+            className="md:hidden w-8 h-8 flex items-center justify-center text-neutral-400"
             aria-label="Toggle menu"
           >
             {menuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
 
+        {/* Progress bar — updated directly via ref, no React state */}
         <div className="absolute bottom-0 left-0 h-px w-full bg-[#161616]">
           <div
-            className="h-full bg-indigo-600/60 transition-all duration-75"
-            style={{ width: `${scrollProgress}%` }}
+            ref={progressRef}
+            className="h-full bg-indigo-500/70"
+            style={{ width: "0%" }}
           />
         </div>
       </header>
 
+      {/* Mobile menu */}
       {menuOpen && (
         <div className="fixed top-14 left-0 right-0 z-40 bg-black/95 backdrop-blur-xl border-b border-[#1e1e1e] md:hidden">
           <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-1">
