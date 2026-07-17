@@ -7,12 +7,11 @@ import About from '@/components/sections/About';
 import Experience from '@/components/sections/Experience';
 import TechStack from '@/components/sections/TechStack';
 import Projects from '@/components/sections/Projects';
-import GitHubActivity from '@/components/sections/GitHubActivity';
 import Contact from '@/components/sections/Contact';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const PANELS = [Hero, About, Experience, TechStack, Projects, GitHubActivity, Contact];
+const PANELS = [Hero, About, Experience, TechStack, Projects, Contact];
 
 function App() {
   const spacerRef    = useRef<HTMLDivElement>(null);

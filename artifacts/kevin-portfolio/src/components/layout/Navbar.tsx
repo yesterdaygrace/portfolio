@@ -8,12 +8,11 @@ const NAV_LINKS = [
   { label: "Experience", href: "#experience" },
   { label: "Stack",      href: "#stack" },
   { label: "Projects",   href: "#projects" },
-  { label: "GitHub",     href: "#github-activity" },
   { label: "Contact",    href: "#contact" },
 ];
 
 const SECTION_IDS = [
-  "hero", "about", "experience", "stack", "projects", "github-activity", "contact",
+  "hero", "about", "experience", "stack", "projects", "contact",
 ];
 
 const SOCIAL_LINKS = [
