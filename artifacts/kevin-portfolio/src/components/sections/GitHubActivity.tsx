@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Github, Star, GitFork, Users, ExternalLink, Clock3 } from "lucide-react";
-import GSAPReveal from "@/components/ui/GSAPReveal";
-import SectionHeader from "@/components/ui/SectionHeader";
+import { Star, GitFork, Users, ExternalLink, Clock3, Github } from "lucide-react";
 import { profile, socialLinks } from "@/data/profile";
 
 interface GitHubUser {
@@ -26,208 +24,158 @@ interface GitHubRepo {
   fork: boolean;
 }
 
-function formatCompact(value: number) {
-  return new Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 }).format(value);
+function formatCompact(n: number) {
+  return new Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 }).format(n);
 }
-
-function formatDate(date: string) {
-  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(date));
+function formatDate(d: string) {
+  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(d));
 }
 
 export default function GitHubActivity() {
-  const [user, setUser] = useState<GitHubUser | null>(null);
-  const [repos, setRepos] = useState<GitHubRepo[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [user,      setUser]      = useState<GitHubUser | null>(null);
+  const [repos,     setRepos]     = useState<GitHubRepo[]>([]);
+  const [loading,   setLoading]   = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    async function loadGitHubData() {
+    (async () => {
       try {
-        const [userResponse, reposResponse] = await Promise.all([
-          fetch(`https://api.github.com/users/${profile.githubUsername}`, {
-            headers: { Accept: "application/vnd.github+json" },
-          }),
-          fetch(
-            `https://api.github.com/users/${profile.githubUsername}/repos?sort=updated&per_page=100&type=owner`,
-            { headers: { Accept: "application/vnd.github+json" } }
-          ),
+        const [ur, rr] = await Promise.all([
+          fetch(`https://api.github.com/users/${profile.githubUsername}`, { headers: { Accept: "application/vnd.github+json" } }),
+          fetch(`https://api.github.com/users/${profile.githubUsername}/repos?sort=updated&per_page=100&type=owner`, { headers: { Accept: "application/vnd.github+json" } }),
         ]);
-
-        if (!userResponse.ok || !reposResponse.ok) {
-          throw new Error(`GitHub API returned ${userResponse.status}/${reposResponse.status}`);
-        }
-
-        const [userData, repoData] = (await Promise.all([
-          userResponse.json(),
-          reposResponse.json(),
-        ])) as [GitHubUser, GitHubRepo[]];
-
-        if (!cancelled) {
-          setUser(userData);
-          setRepos(repoData.filter((repo) => !repo.fork));
-          setLoadError(null);
-        }
-      } catch (error) {
-        if (!cancelled) {
-          setLoadError(error instanceof Error ? error.message : "unknown error");
-        }
+        if (!ur.ok || !rr.ok) throw new Error(`GitHub ${ur.status}/${rr.status}`);
+        const [u, r] = await Promise.all([ur.json(), rr.json()]) as [GitHubUser, GitHubRepo[]];
+        if (!cancelled) { setUser(u); setRepos(r.filter(x => !x.fork)); }
+      } catch (e) {
+        if (!cancelled) setLoadError(e instanceof Error ? e.message : "unknown error");
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        if (!cancelled) setLoading(false);
       }
-    }
-    loadGitHubData();
+    })();
     return () => { cancelled = true; };
   }, []);
 
-  const totals = useMemo(() => {
-    const totalStars = repos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
-    const totalForks = repos.reduce((sum, repo) => sum + repo.forks_count, 0);
-    return {
-      repos: user?.public_repos ?? repos.length,
-      followers: user?.followers ?? 0,
-      stars: totalStars,
-      forks: totalForks,
-    };
-  }, [repos, user]);
+  const totals = useMemo(() => ({
+    repos:     user?.public_repos ?? repos.length,
+    followers: user?.followers ?? 0,
+    stars:     repos.reduce((s, r) => s + r.stargazers_count, 0),
+    forks:     repos.reduce((s, r) => s + r.forks_count, 0),
+  }), [repos, user]);
 
-  const recentRepos = useMemo(
-    () => [...repos].sort((a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()).slice(0, 6),
+  const allRepos = useMemo(
+    () => [...repos].sort((a, b) => new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()),
     [repos]
   );
 
   const topLanguages = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const repo of repos) {
-      if (!repo.language) continue;
-      counts.set(repo.language, (counts.get(repo.language) ?? 0) + 1);
-    }
-    return Array.from(counts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([name, count]) => ({ name, count }));
+    const m = new Map<string, number>();
+    repos.forEach(r => r.language && m.set(r.language, (m.get(r.language) ?? 0) + 1));
+    return Array.from(m.entries()).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([n, c]) => ({ name: n, count: c }));
   }, [repos]);
 
-  const statCards = [
-    { icon: Github, label: "Public Repos", value: totals.repos },
-    { icon: Users, label: "Followers", value: totals.followers },
-    { icon: Star, label: "Total Stars", value: totals.stars },
-    { icon: GitFork, label: "Total Forks", value: totals.forks },
+  const statItems = [
+    { label: "Public Repos", value: totals.repos },
+    { label: "Followers",    value: totals.followers },
+    { label: "Total Stars",  value: totals.stars },
+    { label: "Total Forks",  value: totals.forks },
   ];
 
   return (
-    <section id="github-activity" className="py-24 border-b border-[#161616]">
-      <div className="max-w-6xl mx-auto px-6">
-        <GSAPReveal stagger={0.1}>
-          <SectionHeader index="05" title="Git Telemetry" comment={`Live feed: @${profile.githubUsername}`} />
+    <section
+      id="github-activity"
+      className="py-24 px-6 md:px-12 lg:px-20"
+      style={{ maxWidth: '90rem', margin: '0 auto', width: '100%' }}
+    >
+      {/* Section label */}
+      <div className="reveal-item mb-16">
+        <span className="eyebrow">[ 05 ] — GitHub</span>
+      </div>
 
-          {loadError && (
-            <div className="reveal-item mb-6 bg-[#0a0a0a] border border-[#1e1e1e] rounded-lg px-4 py-3">
-              <p className="font-mono text-xs text-red-400">Failed to sync: {loadError}</p>
-            </div>
-          )}
+      {loadError && (
+        <div className="reveal-item mb-8" style={{ border: '1px solid #1e1e1e', borderRadius: '0.75rem', padding: '1rem 1.25rem' }}>
+          <p className="font-mono" style={{ fontSize: '0.75rem', color: '#ef4444' }}>Failed to sync: {loadError}</p>
+        </div>
+      )}
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {statCards.map((item) => {
-              const Icon = item.icon;
-              return (
-                <div key={item.label} className="reveal-item bg-black border border-[#1e1e1e] rounded-xl p-5 flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-md bg-[#0a0a0a] border border-[#1e1e1e] flex items-center justify-center flex-shrink-0">
-                    <Icon size={14} className="text-indigo-400" />
-                  </div>
-                  <div>
-                    <p className="font-mono text-xl font-bold text-neutral-100">
-                      {loading ? "..." : formatCompact(item.value)}
-                    </p>
-                    <p className="text-xs text-neutral-500 mt-0.5">{item.label}</p>
-                  </div>
-                </div>
-              );
-            })}
+      {/* Stats row */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-0 reveal-item mb-16" style={{ borderTop: '1px solid #111' }}>
+        {statItems.map(item => (
+          <div key={item.label} className="py-8 pr-6" style={{ borderBottom: '1px solid #111' }}>
+            <p
+              className="display-heading mb-2"
+              style={{ fontSize: 'clamp(2.5rem, 4vw, 4rem)', color: '#efefef', lineHeight: 1 }}
+            >
+              {loading ? '—' : formatCompact(item.value)}
+            </p>
+            <span className="eyebrow">{item.label}</span>
           </div>
+        ))}
+      </div>
 
-          <div className="grid lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2">
-              <div className="reveal-item bg-black border border-[#1e1e1e] rounded-xl p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-sm text-neutral-300 font-medium">Recent Commits</span>
-                  <a href={socialLinks.github} target="_blank" rel="noreferrer" className="text-xs font-mono text-indigo-400 hover:text-indigo-300 inline-flex items-center gap-1 transition-colors">
-                    view all <ExternalLink size={12} />
-                  </a>
-                </div>
-
-                {recentRepos.length === 0 && !loading && (
-                  <p className="text-sm text-neutral-600">No active repositories found.</p>
-                )}
-
-                <div className="space-y-3">
-                  {recentRepos.map((repo) => (
-                    <a key={repo.id} href={repo.html_url} target="_blank" rel="noreferrer" className="block border border-[#1e1e1e] bg-[#050505] hover:border-[#2a2a2a] rounded-lg p-4 transition-colors group">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="min-w-0">
-                          <p className="text-sm text-neutral-200 font-medium truncate group-hover:text-indigo-400 transition-colors">
-                            {repo.name}
-                          </p>
-                          <p className="text-xs text-neutral-500 mt-1 line-clamp-1">
-                            {repo.description ?? "No description provided."}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="mt-3 flex flex-wrap items-center gap-4 font-mono text-[10px] text-neutral-500">
-                        {repo.language && (
-                          <span className="inline-flex items-center gap-1 text-indigo-300">
-                            <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
-                            {repo.language}
-                          </span>
-                        )}
-                        <span className="inline-flex items-center gap-1"><Star size={12} /> {repo.stargazers_count}</span>
-                        <span className="inline-flex items-center gap-1"><GitFork size={12} /> {repo.forks_count}</span>
-                        <span className="inline-flex items-center gap-1"><Clock3 size={12} /> {formatDate(repo.pushed_at)}</span>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <div className="reveal-item bg-black border border-[#1e1e1e] rounded-xl p-6">
-                <div className="flex items-center gap-4">
-                  {user?.avatar_url ? (
-                    <img src={user.avatar_url} alt="avatar" className="w-12 h-12 rounded-full border border-[#2a2a2a]" />
-                  ) : (
-                    <div className="w-12 h-12 rounded-full border border-[#2a2a2a] bg-[#0a0a0a] flex items-center justify-center">
-                      <Github size={20} className="text-neutral-500" />
-                    </div>
-                  )}
-                  <div>
-                    <p className="text-sm text-neutral-100 font-medium">@{profile.githubUsername}</p>
-                    <p className="text-xs font-mono text-neutral-500 mt-0.5">Active Engineer</p>
-                  </div>
-                </div>
-                <p className="text-sm text-neutral-400 mt-4 leading-relaxed">
-                  {user?.bio ?? "Open-source work, experiments, and project iterations live here."}
+      {/* Repos list */}
+      <div className="space-y-0">
+        {allRepos.length === 0 && !loading && (
+          <p className="eyebrow">No repositories found.</p>
+        )}
+        {allRepos.map(repo => (
+          <a
+            key={repo.id}
+            href={repo.html_url}
+            target="_blank" rel="noreferrer"
+            className="block group"
+            style={{ borderTop: '1px solid #111', padding: '1.5rem 0', textDecoration: 'none' }}
+          >
+            <div className="grid md:grid-cols-[1fr_auto] gap-4 items-start">
+              <div>
+                <p
+                  className="display-heading mb-1.5 transition-colors"
+                  style={{ fontSize: 'clamp(1.3rem, 2.5vw, 1.8rem)', color: '#2a2a2a' }}
+                  onMouseOver={e => ((e.currentTarget as HTMLElement).style.color = '#efefef')}
+                  onMouseOut={e => ((e.currentTarget as HTMLElement).style.color = '#2a2a2a')}
+                >
+                  {repo.name}
+                </p>
+                <p style={{ color: '#3a3a3a', fontSize: '0.8125rem' }} className="leading-relaxed">
+                  {repo.description ?? 'No description.'}
                 </p>
               </div>
-
-              <div className="reveal-item bg-black border border-[#1e1e1e] rounded-xl p-6">
-                <p className="text-sm text-neutral-300 font-medium mb-4">Language Distribution</p>
-                {topLanguages.length > 0 ? (
-                  <div className="flex flex-wrap gap-2">
-                    {topLanguages.map((lang) => (
-                      <span key={lang.name} className="inline-flex items-center gap-1.5 font-mono text-xs px-2.5 py-1 rounded-md border border-[#1e1e1e] bg-[#050505] text-neutral-300">
-                        {lang.name}
-                        <span className="text-indigo-400">{lang.count}</span>
-                      </span>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-sm text-neutral-600">Collecting metrics...</p>
-                )}
+              <div
+                className="flex items-center gap-4 font-mono"
+                style={{ fontSize: '0.688rem', color: '#2a2a2a', flexShrink: 0 }}
+              >
+                {repo.language && <span style={{ color: '#404040' }}>{repo.language}</span>}
+                <span className="flex items-center gap-1"><Star size={11} />{repo.stargazers_count}</span>
+                <span className="flex items-center gap-1"><GitFork size={11} />{repo.forks_count}</span>
+                <span className="flex items-center gap-1"><Clock3 size={11} />{formatDate(repo.pushed_at)}</span>
               </div>
             </div>
-          </div>
-        </GSAPReveal>
+          </a>
+        ))}
       </div>
+
+      {/* Language distribution */}
+      {topLanguages.length > 0 && (
+        <div className="reveal-item mt-16 pt-8" style={{ borderTop: '1px solid #111' }}>
+          <span className="eyebrow block mb-5">Language Distribution</span>
+          <div className="flex flex-wrap gap-2">
+            {topLanguages.map(l => (
+              <span
+                key={l.name}
+                className="font-mono"
+                style={{
+                  fontSize: '0.688rem', color: '#404040',
+                  border: '1px solid #161616', padding: '0.25rem 0.75rem',
+                  borderRadius: '999px',
+                }}
+              >
+                {l.name}&nbsp;<span style={{ color: '#818cf8' }}>{l.count}</span>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

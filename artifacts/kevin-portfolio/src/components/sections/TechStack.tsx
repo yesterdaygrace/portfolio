@@ -1,55 +1,71 @@
 import { skillCategories } from "@/data/skills";
-import SectionHeader from "@/components/ui/SectionHeader";
-import GSAPReveal from "@/components/ui/GSAPReveal";
 import * as Icons from "lucide-react";
 import { useState } from "react";
 
 const ICON_MAP: Record<string, string> = {
-  "Vue.js 3": "vuedotjs",
-  "TypeScript": "typescript",
-  "JavaScript ES2022+": "javascript",
-  "Tailwind CSS": "tailwindcss",
-  "Alpine.js": "alpinedotjs",
-  "Vite": "vite",
-  "Next.js": "nextdotjs",
-  "HTML5 / CSS3": "html5",
-  "Laravel": "laravel",
-  "PHP 8+": "php",
-  "Node.js": "nodedotjs",
-  "MySQL / MariaDB": "mysql",
-  "PostgreSQL": "postgresql",
-  "Eloquent ORM": "laravel",
-  "Linux (Debian / Ubuntu)": "linux",
-  "Nginx": "nginx",
-  "Git & GitHub": "github",
-  "Docker": "docker",
-  "Bash Scripting": "gnubash",
-  "SSL/TLS": "letsencrypt",
-  "Redis": "redis",
+  "Vue.js 3":              "vuedotjs",
+  "TypeScript":            "typescript",
+  "JavaScript ES2022+":    "javascript",
+  "Tailwind CSS":          "tailwindcss",
+  "Alpine.js":             "alpinedotjs",
+  "Vite":                  "vite",
+  "Next.js":               "nextdotjs",
+  "HTML5 / CSS3":          "html5",
+  "Laravel":               "laravel",
+  "PHP 8+":                "php",
+  "Node.js":               "nodedotjs",
+  "MySQL / MariaDB":       "mysql",
+  "PostgreSQL":            "postgresql",
+  "Eloquent ORM":          "laravel",
+  "Linux (Debian / Ubuntu)":"linux",
+  "Nginx":                 "nginx",
+  "Git & GitHub":          "github",
+  "Docker":                "docker",
+  "Bash Scripting":        "gnubash",
+  "SSL/TLS":               "letsencrypt",
+  "Redis":                 "redis",
 };
 
 function IconTile({ name }: { name: string }) {
   const slug = ICON_MAP[name]!;
   const [hovered, setHovered] = useState(false);
-
   return (
     <div
       className="relative"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div className="w-9 h-9 rounded-lg bg-[#0a0a0a] border border-[#1e1e1e] hover:border-indigo-500/40 flex items-center justify-center transition-colors cursor-default group">
+      <div
+        className="flex items-center justify-center cursor-default transition-colors"
+        style={{
+          width: '2.25rem', height: '2.25rem',
+          borderRadius: '0.5rem',
+          background: '#050505',
+          border: '1px solid #141414',
+        }}
+        onMouseOver={e => (e.currentTarget.style.borderColor = '#252525')}
+        onMouseOut={e => (e.currentTarget.style.borderColor = '#141414')}
+      >
         <img
-          src={`https://cdn.simpleicons.org/${slug}/818cf8`}
-          alt={name}
-          width={18}
-          height={18}
-          className="opacity-70 group-hover:opacity-100 transition-opacity"
-          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+          src={`https://cdn.simpleicons.org/${slug}/505050`}
+          alt={name} width={16} height={16}
+          style={{ opacity: 0.7, transition: 'opacity .2s' }}
+          onMouseOver={e => ((e.currentTarget as HTMLImageElement).style.opacity = '1')}
+          onMouseOut={e => ((e.currentTarget as HTMLImageElement).style.opacity = '0.7')}
+          onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
         />
       </div>
       {hovered && (
-        <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-[#111] border border-[#2a2a2a] text-neutral-300 text-[10px] font-mono px-2 py-0.5 rounded whitespace-nowrap z-20 pointer-events-none">
+        <div
+          className="absolute pointer-events-none font-sans"
+          style={{
+            top: '-1.75rem', left: '50%', transform: 'translateX(-50%)',
+            background: '#111', border: '1px solid #222',
+            color: '#888', fontSize: '0.625rem', letterSpacing: '0.05em',
+            padding: '0.15rem 0.5rem', borderRadius: '0.25rem',
+            whiteSpace: 'nowrap', zIndex: 20,
+          }}
+        >
           {name}
         </div>
       )}
@@ -59,7 +75,14 @@ function IconTile({ name }: { name: string }) {
 
 function TextPill({ name }: { name: string }) {
   return (
-    <span className="px-2 py-1 text-[11px] text-neutral-500 bg-[#0a0a0a] border border-[#1a1a1a] rounded font-mono leading-none">
+    <span
+      className="font-sans"
+      style={{
+        fontSize: '0.625rem', textTransform: 'uppercase', letterSpacing: '0.1em',
+        color: '#2e2e2e', border: '1px solid #141414',
+        padding: '0.2rem 0.6rem', borderRadius: '999px',
+      }}
+    >
       {name}
     </span>
   );
@@ -67,72 +90,56 @@ function TextPill({ name }: { name: string }) {
 
 export default function TechStack() {
   return (
-    <section id="stack" className="py-24 border-b border-[#161616]">
-      <div className="max-w-6xl mx-auto px-6">
-        <GSAPReveal stagger={0.12}>
-          <SectionHeader index="03" title="Dependencies" comment="Core technologies & methodologies" />
+    <section
+      id="stack"
+      className="min-h-[100dvh] flex flex-col justify-center py-24 px-6 md:px-12 lg:px-20"
+      style={{ maxWidth: '90rem', margin: '0 auto', width: '100%' }}
+    >
+      {/* Section label */}
+      <div className="reveal-item mb-16">
+        <span className="eyebrow">[ 03 ] — Stack</span>
+      </div>
 
-          {/* 2×2 bento grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {skillCategories.map((category) => {
-              // @ts-ignore
-              const Icon = Icons[category.icon] || Icons.Code;
+      {/* 2×2 bento grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {skillCategories.map((cat) => {
+          // @ts-ignore
+          const Icon = Icons[cat.icon] || Icons.Code;
+          const withIcon = cat.skills.filter(s => !!ICON_MAP[s.name]);
+          const withText  = cat.skills.filter(s => !ICON_MAP[s.name]);
 
-              const withIcon = category.skills.filter((s) => !!ICON_MAP[s.name]);
-              const withText  = category.skills.filter((s) => !ICON_MAP[s.name]);
-
-              return (
-                <div
-                  key={category.id}
-                  className="reveal-item flex flex-col bg-[#020202] border border-[#181818] hover:border-[#252525] rounded-2xl p-6 gap-5 transition-colors group"
+          return (
+            <div
+              key={cat.id}
+              className="reveal-item card-elev flex flex-col gap-6 p-7"
+            >
+              {/* Header */}
+              <div>
+                <h3
+                  className="display-heading mb-1"
+                  style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', color: '#efefef' }}
                 >
-                  {/* Header */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#0d0d0d] border border-[#222] flex items-center justify-center shrink-0 group-hover:border-indigo-500/30 transition-colors">
-                      <Icon size={14} className="text-indigo-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-neutral-100 leading-none tracking-tight">
-                        {category.name}
-                      </h3>
-                      <p className="text-[10px] text-neutral-600 font-mono mt-1">
-                        {category.description}
-                      </p>
-                    </div>
-                  </div>
+                  {cat.name}
+                </h3>
+                <p className="eyebrow">{cat.description}</p>
+              </div>
 
-                  {/* Icon row */}
-                  {withIcon.length > 0 && (
-                    <div className="flex flex-col gap-2">
-                      <span className="text-[9px] font-mono text-neutral-700 uppercase tracking-widest">
-                        icons
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {withIcon.map((s) => (
-                          <IconTile key={s.name} name={s.name} />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Text row */}
-                  {withText.length > 0 && (
-                    <div className="flex flex-col gap-2">
-                      <span className="text-[9px] font-mono text-neutral-700 uppercase tracking-widest">
-                        technical
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {withText.map((s) => (
-                          <TextPill key={s.name} name={s.name} />
-                        ))}
-                      </div>
-                    </div>
-                  )}
+              {/* Icon row */}
+              {withIcon.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {withIcon.map(s => <IconTile key={s.name} name={s.name} />)}
                 </div>
-              );
-            })}
-          </div>
-        </GSAPReveal>
+              )}
+
+              {/* Text pills */}
+              {withText.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {withText.map(s => <TextPill key={s.name} name={s.name} />)}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
