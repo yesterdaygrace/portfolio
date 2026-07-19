@@ -1,5 +1,12 @@
 import { profile, socialLinks } from "@/data/profile";
 
+const scrollCueKeyframes = `
+  @keyframes scrollCueBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(6px); opacity: 1; }
+  }
+`;
+
 export default function Hero() {
   return (
     <section
@@ -42,13 +49,33 @@ export default function Hero() {
       </div>
 
       {/* Scroll cue */}
-      <div className="reveal-item mt-16 inline-flex items-center gap-3">
-        <span
-          className="block animate-pulse"
-          style={{ width: '1px', height: '2.5rem', background: '#1e1e1e' }}
-        />
-        <span className="eyebrow">Explore my work</span>
-      </div>
+      <style dangerouslySetInnerHTML={{ __html: scrollCueKeyframes }} />
+      <a
+        href="#projects"
+        className="reveal-item mt-16 inline-flex flex-col items-center gap-2 group"
+        aria-label="Scroll to projects"
+      >
+        <span className="eyebrow text-fg-muted transition-colors group-hover:text-fg">
+          Explore my work
+        </span>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          className="text-fg-muted group-hover:text-fg transition-colors"
+          style={{ animation: 'scrollCueBounce 2s ease-in-out infinite' }}
+          aria-hidden="true"
+        >
+          <path
+            d="M3.5 6L8 10.5L12.5 6"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </a>
     </section>
   );
 }
