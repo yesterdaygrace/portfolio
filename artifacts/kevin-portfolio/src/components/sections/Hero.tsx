@@ -55,7 +55,7 @@ export default function Hero() {
         className="reveal-item mt-16 inline-flex flex-col items-center gap-2 group"
         aria-label="Scroll to projects"
       >
-        <span className="eyebrow text-fg-muted transition-colors group-hover:text-fg">
+        <span className="eyebrow text-fg transition-colors">
           Explore my work
         </span>
         <svg
@@ -63,7 +63,7 @@ export default function Hero() {
           height="16"
           viewBox="0 0 16 16"
           fill="none"
-          className="text-fg-muted group-hover:text-fg transition-colors"
+          className="text-fg transition-colors"
           style={{ animation: 'scrollCueBounce 2s ease-in-out infinite' }}
           aria-hidden="true"
         >
