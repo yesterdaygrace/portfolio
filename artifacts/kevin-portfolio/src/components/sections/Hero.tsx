@@ -15,8 +15,8 @@ export default function Hero() {
       className="min-h-[100dvh] flex flex-col justify-center pt-14 pb-16 px-6 md:px-12 lg:px-20"
       style={{ maxWidth: '90rem', margin: '0 auto', width: '100%' }}
     >
-      {/* Eyebrow row — scramble animation */}
-      <div className="flex flex-col mb-10 reveal-item">
+      {/* Eyebrow row — scramble animation (no reveal-item — GlitchCharReveal handles its own entrance) */}
+      <div className="flex flex-col mb-10">
         <GlitchCharReveal
           words={`${profile.location}\nFull-Stack Development  ·  Software Engineering  ·  Open Source`}
           color="#303030"
