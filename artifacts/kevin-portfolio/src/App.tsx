@@ -44,10 +44,14 @@ function App() {
     // ── Per-panel cover slide + reveal ───────────────────────────────────────
     panels.forEach((panel, i) => {
       if (!panel || i === 0) return;
-      gsap.set(panel, { y: vh });
+
+      const fromRight = i >= 1 && i <= 3;
+
+      gsap.set(panel, fromRight ? { x: '100%' } : { y: vh });
 
       gsap.to(panel, {
-        y: 0, ease: 'none',
+        ...(fromRight ? { x: '0%' } : { y: 0 }),
+        ease: 'none',
         scrollTrigger: {
           trigger: spacer,
           start:  `top+=${(i - 1) * vh}px top`,

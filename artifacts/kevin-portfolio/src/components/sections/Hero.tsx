@@ -1,4 +1,5 @@
 import { profile, socialLinks } from "@/data/profile";
+import GlitchCharReveal from "@/components/GlitchCharReveal";
 
 const scrollCueKeyframes = `
   @keyframes scrollCueBounce {
@@ -14,12 +15,48 @@ export default function Hero() {
       className="min-h-[100dvh] flex flex-col justify-center pt-14 pb-16 px-6 md:px-12 lg:px-20"
       style={{ maxWidth: '90rem', margin: '0 auto', width: '100%' }}
     >
-      {/* Eyebrow row */}
-      <div className="flex flex-col gap-1.5 mb-10 reveal-item">
-        <span className="eyebrow">{profile.location}</span>
-        <span className="eyebrow" style={{ color: '#222' }}>
-          Full-Stack Development &nbsp;·&nbsp; Software Engineering &nbsp;·&nbsp; Open Source
-        </span>
+      {/* Eyebrow row — scramble animation */}
+      <div className="flex flex-col mb-10 reveal-item">
+        <GlitchCharReveal
+          words={`${profile.location}\nFull-Stack Development  ·  Software Engineering  ·  Open Source`}
+          color="#303030"
+          font={{
+            fontFamily: "Inter, sans-serif",
+            fontSize: "0.688rem",
+            fontWeight: 400,
+            lineHeight: 1.5,
+            textTransform: "uppercase",
+            textAlign: "left",
+          }}
+          tag="div"
+          enterAnimation={{
+            mode: "multiLine",
+            restState: "solid",
+            replay: true,
+            position: "above",
+            scrambleIntensity: 100,
+            ease: { type: "tween", duration: 2, ease: "linear" },
+            flickerEnabled: true,
+            flickerColor: "#333333",
+            flickerIntensity: 84,
+            flickerSpeed: 10,
+          }}
+          hoverAnimation={{
+            type: "diffusion",
+            lines: "multiLine",
+            radius: 2,
+            collapse: false,
+            glitchChars: "abcdefghijklmnopqrstuvwxyz",
+            glitchShuffle: true,
+            flickerEnabled: false,
+            flickerColor: "#ff4400",
+            flickerIntensity: 50,
+            flickerSpeed: 10,
+            waveEase: { type: "tween", duration: 1.5, ease: "linear" },
+            waveShuffleLimitEnabled: false,
+            waveShuffleLimitValue: 10,
+          }}
+        />
       </div>
 
       {/* Name — display serif, two lines */}
