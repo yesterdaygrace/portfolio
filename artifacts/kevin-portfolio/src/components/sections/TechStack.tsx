@@ -1,6 +1,7 @@
 import { skillCategories } from "@/data/skills";
 import * as Icons from "lucide-react";
-import { useState } from "react";
+
+/* ── simpleicons lookup ───────────────────────────────────────────────────── */
 
 const ICON_MAP: Record<string, string> = {
   "Vue.js 3":              "vuedotjs",
@@ -26,61 +27,72 @@ const ICON_MAP: Record<string, string> = {
   "Redis":                 "redis",
 };
 
+/* ── Monochrome icon tile ─────────────────────────────────────────────────── */
+
 function IconTile({ name }: { name: string }) {
-  const slug = ICON_MAP[name]!;
-  const [hovered, setHovered] = useState(false);
+  const slug = ICON_MAP[name];
+  if (!slug) return null;
+
   return (
     <div
-      className="relative"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className="flex items-center justify-center flex-shrink-0 transition-all duration-200"
+      style={{
+        width: "2.5rem",
+        height: "2.5rem",
+        borderRadius: "10px",
+        background: "rgba(255,255,255,0.03)",
+        border: "1px solid rgba(255,255,255,0.06)",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "rgba(255,255,255,0.16)";
+        e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
+        e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+      }}
     >
-      <div
-        className="flex items-center justify-center cursor-default transition-colors"
-        style={{
-          width: '2.25rem', height: '2.25rem',
-          borderRadius: '0.5rem',
-          background: '#050505',
-          border: '1px solid #141414',
+      <img
+        src={`https://cdn.simpleicons.org/${slug}/888888`}
+        alt={name}
+        width={20}
+        height={20}
+        loading="lazy"
+        style={{ filter: "brightness(1)", transition: "opacity 0.2s" }}
+        onMouseOver={(e) => {
+          (e.currentTarget as HTMLImageElement).style.opacity = "1";
         }}
-        onMouseOver={e => (e.currentTarget.style.borderColor = '#252525')}
-        onMouseOut={e => (e.currentTarget.style.borderColor = '#141414')}
-      >
-        <img
-          src={`https://cdn.simpleicons.org/${slug}/505050`}
-          alt={name} width={16} height={16}
-          style={{ opacity: 0.7, transition: 'opacity .2s' }}
-          onMouseOver={e => ((e.currentTarget as HTMLImageElement).style.opacity = '1')}
-          onMouseOut={e => ((e.currentTarget as HTMLImageElement).style.opacity = '0.7')}
-          onError={e => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-        />
-      </div>
-      {hovered && (
-        <div
-          className="absolute pointer-events-none font-sans"
-          style={{
-            top: '-1.75rem', left: '50%', transform: 'translateX(-50%)',
-            background: '#111', border: '1px solid #222',
-            color: '#888', fontSize: '0.625rem', letterSpacing: '0.05em',
-            padding: '0.15rem 0.5rem', borderRadius: '0.25rem',
-            whiteSpace: 'nowrap', zIndex: 20,
-          }}
-        >
-          {name}
-        </div>
-      )}
+        onMouseOut={(e) => {
+          (e.currentTarget as HTMLImageElement).style.opacity = "0.7";
+        }}
+        onError={(e) => {
+          (e.currentTarget as HTMLImageElement).style.display = "none";
+        }}
+      />
     </div>
   );
 }
 
-function TextPill({ name }: { name: string }) {
+/* ── Tech tag pill ────────────────────────────────────────────────────────── */
+
+function TagPill({ name }: { name: string }) {
   return (
     <span
-      className="font-sans"
+      className="font-sans text-[10px] uppercase tracking-[0.08em] font-medium transition-all duration-200"
       style={{
-        fontSize: '0.625rem', textTransform: 'uppercase', letterSpacing: '0.1em',
-        color: '#2e2e2e', border: '1px solid #141414',
-        padding: '0.2rem 0.6rem', borderRadius: '999px',
+        color: "#9B9B9B",
+        border: "1px solid rgba(255,255,255,0.08)",
+        padding: "0.25rem 0.7rem",
+        borderRadius: "999px",
+        lineHeight: 1.4,
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+        e.currentTarget.style.color = "#d4d4d4";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+        e.currentTarget.style.color = "#9B9B9B";
       }}
     >
       {name}
@@ -88,53 +100,107 @@ function TextPill({ name }: { name: string }) {
   );
 }
 
+/* ── Main Section ─────────────────────────────────────────────────────────── */
+
 export default function TechStack() {
   return (
     <section
       id="stack"
-      className="min-h-[100dvh] flex flex-col justify-center py-24 px-6 md:px-12 lg:px-20"
-      style={{ maxWidth: '90rem', margin: '0 auto', width: '100%' }}
+      className="py-24 px-6 md:px-12 lg:px-20"
+      style={{ maxWidth: "90rem", margin: "0 auto", width: "100%" }}
     >
-      {/* Section label */}
-      <div className="reveal-item mb-16">
-        <span className="eyebrow">[ 03 ] — Stack</span>
+      {/* ── Section header ─────────────────────────────────────────────── */}
+      <div className="reveal-item mb-14">
+        <span
+          className="font-sans text-[11px] uppercase tracking-[0.16em] block mb-4"
+          style={{ color: "#606060" }}
+        >
+          [03] — Stack
+        </span>
+         <div className="w-full" style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
       </div>
 
-      {/* 2×2 bento grid */}
+      {/* ── 2×2 grid ──────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {skillCategories.map((cat) => {
-          // @ts-ignore
-          const Icon = Icons[cat.icon] || Icons.Code;
-          const withIcon = cat.skills.filter(s => !!ICON_MAP[s.name]);
-          const withText  = cat.skills.filter(s => !ICON_MAP[s.name]);
+        {skillCategories.map((cat, i) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const Icon = (Icons as any)[cat.icon] ?? Icons.Code;
+          const withIcon = cat.skills.filter((s) => !!ICON_MAP[s.name]);
+          const withText = cat.skills.filter((s) => !ICON_MAP[s.name]);
 
           return (
             <div
               key={cat.id}
-              className="reveal-item card-elev flex flex-col gap-6 p-7"
+              className="reveal-item flex flex-col gap-5 p-7 transition-all duration-200 ease-out"
+              style={{
+                background: "#101010",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: "16px",
+                transition:
+                  "transform 200ms ease-out, border-color 200ms ease-out, box-shadow 200ms ease-out",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-3px)";
+                e.currentTarget.style.borderColor =
+                  "rgba(255,255,255,0.14)";
+                e.currentTarget.style.boxShadow =
+                  "0 12px 32px rgba(0,0,0,0.4)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.borderColor =
+                  "rgba(255,255,255,0.06)";
+                e.currentTarget.style.boxShadow = "none";
+              }}
             >
               {/* Header */}
-              <div>
-                <h3
-                  className="display-heading mb-1"
-                  style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', color: '#efefef' }}
+              <div className="flex items-center gap-3">
+                <div
+                  className="flex items-center justify-center flex-shrink-0"
+                  style={{
+                    width: "2.5rem",
+                    height: "2.5rem",
+                    borderRadius: "10px",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.06)",
+                  }}
                 >
-                  {cat.name}
-                </h3>
-                <p className="eyebrow">{cat.description}</p>
+                  <Icon size={18} className="text-[#888]" />
+                </div>
+                <div>
+                  <h3
+                    className="font-display leading-tight tracking-tight"
+                    style={{
+                      fontSize: "clamp(1.3rem, 2vw, 1.6rem)",
+                      color: "#F2F2F2",
+                    }}
+                  >
+                    {cat.name}
+                  </h3>
+                  <p
+                    className="font-sans text-[11px] uppercase tracking-[0.1em] mt-0.5"
+                    style={{ color: "#707070" }}
+                  >
+                    {cat.description}
+                  </p>
+                </div>
               </div>
 
-              {/* Icon row */}
+              {/* Icon tiles */}
               {withIcon.length > 0 && (
-                <div className="flex flex-wrap gap-1.5">
-                  {withIcon.map(s => <IconTile key={s.name} name={s.name} />)}
+                <div className="flex flex-wrap gap-2">
+                  {withIcon.map((s) => (
+                    <IconTile key={s.name} name={s.name} />
+                  ))}
                 </div>
               )}
 
-              {/* Text pills */}
+              {/* Text tags */}
               {withText.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
-                  {withText.map(s => <TextPill key={s.name} name={s.name} />)}
+                  {withText.map((s) => (
+                    <TagPill key={s.name} name={s.name} />
+                  ))}
                 </div>
               )}
             </div>

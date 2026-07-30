@@ -1,3 +1,8 @@
+export interface ExperienceMetric {
+  value: string
+  label: string
+}
+
 export interface Experience {
   id: string
   role: string
@@ -9,6 +14,8 @@ export interface Experience {
   description: string[]
   tech: string[]
   current?: boolean
+  metrics?: ExperienceMetric[]
+  highlights?: string[]
 }
 
 export interface SkillItem {
