@@ -8,9 +8,13 @@ export default function Contact() {
       style={{ maxWidth: '90rem', margin: '0 auto', width: '100%' }}
     >
       {/* Section label */}
-      <div className="reveal-item mb-16">
-        <span className="eyebrow">[ 07 ] — Contact</span>
-      </div>
+      <span
+          className="font-sans text-[11px] uppercase tracking-[0.16em] block mb-4"
+          style={{ color: "#606060" }}
+        >
+          [05] - Contact
+        </span>
+
 
       {/* Big serif CTA */}
       <h2

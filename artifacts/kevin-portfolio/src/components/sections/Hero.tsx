@@ -64,8 +64,47 @@ export default function Hero() {
         style={{ maxWidth: "90rem", margin: "0 auto", width: "100%" }}
       >
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-center">
+          {/* ══════════ Portrait — first on mobile, right on desktop ════════ */}
+          <div className="flex items-center justify-center order-1 md:order-2 mb-8 md:mb-0">
+            <div
+              className="hero-fade relative"
+              style={{
+                animationDelay: "0.2s",
+                width: "clamp(200px, 50vw, 400px)",
+              }}
+            >
+              {/* Radial glow behind portrait */}
+              <div
+                className="absolute pointer-events-none"
+                style={{
+                  width: "120%",
+                  height: "120%",
+                  top: "-10%",
+                  left: "-10%",
+                  background:
+                    "radial-gradient(circle at center, rgba(167,139,250,0.08) 0%, transparent 70%)",
+                  animation: "glowPulse 4s ease-in-out infinite",
+                }}
+              />
+
+              {/* Portrait frame */}
+              <div
+                className="relative overflow-hidden"
+                style={{
+                  width: "100%",
+                  aspectRatio: "1 / 1",
+                  borderRadius: "50%",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: "#080808",
+                }}
+              >
+                <PortraitImage />
+              </div>
+            </div>
+          </div>
+
           {/* ══════════ Left column — content ═══════════════════════════════ */}
-          <div className="flex flex-col">
+          <div className="flex flex-col order-2 md:order-1">
             {/* Location + labels */}
             <div
               className="hero-fade font-sans text-[11px] uppercase tracking-[0.16em] mb-6"
@@ -247,42 +286,6 @@ export default function Hero() {
               })}
             </div>
 
-          </div>
-
-          {/* ══════════ Right column — portrait ══════════════════════════════ */}
-          <div className="hidden md:flex items-center justify-center">
-            <div
-              className="hero-fade relative"
-              style={{ animationDelay: "0.2s", width: "100%", maxWidth: "400px" }}
-            >
-              {/* Radial glow behind portrait */}
-              <div
-                className="absolute pointer-events-none"
-                style={{
-                  width: "120%",
-                  height: "120%",
-                  top: "-10%",
-                  left: "-10%",
-                  background:
-                    "radial-gradient(circle at center, rgba(167,139,250,0.08) 0%, transparent 70%)",
-                  animation: "glowPulse 4s ease-in-out infinite",
-                }}
-              />
-
-              {/* Portrait frame */}
-              <div
-                className="relative overflow-hidden"
-                style={{
-                  width: "100%",
-                  aspectRatio: "1 / 1",
-                  borderRadius: "50%",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  background: "#080808",
-                }}
-              >
-                <PortraitImage />
-              </div>
-            </div>
           </div>
         </div>
 
