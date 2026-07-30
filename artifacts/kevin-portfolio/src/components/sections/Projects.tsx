@@ -121,8 +121,7 @@ export default function Projects() {
                   <img
                     src="/devscout.png"
                     alt="DevScout Preview"
-                    className="w-full h-auto"
-                    style={{ display: 'block' }}
+                    className="w-full h-auto hidden dark:block"
                   />
                 </div>
                 <p
