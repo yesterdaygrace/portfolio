@@ -43,7 +43,7 @@ const heroKeyframes = `
 function PortraitImage() {
   return (
     <img
-      src="/profil.jpeg"
+      src={`${import.meta.env.BASE_URL}profil.jpeg`}
       alt="Kevin Van Diesel Chansa"
       className="w-full h-full object-cover"
       style={{ borderRadius: "50%" }}

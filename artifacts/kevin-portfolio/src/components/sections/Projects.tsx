@@ -41,7 +41,7 @@ const PINNED: ProjectCard = {
   tech: ["Laravel", "Vue.js", "MySQL", "Tailwind"],
   year: "2026",
   type: "Web App",
-  thumbnail: "/DevScout.png",
+  thumbnail: `${import.meta.env.BASE_URL}DevScout.png`,
   demoUrl: "https://dev-scout-lac.vercel.app",
   githubUrl: "https://github.com/vinkanika/dev-scout",
 };
