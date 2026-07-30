@@ -100,6 +100,57 @@ export default function Projects() {
       {/* Repo list */}
       {!loading && (
         <div className="space-y-0">
+          {/* ── DevScout (pinned first) ────────────────────────────────────── */}
+          <a
+            href="https://dev-scout-lac.vercel.app"
+            target="_blank"
+            rel="noreferrer"
+            className="block group"
+            style={{ borderTop: '1px solid #111', padding: '1.75rem 0', textDecoration: 'none' }}
+          >
+            <div className="grid md:grid-cols-[auto_1fr_auto] gap-4 md:gap-8 items-start">
+              <span
+                className="display-heading hidden md:block"
+                style={{ fontSize: '1rem', color: '#181818', minWidth: '2rem', paddingTop: '0.4rem' }}
+              >
+                ★
+              </span>
+
+              <div>
+                <div className="rounded-lg overflow-hidden border border-[#161616] group-hover:border-[#2a2a2a] transition-all mb-3">
+                  <img
+                    src="/devscout.png"
+                    alt="DevScout Preview"
+                    className="w-full h-auto"
+                    style={{ display: 'block' }}
+                  />
+                </div>
+                <p
+                  className="display-heading transition-colors"
+                  style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2rem)', color: '#2a2a2a' }}
+                  onMouseOver={e => ((e.currentTarget as HTMLElement).style.color = '#efefef')}
+                  onMouseOut={e => ((e.currentTarget as HTMLElement).style.color = '#2a2a2a')}
+                >
+                  DevScout
+                </p>
+                <p
+                  className="leading-relaxed mt-1"
+                  style={{ color: '#3d3d3d', fontSize: '0.8125rem', maxWidth: '44rem' }}
+                >
+                  Developer profile & portfolio discovery platform — browse curated GitHub repositories with live previews.
+                </p>
+              </div>
+
+              <div
+                className="flex md:flex-col items-center md:items-end gap-3 md:gap-1.5 font-mono flex-wrap"
+                style={{ fontSize: '0.625rem', color: '#222', flexShrink: 0, paddingTop: '0.3rem' }}
+              >
+                <span style={{ color: '#333' }}>Live</span>
+                <ExternalLink size={14} style={{ color: '#444' }} />
+              </div>
+            </div>
+          </a>
+
           {sorted.map((repo, i) => (
             <a
               key={repo.id}
