@@ -1,0 +1,414 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans:    'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    'Courier Prime', 'Courier New', monospace;
+
+  /* Vellum Palette */
+  --color-vellum-bg:      #2A3870;
+  --color-vellum-bg-alt:  #343F80;
+  --color-vellum-deep:    #1F2858;
+  --color-vellum-mid:     #34407A;
+
+  --color-vellum-fg:      #E8D85C;
+  --color-vellum-fg-2:    rgba(232, 216, 92, 0.85);
+  --color-vellum-fg-3:    rgba(232, 216, 92, 0.55);
+  --color-vellum-emphasis:#F5E168;
+  --color-vellum-accent:  #72C4C4;
+  --color-vellum-border:  rgba(232, 216, 92, 0.22);
+
+  /* Semantic mappings */
+  --color-surface-0:      #2A3870;
+  --color-surface-1:      #343F80;
+  --color-surface-2:      #1F2858;
+  --color-surface-3:      #34407A;
+
+  --color-fg:             #E8D85C;
+  --color-fg-muted:       rgba(232, 216, 92, 0.85);
+  --color-fg-faint:       rgba(232, 216, 92, 0.55);
+
+  --color-line:           rgba(232, 216, 92, 0.22);
+  --color-line-hover:     rgba(232, 216, 92, 0.45);
+
+  --color-accent:         #72C4C4;
+  --color-accent-dim:     rgba(114, 196, 196, 0.20);
+}
+
+:root {
+  --c-bg: #2A3870;
+  --c-bg-alt: #343F80;
+  --c-bg-deep: #1F2858;
+  --c-bg-mid: #34407A;
+
+  --c-fg: #E8D85C;
+  --c-fg-2: rgba(232, 216, 92, 0.85);
+  --c-fg-3: rgba(232, 216, 92, 0.55);
+  --c-emphasis: #F5E168;
+  --c-accent: #72C4C4;
+  --c-border: rgba(232, 216, 92, 0.22);
+
+  --f-display: 'Cormorant Garamond', Georgia, serif;
+  --f-body: 'DM Sans', system-ui, sans-serif;
+  --f-mono: 'Courier Prime', 'Courier New', monospace;
+
+  --pad-x: clamp(1.25rem, 5vw, 4.5rem);
+  --pad-y: clamp(2rem, 5vh, 4rem);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    border-color: var(--c-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    background-color: var(--c-bg);
+  }
+
+  body {
+    font-family: var(--f-body);
+    background-color: var(--c-bg);
+    color: var(--c-fg);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--c-emphasis) !important;
+    outline-offset: 3px !important;
+  }
+
+  ::selection {
+    background: rgba(58, 120, 120, 0.45);
+    color: #F5E168;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--c-bg-deep);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(232, 216, 92, 0.22);
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(232, 216, 92, 0.38);
+  }
+
+  /* Headings in Vellum are italic Cormorant Garamond by default */
+  h1, h2, h3, h4, .font-display, .display-heading {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Headline emphasis inversion: Roman (upright) 600 in emphasis yellow */
+  h1 em, h2 em, h3 em, .font-display em, .display-heading em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--c-emphasis);
+  }
+}
+
+/* ── Vellum Primitives & Signature Components ────────────────────────────── */
+
+.vellum-section {
+  width: 100%;
+  max-width: 86rem;
+  margin: 0 auto;
+  padding-left: var(--pad-x);
+  padding-right: var(--pad-x);
+  padding-top: clamp(5rem, 10vh, 8rem);
+  padding-bottom: clamp(6rem, 12vh, 10rem);
+  scroll-margin-top: clamp(4.75rem, 8.5vh, 6.5rem);
+  position: relative;
+}
+
+.vellum-chapter-bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--c-border);
+  padding-bottom: 0.875rem;
+  margin-bottom: clamp(2.5rem, 5vh, 4rem);
+  font-family: var(--f-mono);
+  font-size: 0.8125rem;
+  color: var(--c-accent);
+}
+
+.vellum-kicker {
+  font-family: var(--f-mono);
+  font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+  color: var(--c-accent);
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.vellum-rule {
+  width: 28px;
+  height: 1px;
+  background-color: var(--c-accent);
+  display: block;
+  margin: 1.25rem 0;
+}
+
+.vellum-pin-note {
+  font-family: var(--f-mono);
+  font-size: clamp(0.8125rem, 0.95vw, 0.925rem);
+  line-height: 1.5;
+  color: var(--c-accent);
+  letter-spacing: 0.02em;
+}
+
+/* Button & interactive states in Vellum: strict rectangle, 1px border */
+.vellum-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid var(--c-border);
+  background: transparent;
+  color: var(--c-fg);
+  font-family: var(--f-mono);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  border-radius: 0;
+  transition: all 0.2s ease-out;
+}
+
+.vellum-btn:hover {
+  background: rgba(232, 216, 92, 0.08);
+  border-color: var(--c-fg);
+  color: var(--c-emphasis);
+}
+
+.vellum-btn-solid {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid var(--c-fg);
+  background: var(--c-fg);
+  color: #1F2858;
+  font-family: var(--f-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  border-radius: 0;
+  transition: all 0.2s ease-out;
+}
+
+.vellum-btn-solid:hover {
+  background: var(--c-emphasis);
+  border-color: var(--c-emphasis);
+  color: #151C3F;
+}
+
+.vellum-btn-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid var(--c-accent);
+  background: transparent;
+  color: var(--c-accent);
+  font-family: var(--f-mono);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  border-radius: 0;
+  transition: all 0.2s ease-out;
+}
+
+.vellum-btn-accent:hover {
+  background: rgba(58, 120, 120, 0.25);
+  color: #72B8B8;
+  border-color: #72B8B8;
+}
+
+/* Numbered list using CSS counter in Courier Prime teal */
+.vellum-list {
+  list-style: none;
+  counter-reset: vellum-counter;
+  padding: 0;
+  margin: 0;
+}
+
+.vellum-list-item {
+  counter-increment: vellum-counter;
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.vellum-list-item::before {
+  content: counter(vellum-counter, decimal-leading-zero) ".";
+  font-family: var(--f-mono);
+  font-size: 0.8rem;
+  color: var(--c-accent);
+  letter-spacing: 0.04em;
+}
+
+/* Compare panels */
+.vellum-compare-dark {
+  background-color: var(--c-bg-deep);
+  border: 1px solid var(--c-border);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.vellum-compare-light {
+  background-color: var(--c-bg-mid);
+  border: 1px solid var(--c-border);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* Stat numeral */
+.vellum-stat-val {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  line-height: 1;
+  color: var(--c-fg);
+  letter-spacing: -0.02em;
+}
+
+/* Backward compatibility aliases */
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--c-accent);
+  text-transform: uppercase;
+}
+
+.display-heading {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+.pill-solid {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid var(--c-fg);
+  background: var(--c-fg);
+  color: #1F2858;
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 0;
+  transition: all 0.2s ease-out;
+}
+.pill-solid:hover {
+  background: var(--c-emphasis);
+}
+
+.pill-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid var(--c-border);
+  background: transparent;
+  color: var(--c-fg);
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  text-decoration: none;
+  border-radius: 0;
+  transition: all 0.2s ease-out;
+}
+.pill-ghost:hover {
+  border-color: var(--c-fg);
+  color: var(--c-emphasis);
+}
+
+.pill-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid var(--c-accent);
+  background: transparent;
+  color: var(--c-accent);
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  text-decoration: none;
+  border-radius: 0;
+  transition: all 0.2s ease-out;
+}
+.pill-accent:hover {
+  background: rgba(58, 120, 120, 0.25);
+}
+
+.card-elev {
+  background: var(--c-bg-deep);
+  border: 1px solid var(--c-border);
+  border-radius: 0;
+}
+
+@layer utilities {
+  .text-fg        { color: var(--c-fg); }
+  .text-fg-muted  { color: var(--c-fg-2); }
+  .text-fg-faint  { color: var(--c-fg-3); }
+  .border-line    { border-color: var(--c-border); }
+  .bg-vellum-navy { background-color: var(--c-bg); }
+  .bg-vellum-deep { background-color: var(--c-bg-deep); }
+  .bg-vellum-mid  { background-color: var(--c-bg-mid); }
+}
+
+/* Print Styles */
+@media print {
+  html, body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 11pt;
+  }
+
+  header, nav, #nav-dots, #slide-counter, .no-print {
+    display: none !important;
+  }
+
+  .vellum-section {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .vellum-compare-dark, .vellum-compare-light {
+    background: #f8f8f8 !important;
+    border: 1px solid #ddd !important;
+  }
+
+  * {
+    color: #111111 !important;
+    border-color: #cccccc !important;
+    background-color: transparent !important;
+  }
+
+  .vellum-btn, .vellum-btn-solid, .vellum-btn-accent {
+    border: 1px solid #444444 !important;
+    color: #111111 !important;
+  }
+}

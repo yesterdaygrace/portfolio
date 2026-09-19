@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Build kevin-portfolio
-        run: pnpm --filter @workspace/kevin-portfolio run build
+      - name: Build portfolio
+        run: pnpm --filter @workspace/portfolio run build
         env:
           NODE_ENV: production
 
@@ -39,7 +39,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: artifacts/kevin-portfolio/dist/public
+          path: artifacts/portfolio/dist/public
 
       - name: Deploy to GitHub Pages
         id: deployment

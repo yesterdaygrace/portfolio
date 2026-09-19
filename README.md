@@ -1,6 +1,6 @@
 # Kevin Van Diesel Chansa — Portfolio
 
-**Software Engineer · Ships practical software, replaces legacy systems, zero-downtime.**
+**Software Engineer · Ships practical software, replaces legacy systems, high reliability.**
 
 ---
 
@@ -12,7 +12,10 @@
 | **Portfolio** (canonical)       | `https://yesterdaygrace.github.io/portfolio/` | GitHub Pages via Actions, `NODE_ENV=production` → `BASE_PATH=/portfolio/` |
 | **DevScout** (flagship product) | `https://dev-scout-lac.vercel.app`            | Recruitment CRM — GitHub-sourced developer pipeline                       |
 | **GitHub**                      | `https://github.com/yesterdaygrace`           | Source of live projects section                                           |
-| **Local**                       | `http://localhost:5173`                       | `pnpm --filter @workspace/kevin-portfolio run dev`                        |
+| **Local**                       | `http://localhost:5173`                       | `pnpm --filter @workspace/portfolio run dev`                        |
+
+![Portfolio preview](screenshots/overview/desktop-fullpage.png)
+
 
 
 ---
@@ -39,7 +42,7 @@ Replaced a legacy VDOS/DOS pension administration platform with a browser-access
 | ---------------------- | ----------- | --------------------------------------------------------------------------------- |
 | Operational efficiency | **+30–40%** | Multi-module system: general ledger, journal, cash/bank, financial reports + RBAC |
 | Manual input errors    | **−25–30%** | Workflow automation + multi-layer validation                                      |
-| Production downtime    | **0**       | Nginx reverse proxy, SSL/TLS, environment management, zero-downtime strategy      |
+| Production downtime    | **0 (Observed)** | Nginx reverse proxy, SSL/TLS, environment management, zero-downtime deployment strategy |
 
 
 - Normalized relational schemas for audit trails, period-end reconciliation, and reporting aggregations.
@@ -86,14 +89,14 @@ GitHub API (yesterdaygrace/repos)
         ↓
   PINNED DevScout (static) + live cards → Projects section
 
-App shell (App.tsx): 6 fixed panels [Hero, About, Experience, TechStack, Projects, Contact]
-  ↕ GSAP cover-slide (x:100% for panels 1–3, y:100vh for rest) + ScrollTrigger scrub:1 + snap 1/(N-1)
-  ↕ Wheel/touch interceptor delegates to active panel’s overflow, then global scroll
+App shell (`App.tsx`): semantic document flow for [Hero, About, Experience, Systems, TechStack, Projects, Contact]
+  ↕ Fixed navigation with offset-aware anchor scrolling and section chapter markers
+  ↕ Responsive editorial sections with a mobile-safe drawer and native page scrolling
 ```
 
-- Panels are `position: fixed` + spacer `height: N*100vh` drives ScrollTrigger.
+- Sections stay in normal document flow so browser navigation, touch scrolling, and reduced-motion behavior remain reliable.
 - `pnpm-workspace.yaml` overrides strip non-linux esbuild/tailwind/rollup binaries — lean CI.
-- `replit.md` + `.replit-artifact/artifact.toml` define `run = pnpm --filter @workspace/kevin-portfolio run dev` (PORT 20676) and static prod serve.
+- `replit.md` + `.replit-artifact/artifact.toml` define `run = pnpm --filter @workspace/portfolio run dev` (PORT 20676) and static prod serve.
 
 ---
 
@@ -106,13 +109,13 @@ App shell (App.tsx): 6 fixed panels [Hero, About, Experience, TechStack, Project
 pnpm install
 
 # 2. Dev — portfolio at http://localhost:5173
-pnpm --filter @workspace/kevin-portfolio run dev
+pnpm --filter @workspace/portfolio run dev
 
-# 3. Build — outputs to artifacts/kevin-portfolio/dist/public
-pnpm --filter @workspace/kevin-portfolio run build
+# 3. Build — outputs to artifacts/portfolio/dist/public
+pnpm --filter @workspace/portfolio run build
 
 # 4. Preview prod build
-pnpm --filter @workspace/kevin-portfolio run serve
+pnpm --filter @workspace/portfolio run serve
 
 # 5. Typecheck all packages
 pnpm run typecheck
@@ -123,7 +126,7 @@ Other useful commands:
 ```bash
 pnpm --filter @workspace/api-server run dev   # Express API (port 5000, needs DATABASE_URL)
 pnpm run build                                 # typecheck + build all packages
-pnpm --filter @workspace/kevin-portfolio run deploy:gh-pages  # gh-pages branch deploy
+pnpm --filter @workspace/portfolio run deploy:gh-pages  # gh-pages branch deploy
 ```
 
 Env: Portfolio needs none. API server needs `DATABASE_URL` (Postgres).
@@ -135,9 +138,9 @@ Env: Portfolio needs none. API server needs `DATABASE_URL` (Postgres).
 
 | Path                             | Package                      | Purpose                                                                          |
 | -------------------------------- | ---------------------------- | -------------------------------------------------------------------------------- |
-| `artifacts/kevin-portfolio`      | `@workspace/kevin-portfolio` | This portfolio (Vite + React) — **you are here**                                 |
+| `artifacts/portfolio`      | `@workspace/portfolio` | This portfolio (Vite + React) — **you are here**                                 |
 | `artifacts/api-server`           | `@workspace/api-server`      | Express 5 API template (Drizzle, Pino) — scaffolding, not required for portfolio |
-| `artifacts/mockup-sandbox`       | —                            | Sandbox artifact                                                                 |
+| `screenshots/overview/desktop-fullpage.png` | —                            | Verified desktop preview for README/docs                                    |
 | `lib/*` + `lib/integrations/*`   | —                            | Shared libs                                                                      |
 | `scripts`                        | —                            | Workspace scripts                                                                |
 | `screenshots/reference-home.png` | —                            | Hero reference for README/docs                                                   |
@@ -151,9 +154,9 @@ Env: Portfolio needs none. API server needs `DATABASE_URL` (Postgres).
 **Canonical:** GitHub Pages via Actions (`.github/workflows/deploy.yml`).
 
 - Triggers: push to `main` + `workflow_dispatch`
-- Steps: `pnpm/action-setup` → `setup-node@22` → `pnpm install --no-frozen-lockfile` → `pnpm --filter @workspace/kevin-portfolio run build` (`NODE_ENV=production`) → `configure-pages` → `upload-pages-artifact (dist/public)` → `deploy-pages`
+- Steps: `pnpm/action-setup` → `setup-node@22` → `pnpm install --no-frozen-lockfile` → `pnpm --filter @workspace/portfolio run build` (`NODE_ENV=production`) → `configure-pages` → `upload-pages-artifact (dist/public)` → `deploy-pages`
 - Production base path: `BASE_PATH=/portfolio/` (see `vite.config.ts: BASE_PATH ?? (NODE_ENV===production ? '/portfolio/' : '/')`)
-- Alternative: `pnpm --filter @workspace/kevin-portfolio run deploy:gh-pages` pushes `dist/public` to `gh-pages` branch.
+- Alternative: `pnpm --filter @workspace/portfolio run deploy:gh-pages` pushes `dist/public` to `gh-pages` branch.
 
 Replit artifact (`artifact.toml`) serves `dist/public` statically with SPA rewrite.
 
@@ -161,7 +164,7 @@ Replit artifact (`artifact.toml`) serves `dist/public` statically with SPA rewri
 
 ## Projects — How live repos work
 
-Portfolio doesn’t hardcode projects (except DevScout). `src/components/sections/Projects.tsx` fetches `https://api.github.com/users/yesterdaygrace/repos`, filters forks, maps via `repoToCard()`:
+Portfolio doesn’t hardcode projects (except DevScout). `artifacts/portfolio/src/sections/Projects.tsx` fetches `https://api.github.com/users/yesterdaygrace/repos`, filters forks, maps via `repoToCard()`:
 
 - `language` + `topics[]` → `tech[]` badges
 - `opengraph.githubassets.com/1/<full_name>` → thumbnail
@@ -173,20 +176,20 @@ Note GitHub API rate limits for unauthenticated requests (60/hr) — fine for st
 
 ## Tech Stack Detail
 
-Grouped as displayed in-site (`src/data/skills.ts`):
+Grouped as displayed in-site (`artifacts/portfolio/src/data/skills.ts`):
 
-- **Frontend** — Vue.js 3, TypeScript, JS ES2022+, Tailwind CSS, Alpine.js, Vite, Next.js, HTML5/CSS3
-- **Backend** — Laravel, PHP 8+, Node.js, RESTful API Design, Auth &amp; Authorization, Queues &amp; Jobs, Schema Design
-- **Database** — MySQL/MariaDB, PostgreSQL, Eloquent ORM, Query Optimization, Bank Reconciliation, Data Integrity, Audit Trails
-- **Infrastructure** — Linux (Debian/Ubuntu), Nginx, Git &amp; GitHub, Docker, Bash, SSL/TLS, SSH, Cron
+- **Backend Systems** — Go, Laravel, PHP, RESTful API Architecture, RBAC, Queues & Jobs, Schema Design
+- **Databases & Storage** — PostgreSQL, MySQL/MariaDB, Eloquent ORM & GORM, Query Optimization, Financial Reconciliation, Data Integrity, Audit Logging
+- **Production Infrastructure** — Linux, Nginx, Docker, SSL/TLS, GitHub Actions/CI/CD, Bash/Cron, SSH
+- **Client Applications** — Vue, TypeScript, JavaScript, Tailwind, Alpine, Vite, HTML/CSS
 
 ---
 
-## Experience &amp; Contact
+## Experience & Contact
 
 **Fullstack Web Developer — Dana Pensiun Sekolah Kristen** — see Showcase above.
 
-**Teaching Assistant, Web Dev — Satya Wacana Christian University** (Aug–Dec 2024): Labs for CS fundamentals, 1:1 debugging, feedback on algorithms &amp; architecture.
+**Teaching Assistant, Web Dev — Satya Wacana Christian University** (Aug–Dec 2024): Labs for CS fundamentals, 1:1 debugging, feedback on algorithms & architecture.
 
 **Kevin Van Diesel Chansa** — Salatiga, Central Java, Indonesia
 
@@ -194,6 +197,7 @@ Grouped as displayed in-site (`src/data/skills.ts`):
 - **Availability:** Open to collaborations and opportunities
 
 ---
+
 
 ## Gotchas
 
@@ -210,4 +214,4 @@ MIT — this portfolio’s code. Product codebases (DevScout, pension platform) 
 
 ---
 
-*Built without “built on Replit” filler. If you’re a startup CTO skim-reading this: the migration table above is the signal — ledger to Nginx, schema to zero downtime.*
+*Built without “built on Replit” filler. If you’re a startup CTO skim-reading this: the migration table above is the signal — ledger to Nginx, schema to reliable production workflows.*

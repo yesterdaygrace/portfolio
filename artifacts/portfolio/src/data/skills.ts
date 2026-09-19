@@ -1,0 +1,68 @@
+import type { SkillCategory } from '@/types'
+
+export const skillCategories: SkillCategory[] = [
+  {
+    id: 'backend',
+    name: 'Backend Systems',
+    icon: 'Server',
+    description: 'Server architectures, transactional APIs & business logic',
+    color: 'violet',
+    skills: [
+      { name: 'Laravel' },
+      { name: 'Go (Golang)' },
+      { name: 'PHP 8+' },
+      { name: 'RESTful API Architecture' },
+      { name: 'Auth & Role-Based Access (RBAC)' },
+      { name: 'Background Queues & Jobs' },
+      { name: 'Relational Schema Design' },
+    ],
+  },
+  {
+    id: 'database',
+    name: 'Databases & Storage',
+    icon: 'Database',
+    description: 'Relational modeling, transaction integrity & query optimization',
+    color: 'blue',
+    skills: [
+      { name: 'PostgreSQL' },
+      { name: 'MySQL / MariaDB' },
+      { name: 'Eloquent ORM & GORM' },
+      { name: 'Query Optimization & Indexing' },
+      { name: 'Financial Reconciliation Ledgers' },
+      { name: 'Data Integrity & Normalization' },
+      { name: 'Audit Logging & Verification' },
+    ],
+  },
+  {
+    id: 'infrastructure',
+    name: 'Production Infrastructure',
+    icon: 'Globe',
+    description: 'Linux servers, reverse proxies & deployment reliability',
+    color: 'purple',
+    skills: [
+      { name: 'Linux (Debian / Ubuntu)' },
+      { name: 'Nginx Reverse Proxy' },
+      { name: 'Docker & Containerization' },
+      { name: 'SSL/TLS & Domain Management' },
+      { name: 'Git, GitHub Actions & CI/CD' },
+      { name: 'Bash Automation & Cron' },
+      { name: 'SSH & Environment Security' },
+    ],
+  },
+  {
+    id: 'frontend',
+    name: 'Client Applications',
+    icon: 'Monitor',
+    description: 'Accessible interfaces, SPA state & modern web tooling',
+    color: 'indigo',
+    skills: [
+      { name: 'Vue.js 3' },
+      { name: 'TypeScript' },
+      { name: 'JavaScript ES2022+' },
+      { name: 'Tailwind CSS' },
+      { name: 'Alpine.js' },
+      { name: 'Vite' },
+      { name: 'HTML5 & Accessible CSS' },
+    ],
+  },
+]
