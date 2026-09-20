@@ -322,7 +322,7 @@ export default function Projects() {
             Live GitHub Repositories · @{profile.githubUsername}
           </span>
           <a
-            href={profile.githubUsername ? `https://github.com/${profile.githubUsername}` : "#"}
+            href={`https://github.com/${profile.githubUsername || "yesterdaygrace"}`}
             target="_blank"
             rel="noopener noreferrer"
             className="font-mono text-xs hover:underline"
@@ -373,7 +373,7 @@ export default function Projects() {
                   style={{ color: "var(--c-fg)" }}
                 >
                   <a
-                    href={proj.githubUrl ?? "#"}
+                    href={proj.githubUrl || `https://github.com/${profile.githubUsername || "yesterdaygrace"}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:underline"

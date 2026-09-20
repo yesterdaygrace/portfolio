@@ -23,29 +23,13 @@ export default function Navbar() {
   const activeSect = useRef("hero");
   const [activeId, setActiveId] = useState("hero");
 
+  const ticking = useRef(false);
+
   const handleScroll = useCallback(() => {
     const scrollY = window.scrollY;
     const docHeight =
       document.documentElement.scrollHeight - window.innerHeight;
 
-    // Reading progress line
-    if (progressRef.current) {
-      progressRef.current.style.width =
-        docHeight > 0 ? `${(scrollY / docHeight) * 100}%` : "0%";
-    }
-
-    // Header background: subtle blur on scroll
-    if (headerRef.current) {
-      const past = scrollY > 30;
-      headerRef.current.style.backgroundColor = past
-        ? "rgba(42, 56, 112, 0.95)"
-        : "rgba(42, 56, 112, 0.85)";
-      headerRef.current.style.borderBottomColor = past
-        ? "rgba(232, 216, 92, 0.20)"
-        : "rgba(232, 216, 92, 0.12)";
-    }
-
-    // Active section detection via element bounding rect
     let current = "hero";
     for (const id of SECTION_IDS) {
       const el = document.getElementById(id);
@@ -56,6 +40,22 @@ export default function Navbar() {
         }
       }
     }
+
+    if (progressRef.current) {
+      progressRef.current.style.width =
+        docHeight > 0 ? `${(scrollY / docHeight) * 100}%` : "0%";
+    }
+
+    if (headerRef.current) {
+      const past = scrollY > 30;
+      headerRef.current.style.backgroundColor = past
+        ? "rgba(42, 56, 112, 0.95)"
+        : "rgba(42, 56, 112, 0.85)";
+      headerRef.current.style.borderBottomColor = past
+        ? "rgba(232, 216, 92, 0.20)"
+        : "rgba(232, 216, 92, 0.12)";
+    }
+
     if (current !== activeSect.current) {
       activeSect.current = current;
       setActiveId(current);
@@ -63,11 +63,20 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+    const onScroll = () => {
+      if (!ticking.current) {
+        ticking.current = true;
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking.current = false;
+        });
+      }
+    };
 
+    window.addEventListener("scroll", onScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [handleScroll]);
   // Close mobile drawer on Escape or outside click
   useEffect(() => {
     if (!menuOpen) return;

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Agentation } from "agentation";
 import Navbar from "@/layout/Navbar";
 import { sections } from "@/sections";
@@ -9,13 +9,16 @@ const TOTAL_CHAPTERS = String(sections.length).padStart(2, "0");
 function App() {
   const [activeChapter, setActiveChapter] = useState(1);
 
+  const ticking = useRef(false);
+
   const handleScroll = useCallback(() => {
+    const cutoff = window.innerHeight * 0.45;
     let currentIdx = 0;
     for (let i = 0; i < SECTION_IDS.length; i++) {
       const el = document.getElementById(SECTION_IDS[i]);
       if (el) {
         const rect = el.getBoundingClientRect();
-        if (rect.top <= window.innerHeight * 0.45) {
+        if (rect.top <= cutoff) {
           currentIdx = i;
         }
       }
@@ -24,9 +27,19 @@ function App() {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    const onScroll = () => {
+      if (!ticking.current) {
+        ticking.current = true;
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking.current = false;
+        });
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [handleScroll]);
 
   const scrollToChapter = (id: string, e: React.MouseEvent) => {
@@ -103,7 +116,9 @@ function App() {
         <span style={{ color: "var(--c-fg-3)" }}>/</span>
         <span>{TOTAL_CHAPTERS}</span>
       </aside>
-      {process.env.NODE_ENV === "development" && <Agentation />}
+      {process.env.NODE_ENV === "development" &&
+        typeof window !== "undefined" &&
+        window.location.search.includes("agentation") && <Agentation />}
     </>
   );
 }
