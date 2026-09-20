@@ -82,16 +82,9 @@ export default function Hero() {
           </div>
 
           {/* Direct actions */}
-          <div className="flex flex-wrap gap-3 items-center">
+          <div className="flex flex-wrap gap-4 items-center">
             <a href="#experience" className="vellum-btn-solid">
-              View Experience ↓
-            </a>
-            <a
-              href="#systems"
-              className="vellum-btn"
-              style={{ borderColor: "rgba(232,216,92,0.35)" }}
-            >
-              Case Study: Pension Migration ↓
+              Explore Work &amp; Systems ↓
             </a>
             <a
               href={`${import.meta.env.BASE_URL}cv-kevin-chansa.pdf`}
@@ -121,7 +114,7 @@ export default function Hero() {
                   fetchPriority="high"
                   decoding="async"
                   loading="eager"
-                  className="w-full h-full object-cover sepia-[0.15] contrast-105 brightness-95 hover:sepia-0 transition-all duration-300"
+                  className="w-full h-full object-cover grayscale contrast-[1.08] brightness-95 sepia-[0.20] hover:grayscale-0 hover:sepia-0 transition-all duration-500"
                 />
               </picture>
             </div>

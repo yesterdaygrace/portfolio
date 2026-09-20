@@ -185,15 +185,12 @@ export default function Experience() {
         ))}
       </div>
 
-      <footer className="pt-12 mt-16 border-t border-[var(--c-border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <footer className="pt-12 mt-16 border-t border-[var(--c-border)]">
         <PinAnnotation
           counter="CHRONOLOGY"
           note="Full verification documents and employment references available upon request"
           secondaryNote="Archive verified against contract deliverables"
         />
-        <a href="#systems" className="vellum-btn">
-          Explore Systems Architecture Case Study ↓
-        </a>
       </footer>
     </section>
   );

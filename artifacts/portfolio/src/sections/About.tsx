@@ -155,15 +155,12 @@ export default function About() {
         </div>
       </div>
 
-      <footer className="pt-6 border-t border-[var(--c-border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <footer className="pt-6 border-t border-[var(--c-border)]">
         <PinAnnotation
           counter="CHAPTER 02"
           note="Informatics Engineering · Satya Wacana Christian University"
           secondaryNote="Focus: Full-Stack Architecture, Enterprise Accounting Platforms"
         />
-        <a href="#experience" className="vellum-btn">
-          Proceed to Experience Chronology ↓
-        </a>
       </footer>
     </section>
   );

@@ -408,15 +408,12 @@ export default function Projects() {
         </div>
       )}
 
-      <footer className="pt-12 mt-12 border-t border-[var(--c-border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <footer className="pt-12 mt-12 border-t border-[var(--c-border)]">
         <PinAnnotation
           counter="PROJECT LEDGER"
           note="Live API query: api.github.com/users/yesterdaygrace/repos"
           secondaryNote="Static fallback enabled for CI & GitHub Pages static preview"
         />
-        <a href="#contact" className="vellum-btn">
-          Connect &amp; Inquiries ↓
-        </a>
       </footer>
     </section>
   );

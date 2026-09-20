@@ -91,15 +91,12 @@ export default function TechStack() {
         ))}
       </div>
 
-      <footer className="pt-12 mt-12 border-t border-[var(--c-border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <footer className="pt-12 mt-12 border-t border-[var(--c-border)]">
         <PinAnnotation
           counter="STACK LEDGER"
           note="Evaluated against active production usage in accounting and CRM domains"
           secondaryNote="Standards: PSR-12 · Strict Types · Normalized 3NF Schemas · Semantic HTML"
         />
-        <a href="#projects" className="vellum-btn">
-          View Selected Projects &amp; Repositories ↓
-        </a>
       </footer>
     </section>
   );

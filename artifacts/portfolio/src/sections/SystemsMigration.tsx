@@ -9,11 +9,6 @@ import {
 export default function SystemsMigration() {
   const [mobileTab, setMobileTab] = useState<"after" | "before">("after");
 
-  const metrics = [
-    { value: "+30–40%", label: "Operational Efficiency", detail: "Automated GL, journal entries & reporting" },
-    { value: "−25–30%", label: "Manual Input Errors", detail: "Multi-layer schema & workflow validation" },
-    { value: "0", label: "Production Downtime", detail: "Nginx reverse proxy with zero-downtime deploys" },
-  ];
 
   return (
     <section id="systems" className="vellum-section">
@@ -43,31 +38,6 @@ export default function SystemsMigration() {
         <AccentRule />
       </div>
 
-      {/* Metrics Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 py-6 mb-12 border-y border-[rgba(232,216,92,0.18)]">
-        {metrics.map((m) => (
-          <div key={m.label} className="flex flex-col">
-            <span
-              className="font-display italic text-3xl sm:text-4xl lg:text-5xl mb-2"
-              style={{ color: "var(--c-fg)" }}
-            >
-              {m.value}
-            </span>
-            <span
-              className="font-mono text-xs uppercase tracking-wider mb-1"
-              style={{ color: "var(--c-emphasis)" }}
-            >
-              {m.label}
-            </span>
-            <span
-              className="font-sans text-xs"
-              style={{ color: "var(--c-fg-2)" }}
-            >
-              {m.detail}
-            </span>
-          </div>
-        ))}
-      </div>
 
       {/* Mobile View Toggle */}
       <div className="flex md:hidden items-center border border-[var(--c-border)] mb-4 p-1 bg-[var(--c-bg-deep)] font-mono text-xs">
@@ -200,11 +170,11 @@ export default function SystemsMigration() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 font-mono text-xs">
           {/* Runtime Architecture */}
-          <div className="lg:col-span-6 p-4 sm:p-5 border border-[var(--c-border)] bg-[var(--c-bg)]">
+          <div className="lg:col-span-6 p-3 sm:p-5 border border-[var(--c-border)] bg-[var(--c-bg)]">
             <span className="text-[var(--c-accent)] uppercase block mb-3 font-semibold">
               01 · Multi-Tier Runtime Pipeline
             </span>
-            <div className="space-y-2 leading-relaxed text-[var(--c-fg-2)]">
+            <div className="space-y-2 leading-relaxed text-[var(--c-fg-2)] text-[11px] sm:text-xs">
               <div className="p-2 border border-[var(--c-border)] bg-[var(--c-bg-mid)] text-[var(--c-fg)]">
                 Authenticated Clients (Web Browser / RBAC Sessions)
               </div>
@@ -230,7 +200,7 @@ export default function SystemsMigration() {
           </div>
 
           {/* Process Transformation */}
-          <div className="lg:col-span-6 p-4 sm:p-5 border border-[var(--c-border)] bg-[var(--c-bg)]">
+          <div className="lg:col-span-6 p-3 sm:p-5 border border-[var(--c-border)] bg-[var(--c-bg)]">
             <span className="text-[var(--c-accent)] uppercase block mb-3 font-semibold">
               02 · Workflow Process Transformation
             </span>
@@ -271,9 +241,6 @@ export default function SystemsMigration() {
             className="vellum-btn"
           >
             DAPENSE Repo ↗
-          </a>
-          <a href="#stack" className="vellum-btn">
-            Capabilities Ledger ↓
           </a>
         </div>
       </div>
