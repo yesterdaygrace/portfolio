@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import Navbar from "@/layout/Navbar";
 import { sections } from "@/sections";
+import { SectionTransition } from "@/components/vellum/SectionTransition";
 
 const LazyAgentation = lazy(() =>
   import("agentation").then((m) => ({ default: m.Agentation }))
@@ -19,7 +20,9 @@ function App() {
 
       <main id="content" className="w-full relative">
         {sections.map(({ id, Component }) => (
-          <Component key={id} />
+          <SectionTransition key={id} id={id}>
+            <Component />
+          </SectionTransition>
         ))}
       </main>
 

@@ -24,53 +24,55 @@ export default function Hero() {
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       const ctx = gsap.context(() => {
-        const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-
+        const tl = gsap.timeline({
+          defaults: { ease: "power2.out", clearProps: "all" },
+        });
         tl.from("[data-hero-header]", {
           autoAlpha: 0,
-          y: -12,
-          duration: 0.6,
+          y: -10,
+          duration: 0.35,
         })
           .from("[data-hero-kicker]", {
             autoAlpha: 0,
-            y: 10,
-            duration: 0.4,
-          }, "-=0.3")
+            y: 8,
+            duration: 0.25,
+          }, "-=0.2")
           .from("[data-hero-title]", {
             autoAlpha: 0,
-            y: 22,
-            duration: 0.7,
-          }, "-=0.2")
+            y: 16,
+            duration: 0.45,
+          }, "-=0.15")
           .from("[data-hero-lead]", {
             autoAlpha: 0,
-            y: 14,
-            duration: 0.5,
-          }, "-=0.3")
+            y: 10,
+            duration: 0.35,
+          }, "-=0.2")
           .from("[data-hero-rule]", {
             scaleX: 0,
             transformOrigin: "left center",
-            duration: 0.4,
-          }, "-=0.2")
+            duration: 0.25,
+          }, "-=0.15")
           .from("[data-hero-facts] > div", {
             autoAlpha: 0,
-            y: 10,
-            stagger: 0.05,
-            duration: 0.4,
-          }, "-=0.2")
+            y: 8,
+            stagger: 0.04,
+            duration: 0.3,
+          }, "-=0.15")
           .from("[data-hero-actions]", {
             autoAlpha: 0,
-            y: 10,
-            duration: 0.4,
+            y: 8,
+            duration: 0.3,
           }, "-=0.1")
           .from("[data-hero-portrait]", {
             autoAlpha: 0,
-            scale: 0.97,
-            duration: 0.7,
-          }, "-=0.5")
+            scale: 0.98,
+            duration: 0.45,
+          }, "-=0.35")
           .from("[data-hero-footer]", {
             autoAlpha: 0,
-            duration: 0.5,
-          }, "-=0.3");
+            duration: 0.35,
+            clearProps: "all",
+          }, "-=0.2");
       }, heroRef);
 
       return () => ctx.revert();

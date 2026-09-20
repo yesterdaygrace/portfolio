@@ -373,7 +373,35 @@
   border: 1px solid var(--c-border);
   border-radius: 0;
 }
+@keyframes vellum-shimmer {
+  0% {
+    background-position: -200% 0;
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    background-position: 200% 0;
+    opacity: 0.55;
+  }
+}
 
+.vellum-skeleton-bar {
+  background: linear-gradient(
+    90deg,
+    rgba(232, 216, 92, 0.05) 0%,
+    rgba(232, 216, 92, 0.18) 50%,
+    rgba(232, 216, 92, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: vellum-shimmer 2s infinite ease-in-out;
+}
+
+.vellum-skeleton-box {
+  background-color: var(--c-bg-deep);
+  border: 1px dashed rgba(232, 216, 92, 0.22);
+}
 @layer utilities {
   .text-fg        { color: var(--c-fg); }
   .text-fg-muted  { color: var(--c-fg-2); }
