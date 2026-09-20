@@ -222,6 +222,9 @@ export default function Navbar() {
           <div
             id="mobile-drawer"
             data-mobile-drawer
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
             className="fixed md:hidden z-50 border-b shadow-2xl"
           style={{
             top: "3.5rem",

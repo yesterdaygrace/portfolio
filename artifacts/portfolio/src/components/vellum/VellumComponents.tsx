@@ -72,7 +72,7 @@ export function PinAnnotation({
       {secondaryNote && (
         <div
           className="mt-0.5 text-[11px] tracking-wide"
-          style={{ color: "rgba(58, 120, 120, 0.85)" }}
+          style={{ color: "var(--c-accent)" }}
         >
           {secondaryNote}
         </div>

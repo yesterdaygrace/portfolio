@@ -108,12 +108,22 @@ export default function Hero() {
         <div className="lg:col-span-4 flex flex-col items-center lg:items-end w-full">
           <figure className="w-full max-w-[280px] sm:max-w-[320px] p-2 bg-[var(--c-bg-deep)] border border-[var(--c-border)]">
             <div className="aspect-[4/5] overflow-hidden bg-[var(--c-bg-mid)]">
-              <img
-                src={`${import.meta.env.BASE_URL}portrait.jpeg`}
-                alt="Kevin Van Diesel Chansa"
-                className="w-full h-full object-cover sepia-[0.15] contrast-105 brightness-95 hover:sepia-0 transition-all duration-300"
-                loading="eager"
-              />
+              <picture>
+                <source
+                  srcSet={`${import.meta.env.BASE_URL}portrait.webp`}
+                  type="image/webp"
+                />
+                <img
+                  src={`${import.meta.env.BASE_URL}portrait.jpeg`}
+                  alt="Portrait of Kevin Van Diesel Chansa, Software Engineer"
+                  width={864}
+                  height={1184}
+                  fetchPriority="high"
+                  decoding="async"
+                  loading="eager"
+                  className="w-full h-full object-cover sepia-[0.15] contrast-105 brightness-95 hover:sepia-0 transition-all duration-300"
+                />
+              </picture>
             </div>
             <figcaption className="mt-2.5 px-1 py-1 flex items-center justify-between font-mono text-[11px]" style={{ color: "var(--c-accent)" }}>
               <span>FIGURE 01</span>

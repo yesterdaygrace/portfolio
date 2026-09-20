@@ -51,34 +51,54 @@ export default function Projects() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const fetched = useRef(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (fetched.current) return;
-    fetched.current = true;
+    const startFetch = () => {
+      if (fetched.current) return;
+      fetched.current = true;
 
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch(
-          `https://api.github.com/users/${profile.githubUsername}/repos?sort=updated&per_page=100&type=owner`,
-          { headers: { Accept: "application/vnd.github+json" } },
-        );
-        if (!res.ok) throw new Error(`GitHub API error ${res.status}`);
-        const data: GitHubRepo[] = await res.json();
-        if (!cancelled) setRepos(data.filter((r) => !r.fork));
-      } catch (e) {
-        if (!cancelled) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+      (async () => {
+        try {
+          const res = await fetch(
+            `https://api.github.com/users/${profile.githubUsername}/repos?sort=updated&per_page=15&type=owner`,
+            {
+              headers: { Accept: "application/vnd.github+json" },
+              signal: controller.signal,
+            },
+          );
+          if (!res.ok) throw new Error(`GitHub API error ${res.status}`);
+          const data: GitHubRepo[] = await res.json();
+          setRepos(data.filter((r) => !r.fork));
+        } catch (e) {
           setError(e instanceof Error ? e.message : "Network error");
+        } finally {
+          clearTimeout(timeoutId);
+          setLoading(false);
         }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => {
-      cancelled = true;
+      })();
     };
-  }, []);
 
+    // Defer network fetch until Projects section is near viewport
+    if (typeof IntersectionObserver !== "undefined" && sectionRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting) {
+            startFetch();
+            observer.disconnect();
+          }
+        },
+        { rootMargin: "800px 0px" },
+      );
+      observer.observe(sectionRef.current);
+      return () => observer.disconnect();
+    }
+    startFetch();
+    return undefined;
+  }, []);
   const projectCards: ProjectCard[] = useMemo(() => {
     const ARCH_METADATA: Record<string, { desc: string; type: string; tech: string[] }> = {
       dapense: {
@@ -109,9 +129,39 @@ export default function Projects() {
     };
 
     const FEATURED_ORDER = ["dapense", "inventra", "dev-scout", "portfolio"];
+    if (repos.length === 0 && !loading) {
+      return [
+        {
+          id: "dapense",
+          title: "DAPENSE",
+          description: "Financial information system replacing legacy VDOS workflows with a Laravel/MySQL web architecture for ledger, journal, reconciliation, and reporting operations.",
+          tech: ["Laravel", "PHP", "MySQL", "Nginx"],
+          year: "2025",
+          type: "Financial Information System",
+          githubUrl: `https://github.com/${profile.githubUsername}/DAPENSE`,
+        },
+        {
+          id: "inventra",
+          title: "inventra",
+          description: "Go/PostgreSQL inventory platform with RBAC, multi-warehouse stock ledgers, reservations, audit trails, and transactional workflows.",
+          tech: ["Go", "PostgreSQL", "Docker", "REST API"],
+          year: "2025",
+          type: "Backend Inventory Platform",
+          githubUrl: `https://github.com/${profile.githubUsername}/inventra`,
+        },
+        {
+          id: "portfolio",
+          title: "portfolio",
+          description: "Engineering portfolio documenting production system migrations, backend architecture, and verified software deliverables.",
+          tech: ["React 19", "TypeScript", "Tailwind", "Vite"],
+          year: "2026",
+          type: "Engineering Portfolio",
+          githubUrl: `https://github.com/${profile.githubUsername}/portfolio`,
+        },
+      ];
+    }
 
     return [...repos]
-      .filter((r) => r.name !== "DevScout")
       .sort((a, b) => {
         const aKey = a.name.toLowerCase();
         const bKey = b.name.toLowerCase();
@@ -140,7 +190,7 @@ export default function Projects() {
   }, [repos]);
 
   return (
-    <section id="projects" className="vellum-section">
+    <section id="projects" ref={sectionRef} className="vellum-section">
       <ChapterHeader
         number="06"
         title="Project Showcase"
@@ -234,12 +284,21 @@ export default function Projects() {
           <div className="lg:col-span-6">
             <figure className="border border-[var(--c-border)] bg-[var(--c-bg-mid)] p-2">
               <div className="aspect-[16/10] overflow-hidden bg-[var(--c-bg-deep)]">
-                <img
-                  src={PINNED.thumbnail}
-                  alt="DevScout Recruitment CRM Dashboard"
-                  className="w-full h-full object-cover contrast-[1.03] hover:scale-[1.02] transition-all duration-300"
-                  loading="lazy"
-                />
+                <picture>
+                  <source
+                    srcSet={`${import.meta.env.BASE_URL}devscout-dashboard.webp`}
+                    type="image/webp"
+                  />
+                  <img
+                    src={PINNED.thumbnail}
+                    alt="DevScout Recruitment CRM Dashboard"
+                    width={1916}
+                    height={1077}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover contrast-[1.03] hover:scale-[1.02] transition-all duration-300"
+                  />
+                </picture>
               </div>
               <figcaption
                 className="mt-2 px-1 flex items-center justify-between font-mono text-[11px]"

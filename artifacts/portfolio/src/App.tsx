@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import { Agentation } from "agentation";
 import Navbar from "@/layout/Navbar";
 import { sections } from "@/sections";
 
@@ -40,6 +41,12 @@ function App() {
 
   return (
     <>
+      <a
+        href="#content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--c-emphasis)] focus:text-[#151C3F] focus:font-mono focus:text-xs focus:font-bold focus:shadow-lg focus:border focus:border-[var(--c-fg)] focus:outline-none"
+      >
+        Skip to main content ↓
+      </a>
       <Navbar />
 
       <main id="content" className="w-full relative">
@@ -96,6 +103,7 @@ function App() {
         <span style={{ color: "var(--c-fg-3)" }}>/</span>
         <span>{TOTAL_CHAPTERS}</span>
       </aside>
+      {process.env.NODE_ENV === "development" && <Agentation />}
     </>
   );
 }
