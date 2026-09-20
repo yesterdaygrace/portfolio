@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { useSectionReveal } from "@/lib/useSectionReveal";
 import { experiences } from "@/data/experience";
 import {
   ChapterHeader,
@@ -6,8 +8,11 @@ import {
 } from "@/components/vellum/VellumComponents";
 
 export default function Experience() {
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
+
   return (
-    <section id="experience" className="vellum-section">
+    <section id="experience" ref={sectionRef} className="vellum-section">
       <ChapterHeader
         number="03"
         title="Experience Chronology"

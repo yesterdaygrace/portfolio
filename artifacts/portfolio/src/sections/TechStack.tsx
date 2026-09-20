@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { useSectionReveal } from "@/lib/useSectionReveal";
 import { skillCategories } from "@/data/skills";
 import {
   ChapterHeader,
@@ -6,8 +8,11 @@ import {
 } from "@/components/vellum/VellumComponents";
 
 export default function TechStack() {
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
+
   return (
-    <section id="stack" className="vellum-section">
+    <section id="stack" ref={sectionRef} className="vellum-section">
       <ChapterHeader
         number="05"
         title="Technical Capabilities"

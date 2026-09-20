@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 function GithubIcon({ size = 14 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -276,28 +277,37 @@ export default function Navbar() {
       </header>
 
       {/* Mobile drawer and backdrop scrim */}
-      {menuOpen && (
-        <>
-          <div
-            className="fixed inset-0 bg-[#0c1228]/70 backdrop-blur-sm z-40 md:hidden"
-            onClick={() => setMenuOpen(false)}
-            aria-hidden="true"
-          />
-          <div
-            id="mobile-drawer"
-            data-mobile-drawer
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile navigation menu"
-            className="fixed md:hidden z-50 border-b shadow-2xl"
-          style={{
-            top: "3.5rem",
-            left: 0,
-            right: 0,
-            backgroundColor: "var(--c-bg-deep)",
-            borderColor: "var(--c-border)",
-          }}
-        >
+      <AnimatePresence>
+        {menuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              className="fixed inset-0 bg-[#0c1228]/70 backdrop-blur-sm z-40 md:hidden"
+              onClick={() => setMenuOpen(false)}
+              aria-hidden="true"
+            />
+            <motion.div
+              id="mobile-drawer"
+              data-mobile-drawer
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation menu"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed md:hidden z-50 border-b shadow-2xl"
+              style={{
+                top: "3.5rem",
+                left: 0,
+                right: 0,
+                backgroundColor: "var(--c-bg-deep)",
+                borderColor: "var(--c-border)",
+              }}
+            >
           <div className="p-6 font-mono text-xs">
             <div className="flex flex-col gap-2 mb-6">
               {NAV_LINKS.map((link) => (
@@ -344,9 +354,10 @@ export default function Navbar() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </>
     )}
+  </AnimatePresence>
   </>
   );
 }

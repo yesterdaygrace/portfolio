@@ -12,6 +12,7 @@
     "deploy": "pnpm run deploy:gh-pages"
   },
   "dependencies": {
+    "framer-motion": "catalog:",
     "gsap": "^3.15.0"
   },
   "devDependencies": {

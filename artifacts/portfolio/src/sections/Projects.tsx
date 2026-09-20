@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useSectionReveal } from "@/lib/useSectionReveal";
 import { profile } from "@/data/profile";
 import {
   ChapterHeader,
@@ -52,7 +54,7 @@ export default function Projects() {
   const [error, setError] = useState<string | null>(null);
   const fetched = useRef(false);
   const sectionRef = useRef<HTMLElement>(null);
-
+  useSectionReveal(sectionRef);
   useEffect(() => {
     const startFetch = () => {
       if (fetched.current) return;
@@ -359,8 +361,10 @@ export default function Projects() {
       {!loading && (
         <div className="divide-y divide-[var(--c-border)] border-y border-[var(--c-border)]">
           {projectCards.map((proj, idx) => (
-            <article
+            <motion.article
               key={proj.id}
+              whileHover={{ x: 3 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
               className="py-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-baseline group"
             >
               <div className="md:col-span-1 font-mono text-xs text-[var(--c-accent)]">
@@ -403,7 +407,7 @@ export default function Projects() {
                   </a>
                 )}
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       )}

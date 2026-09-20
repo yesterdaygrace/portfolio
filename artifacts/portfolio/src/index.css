@@ -187,13 +187,19 @@
   font-size: 0.8125rem;
   text-decoration: none;
   border-radius: 0;
-  transition: all 0.2s ease-out;
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .vellum-btn:hover {
   background: rgba(232, 216, 92, 0.08);
   border-color: var(--c-fg);
   color: var(--c-emphasis);
+  transform: translateY(-1px);
+}
+
+.vellum-btn:active, .vellum-btn-solid:active, .vellum-btn-accent:active {
+  transform: scale(0.98) translateY(1px) !important;
+  transition-duration: 0.08s !important;
 }
 
 .vellum-btn-solid {
@@ -209,13 +215,14 @@
   letter-spacing: 0.05em;
   text-decoration: none;
   border-radius: 0;
-  transition: all 0.2s ease-out;
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .vellum-btn-solid:hover {
   background: var(--c-emphasis);
   border-color: var(--c-emphasis);
   color: #151C3F;
+  transform: translateY(-1px);
 }
 
 .vellum-btn-accent {
@@ -230,15 +237,15 @@
   font-size: 0.8125rem;
   text-decoration: none;
   border-radius: 0;
-  transition: all 0.2s ease-out;
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .vellum-btn-accent:hover {
   background: rgba(58, 120, 120, 0.25);
   color: #72B8B8;
   border-color: #72B8B8;
+  transform: translateY(-1px);
 }
-
 /* Numbered list using CSS counter in Courier Prime teal */
 .vellum-list {
   list-style: none;

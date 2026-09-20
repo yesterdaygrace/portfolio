@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import { profile } from "@/data/profile";
+import { useSectionReveal } from "@/lib/useSectionReveal";
 import {
   ChapterHeader,
   Kicker,
@@ -41,8 +43,11 @@ export default function About() {
     },
   ];
 
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
+
   return (
-    <section id="about" className="vellum-section">
+    <section id="about" ref={sectionRef} className="vellum-section">
       <ChapterHeader
         number="02"
         title="Positioning &amp; Background"

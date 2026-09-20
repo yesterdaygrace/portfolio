@@ -1,17 +1,52 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ChapterHeader,
   Kicker,
   AccentRule,
   PinAnnotation,
 } from "@/components/vellum/VellumComponents";
+import { useSectionReveal } from "@/lib/useSectionReveal";
+import { gsap } from "@/lib/motion";
 
 export default function SystemsMigration() {
   const [mobileTab, setMobileTab] = useState<"after" | "before">("after");
+  const sectionRef = useRef<HTMLElement>(null);
+  const pipelineRef = useRef<HTMLDivElement>(null);
+  useSectionReveal(sectionRef);
 
+  useEffect(() => {
+    if (!pipelineRef.current) return;
+
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const ctx = gsap.context(() => {
+        const steps = pipelineRef.current?.querySelectorAll("[data-pipeline-step]");
+        if (steps && steps.length > 0) {
+          gsap.from(steps, {
+            scrollTrigger: {
+              trigger: pipelineRef.current,
+              start: "top 80%",
+              once: true,
+            },
+            autoAlpha: 0,
+            y: 10,
+            stagger: 0.08,
+            duration: 0.45,
+            ease: "power2.out",
+            clearProps: "transform,opacity,visibility",
+          });
+        }
+      }, pipelineRef);
+
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
+  }, []);
 
   return (
-    <section id="systems" className="vellum-section">
+    <section id="systems" ref={sectionRef} className="vellum-section">
       <ChapterHeader
         number="04"
         title="Systems Migration"
@@ -162,7 +197,7 @@ export default function SystemsMigration() {
       </div>
 
       {/* ── Visual Architecture Blueprint ───────────────────────────────── */}
-      <div className="border border-[var(--c-border)] bg-[var(--c-bg-deep)] p-6 sm:p-8 mb-12">
+      <div ref={pipelineRef} className="border border-[var(--c-border)] bg-[var(--c-bg-deep)] p-6 sm:p-8 mb-12">
         <div className="flex items-baseline justify-between pb-3 mb-6 border-b border-[var(--c-border)] font-mono text-xs">
           <span style={{ color: "var(--c-emphasis)" }}>SYSTEM TOPOLOGY &amp; DATA FLOW</span>
           <span style={{ color: "var(--c-accent)" }}>[DAPENSE ARCHITECTURE]</span>
@@ -175,15 +210,15 @@ export default function SystemsMigration() {
               01 · Multi-Tier Runtime Pipeline
             </span>
             <div className="space-y-2 leading-relaxed text-[var(--c-fg-2)] text-[11px] sm:text-xs">
-              <div className="p-2 border border-[var(--c-border)] bg-[var(--c-bg-mid)] text-[var(--c-fg)]">
+              <div data-pipeline-step className="p-2 border border-[var(--c-border)] bg-[var(--c-bg-mid)] text-[var(--c-fg)]">
                 Authenticated Clients (Web Browser / RBAC Sessions)
               </div>
-              <div className="text-center text-[var(--c-accent)] py-0.5">↓ HTTPS / SSL/TLS Reverse Proxy</div>
-              <div className="p-2 border border-[var(--c-border)] bg-[var(--c-bg-mid)] text-[var(--c-fg)]">
+              <div data-pipeline-step className="text-center text-[var(--c-accent)] py-0.5">↓ HTTPS / SSL/TLS Reverse Proxy</div>
+              <div data-pipeline-step className="p-2 border border-[var(--c-border)] bg-[var(--c-bg-mid)] text-[var(--c-fg)]">
                 Nginx (Rate Limiting · Static Assets · Reverse Proxy)
               </div>
-              <div className="text-center text-[var(--c-accent)] py-0.5">↓ FastCGI / PHP 8+ FPM</div>
-              <div className="p-2.5 border border-[rgba(232,216,92,0.25)] bg-[var(--c-bg-deep)] text-[var(--c-emphasis)]">
+              <div data-pipeline-step className="text-center text-[var(--c-accent)] py-0.5">↓ FastCGI / PHP 8+ FPM</div>
+              <div data-pipeline-step className="p-2.5 border border-[rgba(232,216,92,0.25)] bg-[var(--c-bg-deep)] text-[var(--c-emphasis)]">
                 <div className="font-semibold mb-1">Laravel Core Application</div>
                 <div className="text-[11px] text-[var(--c-fg-2)] space-y-0.5">
                   <div>· Multi-module Ledger &amp; Journal Processing</div>
@@ -192,8 +227,8 @@ export default function SystemsMigration() {
                   <div>· Financial Reporting Aggregations</div>
                 </div>
               </div>
-              <div className="text-center text-[var(--c-accent)] py-0.5">↓ PDO / Transactional Queries</div>
-              <div className="p-2 border border-[var(--c-border)] bg-[var(--c-bg-mid)] text-[var(--c-fg)]">
+              <div data-pipeline-step className="text-center text-[var(--c-accent)] py-0.5">↓ PDO / Transactional Queries</div>
+              <div data-pipeline-step className="p-2 border border-[var(--c-border)] bg-[var(--c-bg-mid)] text-[var(--c-fg)]">
                 MySQL (3NF Normalized Schemas · Indexed Foreign Keys · Audit Tables)
               </div>
             </div>

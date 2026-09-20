@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { useSectionReveal } from "@/lib/useSectionReveal";
 import { profile, socialLinks } from "@/data/profile";
 import {
   ChapterHeader,
@@ -7,11 +9,14 @@ import {
 } from "@/components/vellum/VellumComponents";
 
 export default function Contact() {
+  const sectionRef = useRef<HTMLElement>(null);
+  useSectionReveal(sectionRef);
   const currentYear = new Date().getFullYear();
 
   return (
     <section
       id="contact"
+      ref={sectionRef}
       className="vellum-section min-h-[90vh] flex flex-col justify-between"
     >
       <div>

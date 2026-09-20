@@ -1,9 +1,11 @@
+import { useEffect, useRef } from "react";
 import { profile, socialLinks } from "@/data/profile";
 import {
   Kicker,
   PinAnnotation,
   AccentRule,
 } from "@/components/vellum/VellumComponents";
+import { gsap } from "@/lib/motion";
 
 export default function Hero() {
   const facts = [
@@ -13,13 +15,79 @@ export default function Hero() {
     { label: "Availability", value: "Open to Opportunities" },
   ];
 
+  const heroRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!heroRef.current) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+        tl.from("[data-hero-header]", {
+          autoAlpha: 0,
+          y: -12,
+          duration: 0.6,
+        })
+          .from("[data-hero-kicker]", {
+            autoAlpha: 0,
+            y: 10,
+            duration: 0.4,
+          }, "-=0.3")
+          .from("[data-hero-title]", {
+            autoAlpha: 0,
+            y: 22,
+            duration: 0.7,
+          }, "-=0.2")
+          .from("[data-hero-lead]", {
+            autoAlpha: 0,
+            y: 14,
+            duration: 0.5,
+          }, "-=0.3")
+          .from("[data-hero-rule]", {
+            scaleX: 0,
+            transformOrigin: "left center",
+            duration: 0.4,
+          }, "-=0.2")
+          .from("[data-hero-facts] > div", {
+            autoAlpha: 0,
+            y: 10,
+            stagger: 0.05,
+            duration: 0.4,
+          }, "-=0.2")
+          .from("[data-hero-actions]", {
+            autoAlpha: 0,
+            y: 10,
+            duration: 0.4,
+          }, "-=0.1")
+          .from("[data-hero-portrait]", {
+            autoAlpha: 0,
+            scale: 0.97,
+            duration: 0.7,
+          }, "-=0.5")
+          .from("[data-hero-footer]", {
+            autoAlpha: 0,
+            duration: 0.5,
+          }, "-=0.3");
+      }, heroRef);
+
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
+  }, []);
+
   return (
     <section
       id="hero"
+      ref={heroRef}
       className="vellum-section min-h-[100dvh] flex flex-col justify-between pt-28 sm:pt-36 pb-20"
     >
       {/* Top chapter identifier */}
       <header
+        data-hero-header
         className="flex items-baseline justify-between border-b pb-3 mb-12 sm:mb-16"
         style={{ borderColor: "var(--c-border)" }}
       >
@@ -41,9 +109,12 @@ export default function Hero() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start my-auto">
         {/* Left / Primary Column (8 cols) */}
         <div className="lg:col-span-8 flex flex-col items-start">
-          <Kicker>Software Engineer · Web &amp; Distributed Systems</Kicker>
+          <div data-hero-kicker>
+            <Kicker>Software Engineer · Web &amp; Distributed Systems</Kicker>
+          </div>
 
           <h1
+            data-hero-title
             className="font-display italic text-4xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] tracking-tight mb-8"
             style={{ color: "var(--c-fg)" }}
           >
@@ -52,6 +123,7 @@ export default function Hero() {
           </h1>
 
           <p
+            data-hero-lead
             className="font-sans text-base sm:text-xl leading-relaxed max-w-2xl mb-8"
             style={{ color: "var(--c-fg-2)" }}
           >
@@ -59,10 +131,15 @@ export default function Hero() {
             workarounds, scales business workflows, and ships reliably to production.
           </p>
 
-          <AccentRule />
+          <div data-hero-rule>
+            <AccentRule />
+          </div>
 
           {/* Fact bar */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full py-5 mb-8 border-y border-[rgba(232,216,92,0.18)]">
+          <div
+            data-hero-facts
+            className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full py-5 mb-8 border-y border-[rgba(232,216,92,0.18)]"
+          >
             {facts.map((f) => (
               <div key={f.label} className="flex flex-col">
                 <span
@@ -82,7 +159,7 @@ export default function Hero() {
           </div>
 
           {/* Direct actions */}
-          <div className="flex flex-wrap gap-4 items-center">
+          <div data-hero-actions className="flex flex-wrap gap-4 items-center">
             <a href="#experience" className="vellum-btn-solid">
               Explore Work &amp; Systems ↓
             </a>
@@ -98,7 +175,7 @@ export default function Hero() {
         </div>
 
         {/* Right Column: Framed Archival Portrait (4 cols) */}
-        <div className="lg:col-span-4 flex flex-col items-center lg:items-end w-full">
+        <div data-hero-portrait className="lg:col-span-4 flex flex-col items-center lg:items-end w-full">
           <figure className="w-full max-w-[280px] sm:max-w-[320px] p-2 bg-[var(--c-bg-deep)] border border-[var(--c-border)]">
             <div className="aspect-[4/5] overflow-hidden bg-[var(--c-bg-mid)]">
               <picture>
@@ -127,7 +204,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom bar with pin annotation */}
-      <footer className="pt-12 mt-12 border-t border-[var(--c-border)] flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+      <footer data-hero-footer className="pt-12 mt-12 border-t border-[var(--c-border)] flex flex-col sm:flex-row sm:items-end justify-between gap-6">
         <PinAnnotation
           counter="FOLIO / 2026"
           note="Fullstack Web Developer · Laravel · PHP · MySQL · Vue · TypeScript · Linux"
