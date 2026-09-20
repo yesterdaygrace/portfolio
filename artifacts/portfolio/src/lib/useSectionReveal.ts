@@ -31,15 +31,15 @@ export function useSectionReveal(
         gsap.from(targets, {
           scrollTrigger: {
             trigger: el,
-            start: "top 85%",
+            start: "top 95%",
             once: true,
           },
           autoAlpha: 0,
-          y: 16,
-          duration: 0.65,
-          stagger: options?.stagger ?? 0.08,
+          y: 8,
+          duration: 0.28,
+          stagger: options?.stagger ?? 0.03,
           ease: "power2.out",
-          clearProps: "transform,opacity,visibility",
+          clearProps: "all",
         });
       }, el);
 

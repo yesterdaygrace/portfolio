@@ -34,17 +34,17 @@ export function SectionTransition({ id, children }: SectionTransitionProps) {
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       const ctx = gsap.context(() => {
-        // 1. Entrance Trigger: Dissolve skeleton & reveal content
+        // 1. Entrance Trigger: Instant skeleton dissolve & rapid content reveal
         ScrollTrigger.create({
           trigger: el,
-          start: "top 85%",
+          start: "top 98%",
           once: true,
           onEnter: () => {
             if (skeleton) {
               gsap.to(skeleton, {
                 opacity: 0,
-                duration: 0.35,
-                ease: "power2.out",
+                duration: 0.12,
+                ease: "power3.out",
                 onComplete: () => setResolved(true),
               });
             } else {
@@ -53,29 +53,28 @@ export function SectionTransition({ id, children }: SectionTransitionProps) {
 
             gsap.fromTo(
               content,
-              { opacity: 0, y: 16 },
+              { opacity: 0, y: 6 },
               {
                 opacity: 1,
                 y: 0,
-                duration: 0.6,
-                delay: 0.1,
-                ease: "power2.out",
-                clearProps: "transform",
+                duration: 0.2,
+                ease: "power3.out",
+                clearProps: "all",
               },
             );
           },
         });
 
-        // 2. Section Exit Animation: Ease out when scrolling past
+        // 2. Section Exit Animation: Clean, subtle transition before next section
         ScrollTrigger.create({
           trigger: el,
-          start: "bottom 30%",
+          start: "bottom 15%",
           end: "bottom 0%",
           onLeave: () => {
             gsap.to(content, {
-              opacity: 0.35,
-              y: -14,
-              duration: 0.45,
+              opacity: 0.88,
+              y: -6,
+              duration: 0.25,
               ease: "power2.out",
             });
           },
@@ -83,7 +82,7 @@ export function SectionTransition({ id, children }: SectionTransitionProps) {
             gsap.to(content, {
               opacity: 1,
               y: 0,
-              duration: 0.4,
+              duration: 0.2,
               ease: "power2.out",
               clearProps: "transform",
             });

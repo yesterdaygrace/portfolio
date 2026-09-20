@@ -27,52 +27,22 @@ export default function Hero() {
         const tl = gsap.timeline({
           defaults: { ease: "power2.out", clearProps: "all" },
         });
-        tl.from("[data-hero-header]", {
-          autoAlpha: 0,
-          y: -10,
-          duration: 0.35,
-        })
-          .from("[data-hero-kicker]", {
+        tl.from(
+          "[data-hero-header], [data-hero-kicker], [data-hero-title], [data-hero-lead], [data-hero-rule], [data-hero-facts], [data-hero-actions]",
+          {
             autoAlpha: 0,
             y: 8,
-            duration: 0.25,
-          }, "-=0.2")
-          .from("[data-hero-title]", {
+            duration: 0.24,
+            stagger: 0.02,
+          },
+        ).from(
+          "[data-hero-portrait], [data-hero-footer]",
+          {
             autoAlpha: 0,
-            y: 16,
-            duration: 0.45,
-          }, "-=0.15")
-          .from("[data-hero-lead]", {
-            autoAlpha: 0,
-            y: 10,
-            duration: 0.35,
-          }, "-=0.2")
-          .from("[data-hero-rule]", {
-            scaleX: 0,
-            transformOrigin: "left center",
-            duration: 0.25,
-          }, "-=0.15")
-          .from("[data-hero-facts] > div", {
-            autoAlpha: 0,
-            y: 8,
-            stagger: 0.04,
-            duration: 0.3,
-          }, "-=0.15")
-          .from("[data-hero-actions]", {
-            autoAlpha: 0,
-            y: 8,
-            duration: 0.3,
-          }, "-=0.1")
-          .from("[data-hero-portrait]", {
-            autoAlpha: 0,
-            scale: 0.98,
-            duration: 0.45,
-          }, "-=0.35")
-          .from("[data-hero-footer]", {
-            autoAlpha: 0,
-            duration: 0.35,
-            clearProps: "all",
-          }, "-=0.2");
+            duration: 0.22,
+          },
+          "-=0.15",
+        );
       }, heroRef);
 
       return () => ctx.revert();
