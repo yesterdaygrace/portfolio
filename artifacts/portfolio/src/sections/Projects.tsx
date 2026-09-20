@@ -50,7 +50,6 @@ const PINNED: ProjectCard & { thumbnail: string } = {
 
 export default function Projects() {
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const fetched = useRef(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -79,7 +78,6 @@ export default function Projects() {
           setError(e instanceof Error ? e.message : "Network error");
         } finally {
           clearTimeout(timeoutId);
-          setLoading(false);
         }
       })();
     };
@@ -130,65 +128,23 @@ export default function Projects() {
       },
     };
 
-    const FEATURED_ORDER = ["dapense", "inventra", "dev-scout", "portfolio"];
-    if (repos.length === 0 && !loading) {
-      return [
-        {
-          id: "dapense",
-          title: "DAPENSE",
-          description: "Financial information system replacing legacy VDOS workflows with a Laravel/MySQL web architecture for ledger, journal, reconciliation, and reporting operations.",
-          tech: ["Laravel", "PHP", "MySQL", "Nginx"],
-          year: "2025",
-          type: "Financial Information System",
-          githubUrl: `https://github.com/${profile.githubUsername}/DAPENSE`,
-        },
-        {
-          id: "inventra",
-          title: "inventra",
-          description: "Go/PostgreSQL inventory platform with RBAC, multi-warehouse stock ledgers, reservations, audit trails, and transactional workflows.",
-          tech: ["Go", "PostgreSQL", "Docker", "REST API"],
-          year: "2025",
-          type: "Backend Inventory Platform",
-          githubUrl: `https://github.com/${profile.githubUsername}/inventra`,
-        },
-        {
-          id: "portfolio",
-          title: "portfolio",
-          description: "Engineering portfolio documenting production system migrations, backend architecture, and verified software deliverables.",
-          tech: ["React 19", "TypeScript", "Tailwind", "Vite"],
-          year: "2026",
-          type: "Engineering Portfolio",
-          githubUrl: `https://github.com/${profile.githubUsername}/portfolio`,
-        },
-      ];
-    }
+    const FEATURED_ORDER = ["dapense", "inventra", "portfolio", "dev-scout"];
+    const repoMap = new Map(repos.map((r) => [r.name.toLowerCase(), r]));
 
-    return [...repos]
-      .sort((a, b) => {
-        const aKey = a.name.toLowerCase();
-        const bKey = b.name.toLowerCase();
-        const aRank = FEATURED_ORDER.findIndex((f) => f === aKey || aKey.includes(f));
-        const bRank = FEATURED_ORDER.findIndex((f) => f === bKey || bKey.includes(f));
-        if (aRank !== -1 && bRank !== -1) return aRank - bRank;
-        if (aRank !== -1) return -1;
-        if (bRank !== -1) return 1;
-        return new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime();
-      })
-      .slice(0, 5)
-      .map((repo) => {
-        const key = repo.name.toLowerCase();
-        const custom = ARCH_METADATA[key] || Object.entries(ARCH_METADATA).find(([k]) => key.includes(k))?.[1];
-        return {
-          id: String(repo.id),
-          title: repo.name,
-          description: custom?.desc ?? (repo.description || "Production repository and architecture codebase."),
-          tech: custom?.tech ?? ([repo.language, ...(repo.topics ?? [])].filter(Boolean) as string[]),
-          year: new Date(repo.pushed_at).getFullYear().toString(),
-          type: custom?.type ?? (repo.topics?.includes("app") ? "Web Application" : "Engineering Repository"),
-          githubUrl: repo.html_url,
-          stars: repo.stargazers_count,
-        };
-      });
+    return FEATURED_ORDER.map((key, i) => {
+      const live = repoMap.get(key) || [...repoMap.entries()].find(([k]) => k.includes(key))?.[1];
+      const meta = ARCH_METADATA[key];
+      return {
+        id: live ? String(live.id) : `curated-${key}`,
+        title: key === "dapense" ? "DAPENSE" : key === "dev-scout" ? "dev-scout" : key,
+        description: meta?.desc ?? (live?.description || "Production repository and architecture codebase."),
+        tech: meta?.tech ?? ([live?.language, ...(live?.topics ?? [])].filter(Boolean) as string[]),
+        year: live ? new Date(live.pushed_at).getFullYear().toString() : "2025",
+        type: meta?.type ?? "Engineering Repository",
+        githubUrl: live?.html_url || `https://github.com/${profile.githubUsername || "yesterdaygrace"}/${key}`,
+        stars: live?.stargazers_count,
+      };
+    });
   }, [repos]);
 
   return (
@@ -342,24 +298,8 @@ export default function Projects() {
         </div>
       )}
 
-      {/* Loading state */}
-      {loading && (
-        <div className="space-y-4">
-          {[1, 2, 3].map((n) => (
-            <div
-              key={n}
-              className="border-b border-[var(--c-border)] pb-6 animate-pulse"
-            >
-              <div className="h-5 w-48 bg-[var(--c-bg-deep)] mb-2" />
-              <div className="h-4 w-96 bg-[var(--c-bg-deep)]" />
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Repository Archive Ledger */}
-      {!loading && (
-        <div className="divide-y divide-[var(--c-border)] border-y border-[var(--c-border)]">
+      {/* Repository Archive Ledger — Synchronous Instant Render */}
+      <div className="divide-y divide-[var(--c-border)] border-y border-[var(--c-border)]">
           {projectCards.map((proj, idx) => (
             <motion.article
               key={proj.id}
@@ -410,7 +350,6 @@ export default function Projects() {
             </motion.article>
           ))}
         </div>
-      )}
 
       <footer className="pt-12 mt-12 border-t border-[var(--c-border)]">
         <PinAnnotation
