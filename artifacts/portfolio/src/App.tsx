@@ -1,7 +1,10 @@
-import { useEffect, useState, useCallback, useRef } from "react";
-import { Agentation } from "agentation";
+import { useEffect, useState, useCallback, useRef, lazy, Suspense } from "react";
 import Navbar from "@/layout/Navbar";
 import { sections } from "@/sections";
+
+const LazyAgentation = lazy(() =>
+  import("agentation").then((m) => ({ default: m.Agentation }))
+);
 
 const SECTION_IDS = sections.map((s) => s.id);
 const TOTAL_CHAPTERS = String(sections.length).padStart(2, "0");
@@ -118,7 +121,11 @@ function App() {
       </aside>
       {process.env.NODE_ENV === "development" &&
         typeof window !== "undefined" &&
-        window.location.search.includes("agentation") && <Agentation />}
+        window.location.search.includes("agentation") && (
+          <Suspense fallback={null}>
+            <LazyAgentation />
+          </Suspense>
+        )}
     </>
   );
 }
