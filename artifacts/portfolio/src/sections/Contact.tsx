@@ -152,7 +152,7 @@ export default function Contact() {
             Return to Top ↑
           </a>
           <span>·</span>
-          <span style={{ color: "var(--c-fg-3)" }}>
+          <span style={{ color: "var(--c-fg-2)" }}>
             &copy; {currentYear} {profile.name}
           </span>
         </div>

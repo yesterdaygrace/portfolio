@@ -153,7 +153,7 @@ export default function About() {
             <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--c-emphasis)] block mb-1 font-semibold">
               Primary Focus Area
             </span>
-            <p className="font-sans text-xs text-[var(--c-fg-2)] leading-relaxed">
+            <p className="font-sans text-xs text-[var(--c-fg)] leading-relaxed">
               Fullstack application architecture, transactional database normalization, and automated Linux server administration.
             </p>
           </div>
