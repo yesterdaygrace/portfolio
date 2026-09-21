@@ -74,7 +74,7 @@ export default function Hero() {
       {/* Main Cover Body */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start my-auto">
         {/* Left / Primary Column (8 cols) */}
-        <div className="lg:col-span-8 flex flex-col items-start">
+        <div className="lg:col-span-8 order-1 flex flex-col items-start">
           <div data-hero-kicker>
             <Kicker>Software Engineer · Web &amp; Distributed Systems</Kicker>
           </div>
@@ -145,7 +145,7 @@ export default function Hero() {
         {/* Right Column: Framed Archival Portrait (4 cols) */}
         <div
           data-hero-portrait
-          className="lg:col-span-4 flex flex-col items-center lg:items-end w-full"
+          className="lg:col-span-4 order-2 flex flex-col items-center lg:items-end w-full mt-8 pt-8 border-t border-[var(--c-border)] lg:mt-0 lg:pt-0 lg:border-t-0"
         >
           <figure className="w-full max-w-[280px] sm:max-w-[320px] p-2 bg-[var(--c-bg-deep)] border border-[var(--c-border)]">
             <div className="aspect-[4/5] overflow-hidden bg-[var(--c-bg-mid)]">
