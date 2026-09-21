@@ -69,12 +69,6 @@ export default function Hero() {
         >
           [01] · Curriculum Vitae
         </span>
-        <span
-          className="font-mono text-xs tracking-wider"
-          style={{ color: "var(--c-fg-2)" }}
-        >
-          {profile.role}
-        </span>
       </header>
 
       {/* Main Cover Body */}
@@ -90,7 +84,8 @@ export default function Hero() {
             className="font-display italic text-4xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] tracking-tight mb-8"
             style={{ color: "var(--c-fg)" }}
           >
-            Kevin Van Diesel<br />
+            Kevin Van Diesel
+            <br />
             Chansa.
           </h1>
 
@@ -100,7 +95,8 @@ export default function Hero() {
             style={{ color: "var(--c-fg-2)" }}
           >
             Building <em>practical software</em> that replaces legacy
-            workarounds, scales business workflows, and ships reliably to production.
+            workarounds, scales business workflows, and ships reliably to
+            production.
           </p>
 
           <div data-hero-rule>
@@ -110,7 +106,7 @@ export default function Hero() {
           {/* Fact bar */}
           <div
             data-hero-facts
-            className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full py-5 mb-8 border-y border-[rgba(232,216,92,0.18)]"
+            className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full py-5 mb-8 border-y border-[var(--c-border)]"
           >
             {facts.map((f) => (
               <div key={f.label} className="flex flex-col">
@@ -147,7 +143,10 @@ export default function Hero() {
         </div>
 
         {/* Right Column: Framed Archival Portrait (4 cols) */}
-        <div data-hero-portrait className="lg:col-span-4 flex flex-col items-center lg:items-end w-full">
+        <div
+          data-hero-portrait
+          className="lg:col-span-4 flex flex-col items-center lg:items-end w-full"
+        >
           <figure className="w-full max-w-[280px] sm:max-w-[320px] p-2 bg-[var(--c-bg-deep)] border border-[var(--c-border)]">
             <div className="aspect-[4/5] overflow-hidden bg-[var(--c-bg-mid)]">
               <picture>
@@ -167,7 +166,10 @@ export default function Hero() {
                 />
               </picture>
             </div>
-            <figcaption className="mt-2.5 px-1 py-1 flex items-center justify-between font-mono text-[11px]" style={{ color: "var(--c-accent)" }}>
+            <figcaption
+              className="mt-2.5 px-1 py-1 flex items-center justify-between font-mono text-[11px]"
+              style={{ color: "var(--c-accent)" }}
+            >
               <span>FIGURE 01</span>
               <span>SALATIGA · ID</span>
             </figcaption>
@@ -176,14 +178,20 @@ export default function Hero() {
       </div>
 
       {/* Bottom bar with pin annotation */}
-      <footer data-hero-footer className="pt-12 mt-12 border-t border-[var(--c-border)] flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+      <footer
+        data-hero-footer
+        className="pt-12 mt-12 border-t border-[var(--c-border)] flex flex-col sm:flex-row sm:items-end justify-between gap-6"
+      >
         <PinAnnotation
           counter="FOLIO / 2026"
           note="Fullstack Web Developer · Laravel · PHP · MySQL · Vue · TypeScript · Linux"
           secondaryNote="Available for engineering roles & technical consulting"
         />
 
-        <div className="flex items-center gap-4 font-mono text-xs" style={{ color: "var(--c-accent)" }}>
+        <div
+          className="flex items-center gap-4 font-mono text-xs"
+          style={{ color: "var(--c-accent)" }}
+        >
           <a
             href={socialLinks.github}
             target="_blank"

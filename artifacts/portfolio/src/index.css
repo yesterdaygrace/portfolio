@@ -9,48 +9,50 @@
   --font-sans:    'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono:    'Courier Prime', 'Courier New', monospace;
 
-  /* Vellum Palette */
-  --color-vellum-bg:      #2A3870;
-  --color-vellum-bg-alt:  #343F80;
-  --color-vellum-deep:    #1F2858;
-  --color-vellum-mid:     #34407A;
+  /* Slate, terracotta, and warm ivory palette */
+  --color-vellum-bg:      #2E3344;
+  --color-vellum-bg-alt:  #353A4A;
+  --color-vellum-deep:    #252A37;
+  --color-vellum-mid:     #3B4051;
 
-  --color-vellum-fg:      #E8D85C;
-  --color-vellum-fg-2:    rgba(232, 216, 92, 0.85);
-  --color-vellum-fg-3:    rgba(232, 216, 92, 0.72);
-  --color-vellum-emphasis:#F5E168;
-  --color-vellum-accent:  #72C4C4;
-  --color-vellum-border:  rgba(232, 216, 92, 0.22);
+  --color-vellum-fg:      #F7F1E2;
+  --color-vellum-fg-2:    rgba(247, 241, 226, 0.84);
+  --color-vellum-fg-3:    rgba(247, 241, 226, 0.68);
+  --color-vellum-emphasis:#F3C8B4;
+  --color-vellum-accent:  #D8A08A;
+  --color-vellum-border:  rgba(247, 241, 226, 0.20);
 
   /* Semantic mappings */
-  --color-surface-0:      #2A3870;
-  --color-surface-1:      #343F80;
-  --color-surface-2:      #1F2858;
-  --color-surface-3:      #34407A;
+  --color-surface-0:      #2E3344;
+  --color-surface-1:      #353A4A;
+  --color-surface-2:      #252A37;
+  --color-surface-3:      #3B4051;
 
-  --color-fg:             #E8D85C;
-  --color-fg-muted:       rgba(232, 216, 92, 0.85);
-  --color-fg-faint:       rgba(232, 216, 92, 0.72);
+  --color-fg:             #F7F1E2;
+  --color-fg-muted:       rgba(247, 241, 226, 0.84);
+  --color-fg-faint:       rgba(247, 241, 226, 0.68);
 
-  --color-line:           rgba(232, 216, 92, 0.22);
-  --color-line-hover:     rgba(232, 216, 92, 0.45);
+  --color-line:           rgba(247, 241, 226, 0.20);
+  --color-line-hover:     rgba(247, 241, 226, 0.38);
 
-  --color-accent:         #72C4C4;
-  --color-accent-dim:     rgba(114, 196, 196, 0.20);
+  --color-accent:         #D8A08A;
+  --color-accent-deep:    #7E5246;
+  --color-accent-dim:     rgba(126, 82, 70, 0.26);
 }
 
 :root {
-  --c-bg: #2A3870;
-  --c-bg-alt: #343F80;
-  --c-bg-deep: #1F2858;
-  --c-bg-mid: #34407A;
+  --c-bg: #2E3344;
+  --c-bg-alt: #353A4A;
+  --c-bg-deep: #252A37;
+  --c-bg-mid: #3B4051;
 
-  --c-fg: #E8D85C;
-  --c-fg-2: rgba(232, 216, 92, 0.85);
-  --c-fg-3: rgba(232, 216, 92, 0.72);
-  --c-emphasis: #F5E168;
-  --c-accent: #72C4C4;
-  --c-border: rgba(232, 216, 92, 0.22);
+  --c-fg: #F7F1E2;
+  --c-fg-2: rgba(247, 241, 226, 0.84);
+  --c-fg-3: rgba(247, 241, 226, 0.68);
+  --c-emphasis: #F3C8B4;
+  --c-accent: #D8A08A;
+  --c-accent-deep: #7E5246;
+  --c-border: rgba(247, 241, 226, 0.20);
 
   --f-display: 'Cormorant Garamond', Georgia, serif;
   --f-body: 'DM Sans', system-ui, sans-serif;
@@ -90,8 +92,8 @@
   }
 
   ::selection {
-    background: rgba(58, 120, 120, 0.45);
-    color: #F5E168;
+    background: rgba(126, 82, 70, 0.55);
+    color: #F7F1E2;
   }
 
   ::-webkit-scrollbar {
@@ -102,13 +104,12 @@
     background: var(--c-bg-deep);
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(232, 216, 92, 0.22);
+    background: rgba(247, 241, 226, 0.20);
     border-radius: 0;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(232, 216, 92, 0.38);
+    background: rgba(247, 241, 226, 0.38);
   }
-
   /* Headings in Vellum are italic Cormorant Garamond by default */
   h1, h2, h3, h4, .font-display, .display-heading {
     font-family: var(--f-display);
@@ -116,7 +117,7 @@
     font-weight: 400;
   }
 
-  /* Headline emphasis inversion: Roman (upright) 600 in emphasis yellow */
+  /* Headline emphasis shifts to light terracotta for a warmer editorial contrast */
   h1 em, h2 em, h3 em, .font-display em, .display-heading em {
     font-style: normal;
     font-weight: 600;
@@ -191,7 +192,7 @@
 }
 
 .vellum-btn:hover {
-  background: rgba(232, 216, 92, 0.08);
+  background: rgba(247, 241, 226, 0.08);
   border-color: var(--c-fg);
   color: var(--c-emphasis);
   transform: translateY(-1px);
@@ -209,7 +210,7 @@
   padding: 0.65rem 1.4rem;
   border: 1px solid var(--c-fg);
   background: var(--c-fg);
-  color: #1F2858;
+  color: var(--c-bg-deep);
   font-family: var(--f-mono);
   font-size: 0.8125rem;
   letter-spacing: 0.05em;
@@ -221,7 +222,7 @@
 .vellum-btn-solid:hover {
   background: var(--c-emphasis);
   border-color: var(--c-emphasis);
-  color: #151C3F;
+  color: var(--c-bg-deep);
   transform: translateY(-1px);
 }
 
@@ -241,9 +242,9 @@
 }
 
 .vellum-btn-accent:hover {
-  background: rgba(58, 120, 120, 0.25);
-  color: #72B8B8;
-  border-color: #72B8B8;
+  background: rgba(126, 82, 70, 0.34);
+  color: var(--c-emphasis);
+  border-color: var(--c-emphasis);
   transform: translateY(-1px);
 }
 /* Numbered list using CSS counter in Courier Prime teal */
@@ -319,7 +320,7 @@
   padding: 0.65rem 1.4rem;
   border: 1px solid var(--c-fg);
   background: var(--c-fg);
-  color: #1F2858;
+  color: var(--c-bg-deep);
   font-family: var(--f-mono);
   font-size: 0.75rem;
   font-weight: 700;
@@ -365,7 +366,7 @@
   transition: all 0.2s ease-out;
 }
 .pill-accent:hover {
-  background: rgba(58, 120, 120, 0.25);
+  background: rgba(126, 82, 70, 0.34);
 }
 
 .card-elev {
@@ -390,9 +391,9 @@
 .vellum-skeleton-bar {
   background: linear-gradient(
     90deg,
-    rgba(232, 216, 92, 0.05) 0%,
-    rgba(232, 216, 92, 0.18) 50%,
-    rgba(232, 216, 92, 0.05) 100%
+    rgba(247, 241, 226, 0.05) 0%,
+    rgba(247, 241, 226, 0.18) 50%,
+    rgba(247, 241, 226, 0.05) 100%
   );
   background-size: 200% 100%;
   animation: vellum-shimmer 2s infinite ease-in-out;
@@ -400,7 +401,7 @@
 
 .vellum-skeleton-box {
   background-color: var(--c-bg-deep);
-  border: 1px dashed rgba(232, 216, 92, 0.22);
+  border: 1px dashed rgba(247, 241, 226, 0.22);
 }
 @layer utilities {
   .text-fg        { color: var(--c-fg); }

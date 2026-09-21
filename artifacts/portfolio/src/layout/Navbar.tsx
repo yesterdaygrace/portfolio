@@ -105,11 +105,11 @@ export default function Navbar() {
     if (headerRef.current) {
       const past = scrollY > 30;
       headerRef.current.style.backgroundColor = past
-        ? "rgba(42, 56, 112, 0.95)"
-        : "rgba(42, 56, 112, 0.85)";
+        ? "rgba(46, 51, 68, 0.95)"
+        : "rgba(46, 51, 68, 0.85)";
       headerRef.current.style.borderBottomColor = past
-        ? "rgba(232, 216, 92, 0.20)"
-        : "rgba(232, 216, 92, 0.12)";
+        ? "rgba(247, 241, 226, 0.20)"
+        : "rgba(247, 241, 226, 0.12)";
     }
 
     if (current !== activeSect.current) {
@@ -173,8 +173,8 @@ export default function Navbar() {
         ref={headerRef}
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-200 backdrop-blur-md border-b"
         style={{
-          backgroundColor: "rgba(42, 56, 112, 0.88)",
-          borderColor: "rgba(232, 216, 92, 0.12)",
+          backgroundColor: "rgba(46, 51, 68, 0.88)",
+          borderColor: "rgba(247, 241, 226, 0.12)",
         }}
       >
         <div
@@ -210,7 +210,7 @@ export default function Navbar() {
                     color: isActive ? "var(--c-emphasis)" : "var(--c-fg-2)",
                     borderColor: isActive ? "var(--c-border)" : "transparent",
                     backgroundColor: isActive
-                      ? "rgba(232, 216, 92, 0.06)"
+                      ? "rgba(247, 241, 226, 0.06)"
                       : "transparent",
                   }}
                 >
@@ -285,7 +285,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.18 }}
-              className="fixed inset-0 bg-[#0c1228]/70 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-[#181B25]/70 backdrop-blur-sm z-40 md:hidden"
               onClick={() => setMenuOpen(false)}
               aria-hidden="true"
             />
@@ -315,7 +315,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => scrollTo(link.id, e)}
-                  className="py-2.5 px-3 border-b border-[rgba(232,216,92,0.12)] flex items-center justify-between"
+                  className="py-2.5 px-3 border-b border-[var(--c-border)] flex items-center justify-between"
                   style={{
                     color:
                       activeId === link.id
@@ -331,7 +331,7 @@ export default function Navbar() {
                 href={`${import.meta.env.BASE_URL}cv-kevin-chansa.pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-2.5 px-3 border-b border-[rgba(232,216,92,0.12)] flex items-center justify-between font-semibold"
+                className="py-2.5 px-3 border-b border-[var(--c-border)] flex items-center justify-between font-semibold"
                 style={{ color: "var(--c-emphasis)" }}
               >
                 <span>Download CV (PDF)</span>

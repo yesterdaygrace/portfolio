@@ -1,13 +1,7 @@
 import { useRef } from "react";
 import { profile } from "@/data/profile";
 import { useSectionReveal } from "@/lib/useSectionReveal";
-import {
-  ChapterHeader,
-  Kicker,
-  AccentRule,
-  PinAnnotation,
-  QuoteMark,
-} from "@/components/vellum/VellumComponents";
+import { Kicker } from "@/components/vellum/VellumComponents";
 
 export default function About() {
   const dossier = [
@@ -15,7 +9,8 @@ export default function About() {
       num: "01",
       label: "Professional Focus",
       value: "Full-Stack & Backend Systems",
-      detail: "Backend architecture, transactional databases, and resilient APIs",
+      detail:
+        "Backend architecture, transactional databases, and resilient APIs",
     },
     {
       num: "02",
@@ -33,7 +28,8 @@ export default function About() {
       num: "04",
       label: "Operating Base",
       value: profile.location,
-      detail: "Available for remote contracts, hybrid teams, and full-time roles",
+      detail:
+        "Available for remote contracts, hybrid teams, and full-time roles",
     },
     {
       num: "05",
@@ -48,12 +44,6 @@ export default function About() {
 
   return (
     <section id="about" ref={sectionRef} className="vellum-section">
-      <ChapterHeader
-        number="02"
-        title="Positioning &amp; Background"
-        category="Profile Dossier"
-      />
-
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start mb-16">
         {/* Left Column: Thesis & Background (7 cols) */}
         <div className="lg:col-span-7">
@@ -65,7 +55,10 @@ export default function About() {
             Engineering for durability over <em>transient trends</em>.
           </h2>
 
-          <div className="space-y-6 font-sans text-base sm:text-lg leading-relaxed" style={{ color: "var(--c-fg-2)" }}>
+          <div
+            className="space-y-6 font-sans text-base sm:text-lg leading-relaxed"
+            style={{ color: "var(--c-fg-2)" }}
+          >
             <p>
               I am an Informatics Engineering graduate from Universitas Kristen
               Satya Wacana with over a year and five months of hands-on
@@ -73,9 +66,9 @@ export default function About() {
               schemas, and web platform architecture.
             </p>
             <p>
-              My primary field work centers on replacing brittle legacy workflows
-              with auditable software systems. At Dana Pensiun Sekolah Kristen,
-              I single-handedly replaced a decade-old DOS financial
+              My primary field work centers on replacing brittle legacy
+              workflows with auditable software systems. At Dana Pensiun Sekolah
+              Kristen, I single-handedly replaced a decade-old DOS financial
               administration tool with an auditable multi-user platform,
               handling general ledger, journal processing, bank reconciliations,
               and executive reporting.
@@ -83,27 +76,9 @@ export default function About() {
             <p>
               Whether structuring PostgreSQL and MySQL schemas for complex audit
               trails, configuring Nginx reverse proxies with SSL/TLS on Debian,
-              or architecting recruiting CRMs with Laravel and Vue 3, my focus is
-              predictable reliability and maintainable simplicity.
+              or architecting recruiting CRMs with Laravel and Vue 3, my focus
+              is predictable reliability and maintainable simplicity.
             </p>
-          </div>
-
-          {/* Editorial quote block */}
-          <div className="mt-10 pt-6 border-t border-[rgba(232,216,92,0.16)]">
-            <QuoteMark className="mb-3" />
-            <blockquote
-              className="font-display italic text-xl sm:text-2xl leading-snug mb-3 max-w-xl"
-              style={{ color: "var(--c-fg)" }}
-            >
-              "Software credibility comes from what runs reliably in
-              production — not what merely renders."
-            </blockquote>
-            <span
-              className="font-mono text-xs uppercase tracking-widest"
-              style={{ color: "var(--c-accent)" }}
-            >
-              — Engineering Operating Standard
-            </span>
           </div>
         </div>
 
@@ -154,19 +129,12 @@ export default function About() {
               Primary Focus Area
             </span>
             <p className="font-sans text-xs text-[var(--c-fg)] leading-relaxed">
-              Fullstack application architecture, transactional database normalization, and automated Linux server administration.
+              Fullstack application architecture, transactional database
+              normalization, and automated Linux server administration.
             </p>
           </div>
         </div>
       </div>
-
-      <footer className="pt-6 border-t border-[var(--c-border)]">
-        <PinAnnotation
-          counter="CHAPTER 02"
-          note="Informatics Engineering · Satya Wacana Christian University"
-          secondaryNote="Focus: Full-Stack Architecture, Enterprise Accounting Platforms"
-        />
-      </footer>
     </section>
   );
 }

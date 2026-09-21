@@ -1,84 +1,62 @@
-# Kevin Van Diesel Chansa — Portfolio
+# DevScout
 
-**Software Engineer · Ships practical software, replaces legacy systems, high reliability.**
+This repository contains the portfolio site for one startup product: DevScout, a recruitment CRM for sourcing, evaluating, and tracking developer pipelines with GitHub data as the source of truth.
 
 ---
 
 ## Live
 
+| Surface             | URL                                           | Notes                                        |
+| ------------------- | --------------------------------------------- | -------------------------------------------- |
+| **Portfolio**       | `https://yesterdaygrace.github.io/portfolio/` | GitHub Pages deployment                      |
+| **DevScout**        | `https://dev-scout-lac.vercel.app`            | Live recruitment CRM                         |
+| **Repository**      | `https://github.com/vinkanika/dev-scout`      | DevScout source                              |
+| **Local portfolio** | `http://localhost:5173`                       | `pnpm --filter @workspace/portfolio run dev` |
 
-| Surface                         | URL                                           | Notes                                                                     |
-| ------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------- |
-| **Portfolio** (canonical)       | `https://yesterdaygrace.github.io/portfolio/` | GitHub Pages via Actions, `NODE_ENV=production` → `BASE_PATH=/portfolio/` |
-| **DevScout** (flagship product) | `https://dev-scout-lac.vercel.app`            | Recruitment CRM — GitHub-sourced developer pipeline                       |
-| **GitHub**                      | `https://github.com/yesterdaygrace`           | Source of live projects section                                           |
-| **Local**                       | `http://localhost:5173`                       | `pnpm --filter @workspace/portfolio run dev`                        |
+![Updated portfolio preview](screenshots/overview/desktop-fullpage.png)
 
-![Portfolio preview](screenshots/overview/desktop-fullpage.png)
-
-
-
----
-
-## Showcase — Two case studies a startup CTO cares about
-
-### 1. DevScout — Recruitment CRM
-
-> Sourcing, tracking, and managing developers using GitHub data.
-
-- **Stack:** Laravel · Vue.js 3 · MySQL · Tailwind
-- **What it does:** Pipeline sourcing → tracking → hiring workflow, GitHub data as source of truth
-- **Links:** [Live](https://dev-scout-lac.vercel.app) · [Repo](https://github.com/vinkanika/dev-scout)
-- **Why it matters:** End-to-end product thinking — not a todo demo. Real domain (recruiting), real data integration.
-
-### 2. Pension Fund Platform — DOS → Modern Web
-
-**Dana Pensiun Sekolah Kristen · Fullstack Web Developer · Aug 2024 – Dec 2025 (Contract, Remote)**
-
-Replaced a legacy VDOS/DOS pension administration platform with a browser-accessible system. Owned from normalized schema to production deploy.
-
-
-| Metric                 | Result      | How                                                                               |
-| ---------------------- | ----------- | --------------------------------------------------------------------------------- |
-| Operational efficiency | **+30–40%** | Multi-module system: general ledger, journal, cash/bank, financial reports + RBAC |
-| Manual input errors    | **−25–30%** | Workflow automation + multi-layer validation                                      |
-| Production downtime    | **0 (Observed)** | Nginx reverse proxy, SSL/TLS, environment management, zero-downtime deployment strategy |
-
-
-- Normalized relational schemas for audit trails, period-end reconciliation, and reporting aggregations.
-- Previous platform: inaccessible outside on-premise VDOS — new system is role-aware, auditable, available anywhere.
+The preview reflects the current six-section portfolio: Hero, About, Experience, Stack, Projects, and Contact.
 
 ---
 
-## Stack — Honest split
+## Startup
 
-This repo’s code is not its whole story. Startup credibility comes from what *ships*, not just what *renders*.
+### DevScout
 
-### Portfolio Stack (this repo — what you’re reading)
+DevScout is a recruitment CRM built around GitHub developer data. It gives a hiring team one place to source candidates, review profiles, and move people through a structured pipeline.
 
+- **Product:** Recruitment CRM
+- **Stack:** Laravel, Vue.js 3, MySQL, Tailwind CSS
+- **Data source:** GitHub developer and repository data
+- **Live product:** [dev-scout-lac.vercel.app](https://dev-scout-lac.vercel.app)
+- **Source:** [github.com/vinkanika/dev-scout](https://github.com/vinkanika/dev-scout)
 
-| Layer          | Choices                                                                  | Why                                                        |
-| -------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------- |
-| **Frontend**   | React 19.1, Vite 7.3, TypeScript 5.9, Tailwind 4.1                       | Fast HMR, type-safe, utility-first — ships to GitHub Pages |
-| **Motion**     | GSAP 3.15 + ScrollTrigger, animejs                                       | Cover-slide panels, scrub + snap — no jank                 |
-| **Routing/UI** | wouter · Radix UI · shadcn · Framer Motion · lucide-react                | Lightweight routing, accessible primitives                 |
-| **Monorepo**   | pnpm workspaces + catalog, `minimumReleaseAge: 1440`                     | Supply-chain hardened; pnpm catalog pins shared deps       |
-| **Build**      | Vite build → `dist/public`, `BASE_PATH=/portfolio/` in prod              | Static, rewrites `/* → /index.html` for SPA                |
-| **Quality**    | `tsc --build` + per-package typecheck, `onlyBuiltDependencies` allowlist | Reproducible, audited deps                                 |
+The portfolio keeps this single product story visible in the Projects section. The product is pinned as the featured application, while the remaining repository list provides supporting engineering context from GitHub.
+---
 
+## Stack
 
-### Production Stack (ships to users — proven in the field)
+### Portfolio site
 
+| Layer        | Choices                                            | Role                                               |
+| ------------ | -------------------------------------------------- | -------------------------------------------------- |
+| **Frontend** | React 19.1, Vite 7.3, TypeScript 5.9, Tailwind 4.1 | Static case-study site with fast local iteration   |
+| **Motion**   | GSAP 3.15, ScrollTrigger, Framer Motion            | Editorial transitions and section movement         |
+| **UI**       | wouter, Radix UI, shadcn, lucide-react             | Lightweight UI primitives and navigation           |
+| **Monorepo** | pnpm workspaces and catalog                        | Shared dependency versions and repeatable installs |
+| **Build**    | Vite to `dist/public`                              | Static GitHub Pages deployment                     |
+| **Quality**  | TypeScript typecheck and package build             | Catches integration errors before release          |
 
-| Layer       | Choices                                                       | Used for                                             |
-| ----------- | ------------------------------------------------------------- | ---------------------------------------------------- |
-| **Backend** | Laravel · PHP 8+ · Node.js · REST, Auth, Queues/Jobs          | Pension platform business logic                      |
-| **DB**      | MySQL/MariaDB · PostgreSQL · Eloquent · Drizzle ORM           | Financial schemas, Eloquent + drizzle-zod validation |
-| **Infra**   | Linux (Debian/Ubuntu) · Nginx · Docker · SSL/TLS · SSH · Cron | Zero-downtime prod, reverse proxy, scheduling        |
-| **Tooling** | Git/GitHub · Bash · Replit connectors SDK                     | Team workflow                                        |
+### DevScout application
 
+| Layer           | Choices                   | Role                                    |
+| --------------- | ------------------------- | --------------------------------------- |
+| **Backend**     | Laravel and PHP           | Recruitment workflow and domain logic   |
+| **Frontend**    | Vue.js 3 and Tailwind CSS | Candidate review and pipeline interface |
+| **Database**    | MySQL                     | Candidate and pipeline records          |
+| **Integration** | GitHub data               | Developer sourcing and profile context  |
 
-> The portfolio’s `artifacts/api-server` (Express 5 + Drizzle + Pino) is workspace scaffolding — the portfolio itself fetches **live GitHub repos** instead of its own API. Intentional: proves integration over mock data.
+The portfolio is the presentation layer. DevScout is the single product case study it presents.
 
 ### Architecture
 
@@ -109,7 +87,7 @@ App shell (`App.tsx`): semantic document flow for [Hero, About, Experience, Syst
 pnpm install
 
 # 2. Dev — portfolio at http://localhost:5173
-pnpm --filter @workspace/portfolio run dev
+pnpm portfolio
 
 # 3. Build — outputs to artifacts/portfolio/dist/public
 pnpm --filter @workspace/portfolio run build
@@ -135,17 +113,15 @@ Env: Portfolio needs none. API server needs `DATABASE_URL` (Postgres).
 
 ## Workspace Map
 
-
-| Path                             | Package                      | Purpose                                                                          |
-| -------------------------------- | ---------------------------- | -------------------------------------------------------------------------------- |
-| `artifacts/portfolio`      | `@workspace/portfolio` | This portfolio (Vite + React) — **you are here**                                 |
-| `artifacts/api-server`           | `@workspace/api-server`      | Express 5 API template (Drizzle, Pino) — scaffolding, not required for portfolio |
-| `screenshots/overview/desktop-fullpage.png` | —                            | Verified desktop preview for README/docs                                    |
-| `lib/*` + `lib/integrations/*`   | —                            | Shared libs                                                                      |
-| `scripts`                        | —                            | Workspace scripts                                                                |
-| `screenshots/reference-home.png` | —                            | Hero reference for README/docs                                                   |
-| `.github/workflows/deploy.yml`   | —                            | GH Pages pipeline                                                                |
-
+| Path                                        | Package                 | Purpose                                                                          |
+| ------------------------------------------- | ----------------------- | -------------------------------------------------------------------------------- |
+| `artifacts/portfolio`                       | `@workspace/portfolio`  | This portfolio (Vite + React) — **you are here**                                 |
+| `artifacts/api-server`                      | `@workspace/api-server` | Express 5 API template (Drizzle, Pino) — scaffolding, not required for portfolio |
+| `screenshots/overview/desktop-fullpage.png` | —                       | Verified desktop preview for README/docs                                         |
+| `lib/*` + `lib/integrations/*`              | —                       | Shared libs                                                                      |
+| `scripts`                                   | —                       | Workspace scripts                                                                |
+| `screenshots/reference-home.png`            | —                       | Hero reference for README/docs                                                   |
+| `.github/workflows/deploy.yml`              | —                       | GH Pages pipeline                                                                |
 
 ---
 
@@ -185,19 +161,17 @@ Grouped as displayed in-site (`artifacts/portfolio/src/data/skills.ts`):
 
 ---
 
-## Experience & Contact
+## Operator
 
-**Fullstack Web Developer — Dana Pensiun Sekolah Kristen** — see Showcase above.
+The site presents work by **Kevin Van Diesel Chansa**, a fullstack engineer based in Salatiga, Central Java, Indonesia.
 
-**Teaching Assistant, Web Dev — Satya Wacana Christian University** (Aug–Dec 2024): Labs for CS fundamentals, 1:1 debugging, feedback on algorithms & architecture.
-
-**Kevin Van Diesel Chansa** — Salatiga, Central Java, Indonesia
-
-- `kevinvandieselchansa@gmail.com` · [LinkedIn](https://www.linkedin.com/in/kevin-van-diesel-chansa/) · [GitHub](https://github.com/yesterdaygrace) · [@kevinnchanssa](https://www.instagram.com/kevinnchanssa)
+- `kevinvandieselchansa@gmail.com`
+- [LinkedIn](https://www.linkedin.com/in/kevin-van-diesel-chansa/)
+- [GitHub](https://github.com/yesterdaygrace)
+- [Instagram](https://www.instagram.com/kevinnchanssa)
 - **Availability:** Open to collaborations and opportunities
 
 ---
-
 
 ## Gotchas
 
@@ -210,8 +184,8 @@ Grouped as displayed in-site (`artifacts/portfolio/src/data/skills.ts`):
 
 ## License
 
-MIT — this portfolio’s code. Product codebases (DevScout, pension platform) retain their own terms.
+MIT for this portfolio repository. DevScout retains its own product terms.
 
 ---
 
-*Built without “built on Replit” filler. If you’re a startup CTO skim-reading this: the migration table above is the signal — ledger to Nginx, schema to reliable production workflows.*
+The README keeps one startup product in focus: DevScout, its workflow, its evidence, and the code that presents it.

@@ -5,7 +5,6 @@ import Experience from "./Experience";
 import TechStack from "./TechStack";
 import Projects from "./Projects";
 import Contact from "./Contact";
-import SystemsMigration from "./SystemsMigration";
 
 /**
  * Single ordered registry of the portfolio's full-screen panels.
@@ -26,11 +25,15 @@ export interface PanelSection {
 }
 
 export const sections: PanelSection[] = [
-  { id: "hero",       label: "Cover",      direction: "up",    Component: Hero },
-  { id: "about",      label: "About",      direction: "right", Component: About },
-  { id: "experience", label: "Experience", direction: "right", Component: Experience },
-  { id: "systems",    label: "Systems",    direction: "right", Component: SystemsMigration },
-  { id: "stack",      label: "Stack",      direction: "right", Component: TechStack },
-  { id: "projects",   label: "Projects",   direction: "up",    Component: Projects },
-  { id: "contact",    label: "Contact",    direction: "up",    Component: Contact },
+  { id: "hero", label: "Cover", direction: "up", Component: Hero },
+  { id: "about", label: "About", direction: "right", Component: About },
+  {
+    id: "experience",
+    label: "Experience",
+    direction: "right",
+    Component: Experience,
+  },
+  { id: "stack", label: "Stack", direction: "right", Component: TechStack },
+  { id: "projects", label: "Projects", direction: "up", Component: Projects },
+  { id: "contact", label: "Contact", direction: "up", Component: Contact },
 ];

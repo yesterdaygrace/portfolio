@@ -12,7 +12,7 @@ function App() {
     <>
       <a
         href="#content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--c-emphasis)] focus:text-[#151C3F] focus:font-mono focus:text-xs focus:font-bold focus:shadow-lg focus:border focus:border-[var(--c-fg)] focus:outline-none"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--c-emphasis)] focus:text-[var(--c-bg-deep)] focus:font-mono focus:text-xs focus:font-bold focus:shadow-lg focus:border focus:border-[var(--c-fg)] focus:outline-none"
       >
         Skip to main content ↓
       </a>

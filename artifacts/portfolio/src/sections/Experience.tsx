@@ -1,11 +1,7 @@
 import { useRef } from "react";
 import { useSectionReveal } from "@/lib/useSectionReveal";
 import { experiences } from "@/data/experience";
-import {
-  ChapterHeader,
-  Kicker,
-  PinAnnotation,
-} from "@/components/vellum/VellumComponents";
+import { Kicker } from "@/components/vellum/VellumComponents";
 
 export default function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -13,12 +9,6 @@ export default function Experience() {
 
   return (
     <section id="experience" ref={sectionRef} className="vellum-section">
-      <ChapterHeader
-        number="03"
-        title="Experience Chronology"
-        category="Professional Track Record"
-      />
-
       <div className="mb-14">
         <Kicker>Chronological Record · 2024 — 2025</Kicker>
         <h2
@@ -31,8 +21,8 @@ export default function Experience() {
           className="font-sans text-base sm:text-lg max-w-2xl"
           style={{ color: "var(--c-fg-2)" }}
         >
-          Documented history of architectural delivery, contract responsibilities,
-          and verified operational milestones.
+          Documented history of architectural delivery, contract
+          responsibilities, and verified operational milestones.
         </p>
       </div>
 
@@ -143,7 +133,7 @@ export default function Experience() {
                       )}
 
                       {exp.description.length > 0 && (
-                        <div className="pt-4 border-t border-[rgba(232,216,92,0.12)]">
+                        <div className="pt-4 border-t border-[var(--c-border)]">
                           <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--c-accent)] block mb-3 font-medium">
                             Infrastructure &amp; Operational Scope:
                           </span>
@@ -167,7 +157,7 @@ export default function Experience() {
                 })()}
 
                 {/* Tech stack items as Vellum mono tags */}
-                <div className="pt-4 border-t border-[rgba(232,216,92,0.14)] flex items-center gap-2 flex-wrap">
+                <div className="pt-4 border-t border-[var(--c-border)] flex items-center gap-2 flex-wrap">
                   <span
                     className="font-mono text-[10px] uppercase tracking-wider mr-2"
                     style={{ color: "var(--c-accent)" }}
@@ -189,14 +179,6 @@ export default function Experience() {
           </article>
         ))}
       </div>
-
-      <footer className="pt-12 mt-16 border-t border-[var(--c-border)]">
-        <PinAnnotation
-          counter="CHRONOLOGY"
-          note="Full verification documents and employment references available upon request"
-          secondaryNote="Archive verified against contract deliverables"
-        />
-      </footer>
     </section>
   );
 }

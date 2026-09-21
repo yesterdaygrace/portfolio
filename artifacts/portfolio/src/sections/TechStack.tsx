@@ -1,11 +1,7 @@
 import { useRef } from "react";
 import { useSectionReveal } from "@/lib/useSectionReveal";
 import { skillCategories } from "@/data/skills";
-import {
-  ChapterHeader,
-  Kicker,
-  PinAnnotation,
-} from "@/components/vellum/VellumComponents";
+import { Kicker } from "@/components/vellum/VellumComponents";
 
 export default function TechStack() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -13,12 +9,6 @@ export default function TechStack() {
 
   return (
     <section id="stack" ref={sectionRef} className="vellum-section">
-      <ChapterHeader
-        number="05"
-        title="Technical Capabilities"
-        category="Competency Ledger"
-      />
-
       <div className="mb-14">
         <Kicker>Capabilities &amp; Production Stack</Kicker>
         <h2
@@ -78,7 +68,7 @@ export default function TechStack() {
               {cat.skills.map((skill, sIdx) => (
                 <li
                   key={skill.name}
-                  className="flex items-baseline gap-3 py-1.5 border-t border-[rgba(232,216,92,0.10)]"
+                  className="flex items-baseline gap-3 py-1.5 border-t border-[var(--c-border)]"
                 >
                   <span
                     className="font-mono text-xs flex-shrink-0"
@@ -86,23 +76,13 @@ export default function TechStack() {
                   >
                     {String(sIdx + 1).padStart(2, "0")}.
                   </span>
-                  <span style={{ color: "var(--c-fg)" }}>
-                    {skill.name}
-                  </span>
+                  <span style={{ color: "var(--c-fg)" }}>{skill.name}</span>
                 </li>
               ))}
             </ul>
           </div>
         ))}
       </div>
-
-      <footer className="pt-12 mt-12 border-t border-[var(--c-border)]">
-        <PinAnnotation
-          counter="STACK LEDGER"
-          note="Evaluated against active production usage in accounting and CRM domains"
-          secondaryNote="Standards: PSR-12 · Strict Types · Normalized 3NF Schemas · Semantic HTML"
-        />
-      </footer>
     </section>
   );
 }

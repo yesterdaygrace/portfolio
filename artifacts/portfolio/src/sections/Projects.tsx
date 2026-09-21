@@ -2,12 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useSectionReveal } from "@/lib/useSectionReveal";
 import { profile } from "@/data/profile";
-import {
-  ChapterHeader,
-  Kicker,
-  PinAnnotation,
-  AccentRule,
-} from "@/components/vellum/VellumComponents";
+import { Kicker, AccentRule } from "@/components/vellum/VellumComponents";
 
 interface GitHubRepo {
   id: number;
@@ -100,7 +95,10 @@ export default function Projects() {
     return undefined;
   }, []);
   const projectCards: ProjectCard[] = useMemo(() => {
-    const ARCH_METADATA: Record<string, { desc: string; type: string; tech: string[] }> = {
+    const ARCH_METADATA: Record<
+      string,
+      { desc: string; type: string; tech: string[] }
+    > = {
       dapense: {
         desc: "Financial information system replacing legacy VDOS workflows with a Laravel/MySQL web architecture for ledger, journal, reconciliation, and reporting operations.",
         type: "Financial Information System",
@@ -132,16 +130,32 @@ export default function Projects() {
     const repoMap = new Map(repos.map((r) => [r.name.toLowerCase(), r]));
 
     return FEATURED_ORDER.map((key, i) => {
-      const live = repoMap.get(key) || [...repoMap.entries()].find(([k]) => k.includes(key))?.[1];
+      const live =
+        repoMap.get(key) ||
+        [...repoMap.entries()].find(([k]) => k.includes(key))?.[1];
       const meta = ARCH_METADATA[key];
       return {
         id: live ? String(live.id) : `curated-${key}`,
-        title: key === "dapense" ? "DAPENSE" : key === "dev-scout" ? "dev-scout" : key,
-        description: meta?.desc ?? (live?.description || "Production repository and architecture codebase."),
-        tech: meta?.tech ?? ([live?.language, ...(live?.topics ?? [])].filter(Boolean) as string[]),
+        title:
+          key === "dapense"
+            ? "DAPENSE"
+            : key === "dev-scout"
+              ? "dev-scout"
+              : key,
+        description:
+          meta?.desc ??
+          (live?.description ||
+            "Production repository and architecture codebase."),
+        tech:
+          meta?.tech ??
+          ([live?.language, ...(live?.topics ?? [])].filter(
+            Boolean,
+          ) as string[]),
         year: live ? new Date(live.pushed_at).getFullYear().toString() : "2025",
         type: meta?.type ?? "Engineering Repository",
-        githubUrl: live?.html_url || `https://github.com/${profile.githubUsername || "yesterdaygrace"}/${key}`,
+        githubUrl:
+          live?.html_url ||
+          `https://github.com/${profile.githubUsername || "yesterdaygrace"}/${key}`,
         stars: live?.stargazers_count,
       };
     });
@@ -149,12 +163,6 @@ export default function Projects() {
 
   return (
     <section id="projects" ref={sectionRef} className="vellum-section">
-      <ChapterHeader
-        number="06"
-        title="Project Showcase"
-        category="Verified Deliverables"
-      />
-
       <div className="mb-14">
         <Kicker>Flagship Software · 2026</Kicker>
         <h2
@@ -293,71 +301,66 @@ export default function Projects() {
 
       {/* Error state */}
       {error && (
-        <div className="p-4 border border-[rgba(232,216,92,0.20)] font-mono text-xs mb-8 text-[var(--c-fg-2)]">
+        <div className="p-4 border border-[var(--c-border)] font-mono text-xs mb-8 text-[var(--c-fg-2)]">
           GitHub feed note: {error}. Showing curated project index.
         </div>
       )}
 
       {/* Repository Archive Ledger — Synchronous Instant Render */}
       <div className="divide-y divide-[var(--c-border)] border-y border-[var(--c-border)]">
-          {projectCards.map((proj, idx) => (
-            <motion.article
-              key={proj.id}
-              whileHover={{ x: 3 }}
-              transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="py-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-baseline group"
-            >
-              <div className="md:col-span-1 font-mono text-xs text-[var(--c-accent)]">
-                {String(idx + 1).padStart(2, "0")}.
-              </div>
+        {projectCards.map((proj, idx) => (
+          <motion.article
+            key={proj.id}
+            whileHover={{ x: 3 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="py-5 grid grid-cols-1 md:grid-cols-12 gap-4 items-baseline group"
+          >
+            <div className="md:col-span-1 font-mono text-xs text-[var(--c-accent)]">
+              {String(idx + 1).padStart(2, "0")}.
+            </div>
 
-              <div className="md:col-span-4">
-                <h4
-                  className="font-display italic text-xl sm:text-2xl mb-1 group-hover:text-[var(--c-emphasis)] transition-colors"
-                  style={{ color: "var(--c-fg)" }}
+            <div className="md:col-span-4">
+              <h4
+                className="font-display italic text-xl sm:text-2xl mb-1 group-hover:text-[var(--c-emphasis)] transition-colors"
+                style={{ color: "var(--c-fg)" }}
+              >
+                <a
+                  href={
+                    proj.githubUrl ||
+                    `https://github.com/${profile.githubUsername || "yesterdaygrace"}`
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
                 >
-                  <a
-                    href={proj.githubUrl || `https://github.com/${profile.githubUsername || "yesterdaygrace"}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:underline"
-                  >
-                    {proj.title}
-                  </a>
-                </h4>
-                <div className="font-mono text-[11px] text-[var(--c-accent)]">
-                  {proj.type} · {proj.year}
-                  {proj.stars ? ` · ★ ${proj.stars}` : ""}
-                </div>
+                  {proj.title}
+                </a>
+              </h4>
+              <div className="font-mono text-[11px] text-[var(--c-accent)]">
+                {proj.type} · {proj.year}
+                {proj.stars ? ` · ★ ${proj.stars}` : ""}
               </div>
+            </div>
 
-              <div className="md:col-span-5 font-sans text-xs sm:text-sm text-[var(--c-fg-2)] leading-relaxed">
-                {proj.description}
-              </div>
+            <div className="md:col-span-5 font-sans text-xs sm:text-sm text-[var(--c-fg-2)] leading-relaxed">
+              {proj.description}
+            </div>
 
-              <div className="md:col-span-2 flex md:justify-end items-center gap-2">
-                {proj.githubUrl && (
-                  <a
-                    href={proj.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-mono text-xs px-2.5 py-1 border border-[var(--c-border)] hover:border-[var(--c-fg)] text-[var(--c-fg-2)] hover:text-[var(--c-emphasis)]"
-                  >
-                    Repo ↗
-                  </a>
-                )}
-              </div>
-            </motion.article>
-          ))}
-        </div>
-
-      <footer className="pt-12 mt-12 border-t border-[var(--c-border)]">
-        <PinAnnotation
-          counter="PROJECT LEDGER"
-          note="Live API query: api.github.com/users/yesterdaygrace/repos"
-          secondaryNote="Static fallback enabled for CI & GitHub Pages static preview"
-        />
-      </footer>
+            <div className="md:col-span-2 flex md:justify-end items-center gap-2">
+              {proj.githubUrl && (
+                <a
+                  href={proj.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs px-2.5 py-1 border border-[var(--c-border)] hover:border-[var(--c-fg)] text-[var(--c-fg-2)] hover:text-[var(--c-emphasis)]"
+                >
+                  Repo ↗
+                </a>
+              )}
+            </div>
+          </motion.article>
+        ))}
+      </div>
     </section>
   );
 }
