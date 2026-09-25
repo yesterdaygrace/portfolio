@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useSectionReveal } from "@/lib/useSectionReveal";
 import { skillCategories } from "@/data/skills";
 import { Kicker } from "@/components/vellum/VellumComponents";
+import { SkillLogo, CategoryStackIcon } from "@/components/StackIcon";
 
 export default function TechStack() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -34,7 +35,7 @@ export default function TechStack() {
             className="flex flex-col border-b border-[var(--c-border)] pb-8"
           >
             {/* Category header */}
-            <div className="flex items-baseline justify-between mb-2">
+            <div className="flex items-baseline justify-between mb-3">
               <span
                 className="font-mono text-xs uppercase tracking-widest font-semibold"
                 style={{ color: "var(--c-emphasis)" }}
@@ -49,12 +50,21 @@ export default function TechStack() {
               </span>
             </div>
 
-            <h3
-              className="font-display italic text-2xl sm:text-3xl mb-1"
-              style={{ color: "var(--c-fg)" }}
-            >
-              {cat.name}
-            </h3>
+            <div className="flex items-center gap-3 mb-2">
+              <span
+                className="w-8 h-8 rounded border border-[var(--c-border)] bg-[var(--c-bg-mid)] flex items-center justify-center flex-shrink-0 text-[#F7F1E2]"
+                style={{ color: "#F7F1E2" }}
+                aria-hidden="true"
+              >
+                <CategoryStackIcon id={cat.id} size={17} color="#F7F1E2" />
+              </span>
+              <h3
+                className="font-display italic text-2xl sm:text-3xl"
+                style={{ color: "var(--c-fg)" }}
+              >
+                {cat.name}
+              </h3>
+            </div>
 
             <p
               className="font-sans text-xs sm:text-sm mb-6"
@@ -63,20 +73,32 @@ export default function TechStack() {
               {cat.description}
             </p>
 
-            {/* Numbered Skill Items */}
-            <ul className="space-y-1.5 font-sans text-sm">
+            {/* Numbered Skill Items with SVG Logo */}
+            <ul className="space-y-1 font-sans text-sm">
               {cat.skills.map((skill, sIdx) => (
                 <li
                   key={skill.name}
-                  className="flex items-baseline gap-3 py-1.5 border-t border-[var(--c-border)]"
+                  className="flex items-center gap-3 py-2 border-t border-[var(--c-border)] group"
                 >
                   <span
-                    className="font-mono text-xs flex-shrink-0"
+                    className="font-mono text-xs flex-shrink-0 w-6"
                     style={{ color: "var(--c-accent)" }}
                   >
                     {String(sIdx + 1).padStart(2, "0")}.
                   </span>
-                  <span style={{ color: "var(--c-fg)" }}>{skill.name}</span>
+                  <span
+                    className="w-5 h-5 flex-shrink-0 flex items-center justify-center text-[#F7F1E2]"
+                    style={{ color: "#F7F1E2" }}
+                    aria-hidden="true"
+                  >
+                    <SkillLogo name={skill.name} size={16} color="#F7F1E2" />
+                  </span>
+                  <span
+                    style={{ color: "var(--c-fg)" }}
+                    className="font-medium text-sm leading-snug group-hover:text-[var(--c-emphasis)] transition-colors duration-150"
+                  >
+                    {skill.name}
+                  </span>
                 </li>
               ))}
             </ul>

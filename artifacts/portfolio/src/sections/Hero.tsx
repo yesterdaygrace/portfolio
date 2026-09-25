@@ -11,7 +11,7 @@ export default function Hero() {
   const facts = [
     { label: "Discipline", value: "Full-Stack & Backend Systems" },
     { label: "Specialization", value: "Legacy Modernization" },
-    { label: "Location", value: "Salatiga, Central Java" },
+    { label: "Location", value: "Semarang, Central Java" },
     { label: "Availability", value: "Open to Opportunities" },
   ];
 
@@ -28,7 +28,7 @@ export default function Hero() {
           defaults: { ease: "power2.out", clearProps: "all" },
         });
         tl.from(
-          "[data-hero-header], [data-hero-kicker], [data-hero-title], [data-hero-lead], [data-hero-rule], [data-hero-facts], [data-hero-actions]",
+          "[data-hero-header], [data-hero-portrait], [data-hero-kicker], [data-hero-title], [data-hero-lead], [data-hero-rule], [data-hero-facts], [data-hero-actions]",
           {
             autoAlpha: 0,
             y: 8,
@@ -36,7 +36,7 @@ export default function Hero() {
             stagger: 0.02,
           },
         ).from(
-          "[data-hero-portrait], [data-hero-footer]",
+          "[data-hero-footer]",
           {
             autoAlpha: 0,
             duration: 0.22,
@@ -73,8 +73,42 @@ export default function Hero() {
 
       {/* Main Cover Body */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start my-auto">
-        {/* Left / Primary Column (8 cols) */}
-        <div className="lg:col-span-8 order-1 flex flex-col items-start">
+        {/* Archival Portrait: order-1 on mobile (above name & credentials), lg:order-2 on desktop */}
+        <div
+          data-hero-portrait
+          className="lg:col-span-4 order-1 lg:order-2 flex flex-col items-center lg:items-end w-full"
+        >
+          <figure className="w-full max-w-[280px] sm:max-w-[320px] p-2 bg-[var(--c-bg-deep)] border border-[var(--c-border)]">
+            <div className="aspect-[4/5] overflow-hidden bg-[var(--c-bg-mid)]">
+              <picture>
+                <source
+                  srcSet={`${import.meta.env.BASE_URL}portrait.webp`}
+                  type="image/webp"
+                />
+                <img
+                  src={`${import.meta.env.BASE_URL}portrait.jpeg`}
+                  alt="Portrait of Kevin Van Diesel Chansa, Software Engineer"
+                  width={864}
+                  height={1184}
+                  fetchPriority="high"
+                  decoding="async"
+                  loading="eager"
+                  className="w-full h-full object-cover grayscale contrast-[1.08] brightness-95 sepia-[0.20] hover:grayscale-0 hover:sepia-0 transition-all duration-500"
+                />
+              </picture>
+            </div>
+            <figcaption
+              className="mt-2.5 px-1 py-1 flex items-center justify-between font-mono text-[11px]"
+              style={{ color: "var(--c-accent)" }}
+            >
+              <span>FIGURE 01</span>
+              <span>SALATIGA · ID</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        {/* Primary Column: Name & Credentials (order-2 on mobile, lg:order-1 on desktop) */}
+        <div className="lg:col-span-8 order-2 lg:order-1 flex flex-col items-start">
           <div data-hero-kicker>
             <Kicker>Software Engineer · Web &amp; Distributed Systems</Kicker>
           </div>
@@ -140,40 +174,6 @@ export default function Hero() {
               Download CV (PDF) ↗
             </a>
           </div>
-        </div>
-
-        {/* Right Column: Framed Archival Portrait (4 cols) */}
-        <div
-          data-hero-portrait
-          className="lg:col-span-4 order-2 flex flex-col items-center lg:items-end w-full mt-8 pt-8 border-t border-[var(--c-border)] lg:mt-0 lg:pt-0 lg:border-t-0"
-        >
-          <figure className="w-full max-w-[280px] sm:max-w-[320px] p-2 bg-[var(--c-bg-deep)] border border-[var(--c-border)]">
-            <div className="aspect-[4/5] overflow-hidden bg-[var(--c-bg-mid)]">
-              <picture>
-                <source
-                  srcSet={`${import.meta.env.BASE_URL}portrait.webp`}
-                  type="image/webp"
-                />
-                <img
-                  src={`${import.meta.env.BASE_URL}portrait.jpeg`}
-                  alt="Portrait of Kevin Van Diesel Chansa, Software Engineer"
-                  width={864}
-                  height={1184}
-                  fetchPriority="high"
-                  decoding="async"
-                  loading="eager"
-                  className="w-full h-full object-cover grayscale contrast-[1.08] brightness-95 sepia-[0.20] hover:grayscale-0 hover:sepia-0 transition-all duration-500"
-                />
-              </picture>
-            </div>
-            <figcaption
-              className="mt-2.5 px-1 py-1 flex items-center justify-between font-mono text-[11px]"
-              style={{ color: "var(--c-accent)" }}
-            >
-              <span>FIGURE 01</span>
-              <span>SALATIGA · ID</span>
-            </figcaption>
-          </figure>
         </div>
       </div>
 
