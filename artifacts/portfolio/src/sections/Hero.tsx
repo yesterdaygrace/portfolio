@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { profile, socialLinks } from "@/data/profile";
 import {
   Kicker,
@@ -8,6 +8,7 @@ import {
 import { gsap } from "@/lib/motion";
 
 export default function Hero() {
+  const [isColor, setIsColor] = useState(false);
   const facts = [
     { label: "Discipline", value: "Full-Stack & Backend Systems" },
     { label: "Specialization", value: "Legacy Modernization" },
@@ -78,7 +79,19 @@ export default function Hero() {
           data-hero-portrait
           className="lg:col-span-4 order-1 lg:order-2 flex flex-col items-center lg:items-end w-full"
         >
-          <figure className="w-full max-w-[280px] sm:max-w-[320px] p-2 bg-[var(--c-bg-deep)] border border-[var(--c-border)]">
+          <figure
+            role="button"
+            tabIndex={0}
+            aria-label="Portrait of Kevin Van Diesel Chansa. Tap or click to toggle color."
+            onClick={() => setIsColor((prev) => !prev)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setIsColor((prev) => !prev);
+              }
+            }}
+            className="w-full max-w-[280px] sm:max-w-[320px] p-2 bg-[var(--c-bg-deep)] border border-[var(--c-border)] cursor-pointer select-none touch-manipulation group transition-colors duration-300 hover:border-[var(--c-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--c-accent)]"
+          >
             <div className="aspect-[4/5] overflow-hidden bg-[var(--c-bg-mid)]">
               <picture>
                 <source
@@ -93,7 +106,12 @@ export default function Hero() {
                   fetchPriority="high"
                   decoding="async"
                   loading="eager"
-                  className="w-full h-full object-cover grayscale contrast-[1.08] brightness-95 sepia-[0.20] hover:grayscale-0 hover:sepia-0 transition-all duration-500"
+                  draggable={false}
+                  className={`w-full h-full object-cover contrast-[1.08] brightness-95 transition-all duration-500 select-none ${
+                    isColor
+                      ? "grayscale-0 sepia-0"
+                      : "grayscale sepia-[0.20] group-hover:grayscale-0 group-hover:sepia-0 group-active:grayscale-0 group-active:sepia-0 active:grayscale-0 active:sepia-0"
+                  }`}
                 />
               </picture>
             </div>
