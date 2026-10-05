@@ -1,0 +1,5 @@
+Contact: mailto:kevinvandieselchansa@gmail.com
+Expires: 2027-10-05T00:00:00.000Z
+Preferred-Languages: en, id
+Canonical: https://yesterdaygrace.github.io/portfolio/.well-known/security.txt
+Policy: https://github.com/yesterdaygrace/portfolio/security/policy

@@ -1,0 +1,470 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans:    'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:    'Courier Prime', 'Courier New', monospace;
+
+  /* Slate, terracotta, and warm ivory palette */
+  --color-vellum-bg:      #2E3344;
+  --color-vellum-bg-alt:  #353A4A;
+  --color-vellum-deep:    #252A37;
+  --color-vellum-mid:     #3B4051;
+
+  --color-vellum-fg:      #F7F1E2;
+  --color-vellum-fg-2:    rgba(247, 241, 226, 0.84);
+  --color-vellum-fg-3:    rgba(247, 241, 226, 0.68);
+  --color-vellum-emphasis:#F3C8B4;
+  --color-vellum-accent:  #D8A08A;
+  --color-vellum-border:  rgba(247, 241, 226, 0.20);
+
+  /* Semantic mappings */
+  --color-surface-0:      #2E3344;
+  --color-surface-1:      #353A4A;
+  --color-surface-2:      #252A37;
+  --color-surface-3:      #3B4051;
+
+  --color-fg:             #F7F1E2;
+  --color-fg-muted:       rgba(247, 241, 226, 0.84);
+  --color-fg-faint:       rgba(247, 241, 226, 0.68);
+
+  --color-line:           rgba(247, 241, 226, 0.20);
+  --color-line-hover:     rgba(247, 241, 226, 0.38);
+
+  --color-accent:         #D8A08A;
+  --color-accent-deep:    #7E5246;
+  --color-accent-dim:     rgba(126, 82, 70, 0.26);
+}
+
+:root {
+  --c-bg: #2E3344;
+  --c-bg-alt: #353A4A;
+  --c-bg-deep: #252A37;
+  --c-bg-mid: #3B4051;
+
+  --c-fg: #F7F1E2;
+  --c-fg-2: rgba(247, 241, 226, 0.84);
+  --c-fg-3: rgba(247, 241, 226, 0.68);
+  --c-emphasis: #F3C8B4;
+  --c-accent: #D8A08A;
+  --c-accent-deep: #7E5246;
+  --c-border: rgba(247, 241, 226, 0.20);
+
+  --f-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --f-body: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --f-mono: 'Courier Prime', 'Courier New', monospace;
+
+  /* Spacing Scale (8px Base System from task.md) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  /* Layout Gutters */
+  --gutter-desktop: 48px;
+  --gutter-mobile: 32px;
+
+  --pad-x: clamp(1.25rem, 5vw, 4.5rem);
+  --pad-y: clamp(2rem, 5vh, 4rem);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    border-color: var(--c-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    background-color: var(--c-bg);
+  }
+
+  body {
+    font-family: var(--f-body);
+    background-color: var(--c-bg);
+    color: var(--c-fg);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--c-emphasis) !important;
+    outline-offset: 3px !important;
+  }
+
+  ::selection {
+    background: rgba(126, 82, 70, 0.55);
+    color: #F7F1E2;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--c-bg-deep);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(247, 241, 226, 0.20);
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(247, 241, 226, 0.38);
+  }
+  /* Headings: Strict upright Cormorant Garamond 600 */
+  h1, h2, h3 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-style: normal;
+    letter-spacing: -0.015em;
+    line-height: 1;
+    color: var(--c-fg);
+  }
+
+  h1 {
+    font-size: 72px;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-size: 48px;
+    line-height: 1.00;
+    letter-spacing: -0.015em;
+  }
+
+  h3 {
+    font-size: 34px;
+    line-height: 1.10;
+    letter-spacing: -0.01em;
+  }
+
+  /* H4 marks the transition to structural sans */
+  h4 {
+    font-family: var(--f-body);
+    font-size: 24px;
+    line-height: 1.25;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--c-fg);
+  }
+
+  /* Headline emphasis in Cormorant Garamond 400 italic + terracotta */
+  h1 em, h2 em, h3 em, .font-display em {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--c-emphasis);
+  }
+
+  /* Technical content */
+  code, pre, .technical {
+    font-family: var(--f-mono);
+    line-height: 1.6;
+  }
+
+  /* Labels */
+  .label, .uppercase-label {
+    font-family: var(--f-mono);
+    font-size: 12px;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Mobile Responsive Type Scale from task.md */
+  @media (max-width: 768px) {
+    body {
+      font-size: 15px;
+    }
+    h1 {
+      font-size: 48px;
+    }
+    h2 {
+      font-size: 36px;
+    }
+    h3 {
+      font-size: 28px;
+    }
+    h4 {
+      font-size: 20px;
+    }
+  }
+}
+
+/* ── Canonical Container & Section Rhythm (task.md) ───────────────────────── */
+
+.vellum-section {
+  width: min(100% - var(--gutter-desktop), 1200px);
+  margin-inline: auto;
+  padding-top: var(--space-9);
+  padding-bottom: var(--space-9);
+  scroll-margin-top: 4.5rem;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .vellum-section {
+    width: min(100% - var(--gutter-mobile), 1200px);
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+  }
+}
+
+/* Button & interactive states: DM Sans 14px / 600 weight from task.md */
+.vellum-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  border: 1px solid var(--c-border);
+  background: transparent;
+  color: var(--c-fg);
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: 0;
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.vellum-btn:hover {
+  background: rgba(247, 241, 226, 0.08);
+  border-color: var(--c-fg);
+  color: var(--c-emphasis);
+  transform: translateY(-1px);
+}
+
+.vellum-btn:active, .vellum-btn-solid:active, .vellum-btn-accent:active {
+  transform: scale(0.98) translateY(1px) !important;
+  transition-duration: 0.08s !important;
+}
+
+.vellum-btn-solid {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  border: 1px solid var(--c-fg);
+  background: var(--c-fg);
+  color: var(--c-bg-deep);
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: 0;
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.vellum-btn-solid:hover {
+  background: var(--c-emphasis);
+  border-color: var(--c-emphasis);
+  color: var(--c-bg-deep);
+  transform: translateY(-1px);
+}
+
+.vellum-btn-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  border: 1px solid var(--c-accent);
+  background: transparent;
+  color: var(--c-accent);
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: 0;
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.vellum-btn-accent:hover {
+  background: rgba(126, 82, 70, 0.34);
+  color: var(--c-emphasis);
+  border-color: var(--c-emphasis);
+  transform: translateY(-1px);
+}
+
+/* ── Canonical Typography & Section Rhythm Utilities (task.md) ───────────── */
+
+.hero-label {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: var(--space-3); /* 12px */
+  display: block;
+}
+
+.hero-title {
+  font-family: var(--f-display);
+  font-size: 72px;
+  line-height: 0.95;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--c-fg);
+  margin: 0 0 var(--space-5); /* 20px - adjusted to 20px via token */
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 48px;
+  }
+}
+
+.hero-description {
+  font-family: var(--f-body);
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--c-fg-2);
+  max-width: 620px;
+  margin-bottom: var(--space-6); /* 32px */
+}
+
+@media (max-width: 768px) {
+  .hero-description {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+}
+
+.section-header {
+  margin-bottom: var(--space-7); /* 48px */
+}
+
+.section-label {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  margin-bottom: var(--space-3); /* 12px */
+  display: block;
+}
+
+.section-title {
+  font-family: var(--f-display);
+  font-size: 48px;
+  line-height: 1.0;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--c-fg);
+  margin: 0 0 var(--space-4); /* 16px */
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 36px;
+  }
+}
+
+.section-description {
+  font-family: var(--f-body);
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--c-fg-2);
+  max-width: 680px;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .section-description {
+    font-size: 16px;
+    line-height: 1.65;
+  }
+}
+
+.project-title {
+  font-family: var(--f-display);
+  font-size: 32px;
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--c-fg);
+}
+
+.project-description {
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--c-fg-2);
+  max-width: 620px;
+}
+
+.project-meta {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.prose {
+  max-width: 680px;
+}
+
+@layer utilities {
+  .text-fg        { color: var(--c-fg); }
+  .text-fg-muted  { color: var(--c-fg-2); }
+  .text-fg-faint  { color: var(--c-fg-3); }
+  .border-line    { border-color: var(--c-border); }
+  .bg-vellum-navy { background-color: var(--c-bg); }
+  .bg-vellum-deep { background-color: var(--c-bg-deep); }
+  .bg-vellum-mid  { background-color: var(--c-bg-mid); }
+}
+
+/* Print Styles */
+@media print {
+  html, body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-size: 11pt;
+  }
+
+  header, nav, #nav-dots, #slide-counter, .no-print {
+    display: none !important;
+  }
+
+  .vellum-section {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  * {
+    color: #111111 !important;
+    border-color: #cccccc !important;
+    background-color: transparent !important;
+  }
+
+  .vellum-btn, .vellum-btn-solid, .vellum-btn-accent {
+    border: 1px solid #444444 !important;
+    color: #111111 !important;
+  }
+}

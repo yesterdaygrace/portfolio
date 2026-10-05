@@ -74,7 +74,6 @@ App shell (`App.tsx`): semantic document flow for [Hero, About, Experience, Syst
 
 - Sections stay in normal document flow so browser navigation, touch scrolling, and reduced-motion behavior remain reliable.
 - `pnpm-workspace.yaml` overrides strip non-linux esbuild/tailwind/rollup binaries — lean CI.
-- `replit.md` + `.replit-artifact/artifact.toml` define `run = pnpm --filter @workspace/portfolio run dev` (PORT 20676) and static prod serve.
 
 ---
 

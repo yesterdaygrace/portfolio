@@ -2,7 +2,7 @@
   "ci": {
     "collect": {
       "numberOfRuns": 3,
-      "staticDistDir": "artifacts/portfolio/dist/public"
+      "staticDistDir": "dist/public"
     },
     "assert": {
       "assertions": {
