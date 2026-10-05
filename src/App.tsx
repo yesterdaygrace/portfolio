@@ -1,13 +1,82 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, useEffect, useCallback } from "react";
 import Navbar from "@/layout/Navbar";
 import { sections } from "@/sections";
 import { SectionTransition } from "@/components/vellum/SectionTransition";
+import { PROJECT_CASE_STUDIES } from "@/data/projectCaseStudies";
+
+const ProjectDetailPage = lazy(() => import("@/pages/ProjectDetailPage"));
 
 const LazyAgentation = lazy(() =>
   import("agentation").then((m) => ({ default: m.Agentation }))
 );
 
+function parseHashRoute(): { view: "home" | "project"; projectId?: string } {
+  if (typeof window === "undefined") return { view: "home" };
+  const hash = window.location.hash || "";
+  const match = hash.match(/^#\/?projects?\/([a-zA-Z0-9_-]+)/i);
+  if (match && match[1]) {
+    return { view: "project", projectId: match[1].toLowerCase() };
+  }
+  return { view: "home" };
+}
+
 function App() {
+  const [route, setRoute] = useState(parseHashRoute);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setRoute(parseHashRoute());
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("popstate", handleHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener("popstate", handleHashChange);
+    };
+  }, []);
+
+  const handleSelectProject = useCallback((id: string) => {
+    window.location.hash = `#/projects/${id}`;
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
+  const handleBackToHome = useCallback(() => {
+    window.location.hash = "#projects";
+    setTimeout(() => {
+      const el = document.getElementById("projects");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 50);
+  }, []);
+
+  const activeProject =
+    route.view === "project" && route.projectId
+      ? PROJECT_CASE_STUDIES.find((p) => p.id === route.projectId)
+      : null;
+
+  if (route.view === "project" && activeProject) {
+    return (
+      <Suspense
+        fallback={
+          <div className="min-h-screen bg-[var(--c-bg)] flex items-center justify-center p-8">
+            <div className="font-mono text-xs text-[var(--c-accent)] tracking-wider">
+              LOADING ARCHITECTURAL SPECIFICATION...
+            </div>
+          </div>
+        }
+      >
+        <ProjectDetailPage
+          project={activeProject}
+          onBack={handleBackToHome}
+          onSelectProject={handleSelectProject}
+        />
+      </Suspense>
+    );
+  }
+
   return (
     <>
       <a
@@ -21,7 +90,12 @@ function App() {
       <main id="content" className="w-full relative">
         {sections.map(({ id, Component }) => (
           <SectionTransition key={id} id={id}>
-            <Component />
+            {id === "projects" ? (
+              // @ts-expect-error onSelectProject is accepted by Projects
+              <Component onSelectProject={handleSelectProject} />
+            ) : (
+              <Component />
+            )}
           </SectionTransition>
         ))}
       </main>
