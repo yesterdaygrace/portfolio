@@ -2,7 +2,6 @@ import { lazy, Suspense, useState, useEffect, useCallback } from "react";
 import Navbar from "@/layout/Navbar";
 import { sections } from "@/sections";
 import { SectionTransition } from "@/components/vellum/SectionTransition";
-import { PROJECT_CASE_STUDIES } from "@/data/projectCaseStudies";
 
 const ProjectDetailPage = lazy(() => import("@/pages/ProjectDetailPage"));
 
@@ -52,12 +51,7 @@ function App() {
     }, 50);
   }, []);
 
-  const activeProject =
-    route.view === "project" && route.projectId
-      ? PROJECT_CASE_STUDIES.find((p) => p.id === route.projectId)
-      : null;
-
-  if (route.view === "project" && activeProject) {
+  if (route.view === "project" && route.projectId) {
     return (
       <Suspense
         fallback={
@@ -69,7 +63,7 @@ function App() {
         }
       >
         <ProjectDetailPage
-          project={activeProject}
+          projectId={route.projectId}
           onBack={handleBackToHome}
           onSelectProject={handleSelectProject}
         />

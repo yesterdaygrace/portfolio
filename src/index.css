@@ -438,6 +438,37 @@
   .bg-vellum-mid  { background-color: var(--c-bg-mid); }
 }
 
+/* Mobile Drawer Keyframe Animations (Composited, Zero-JS) */
+@keyframes drawerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrimFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-drawer-in {
+  animation: drawerFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-scrim-in {
+  animation: scrimFadeIn 0.18s ease-out forwards;
+  will-change: opacity;
+}
+
 /* Print Styles */
 @media print {
   html, body {

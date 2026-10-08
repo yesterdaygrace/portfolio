@@ -10,7 +10,7 @@ export const profile = {
   instagramUsername: "kevinnchanssa",
   email: "kevinvandieselchansa@gmail.com",
   linkedinUrl: "https://www.linkedin.com/in/kevin-van-diesel-chansa/",
-  location: "Salatiga, Central Java, Indonesia",
+  location: "Semarang, Central Java, Indonesia",
   availability: "Open to collaborations and opportunities",
 } as const;
 

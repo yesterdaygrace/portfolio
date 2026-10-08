@@ -94,19 +94,25 @@ export default function Hero() {
             <div className="aspect-[4/5] overflow-hidden bg-[var(--c-bg-mid)]">
               <picture>
                 <source
-                  srcSet={`${import.meta.env.BASE_URL}portrait.webp`}
                   type="image/webp"
+                  srcSet={`${import.meta.env.BASE_URL}portrait-320w.webp 320w, ${import.meta.env.BASE_URL}portrait-640w.webp 640w, ${import.meta.env.BASE_URL}portrait.webp 864w`}
+                  sizes="(max-width: 640px) 280px, 320px"
+                />
+                <source
+                  type="image/jpeg"
+                  srcSet={`${import.meta.env.BASE_URL}portrait-320w.jpeg 320w, ${import.meta.env.BASE_URL}portrait-640w.jpeg 640w, ${import.meta.env.BASE_URL}portrait.jpeg 864w`}
+                  sizes="(max-width: 640px) 280px, 320px"
                 />
                 <img
-                  src={`${import.meta.env.BASE_URL}portrait.jpeg`}
+                  src={`${import.meta.env.BASE_URL}portrait-640w.jpeg`}
                   alt="Portrait of Kevin Van Diesel Chansa, Software Engineer"
-                  width={864}
-                  height={1184}
+                  width={320}
+                  height={439}
                   fetchPriority="high"
                   decoding="async"
                   loading="eager"
                   draggable={false}
-                  className={`w-full h-full object-cover contrast-[1.08] brightness-95 transition-all duration-500 select-none ${
+                  className={`w-full h-full object-cover contrast-[1.08] brightness-95 transition-[filter] duration-500 will-change-[filter] select-none ${
                     isColor
                       ? "grayscale-0 sepia-0"
                       : "grayscale sepia-[0.20] group-hover:grayscale-0 group-hover:sepia-0 group-active:grayscale-0 group-active:sepia-0 active:grayscale-0 active:sepia-0"

@@ -3,17 +3,22 @@ import { ProjectCaseStudy, PROJECT_CASE_STUDIES } from "@/data/projectCaseStudie
 import { AccentRule } from "@/components/vellum/VellumComponents";
 
 interface ProjectDetailPageProps {
-  project: ProjectCaseStudy;
+  project?: ProjectCaseStudy;
+  projectId?: string;
   onBack: () => void;
   onSelectProject: (id: string) => void;
 }
 
 export default function ProjectDetailPage({
-  project,
+  project: propProject,
+  projectId,
   onBack,
   onSelectProject,
 }: ProjectDetailPageProps) {
+  const project = propProject ?? PROJECT_CASE_STUDIES.find((p) => p.id === projectId);
+
   useEffect(() => {
+    if (!project) return;
     window.scrollTo({ top: 0, behavior: "instant" });
     const originalTitle = document.title;
     document.title = `${project.title} | Kevin Chansa`;
@@ -21,6 +26,20 @@ export default function ProjectDetailPage({
       document.title = originalTitle;
     };
   }, [project]);
+
+  if (!project) {
+    return (
+      <div className="min-h-screen bg-[var(--c-bg)] flex flex-col items-center justify-center p-8 text-center">
+        <p className="font-mono text-sm text-[var(--c-emphasis)] mb-4">SPECIFICATION NOT FOUND</p>
+        <button
+          onClick={onBack}
+          className="font-mono text-xs px-4 py-2 border border-[var(--c-border)] text-[var(--c-fg)] hover:border-[var(--c-emphasis)]"
+        >
+          ← Return to Overview
+        </button>
+      </div>
+    );
+  }
 
   const currentIndex = PROJECT_CASE_STUDIES.findIndex((p) => p.id === project.id);
   const prevProject =

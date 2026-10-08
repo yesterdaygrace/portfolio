@@ -52,12 +52,12 @@ export default function TechStack() {
               >
                 <CategoryStackIcon id={cat.id} size={17} color="#F7F1E2" />
               </span>
-              <h4
-                className="text-xl sm:text-2xl font-semibold tracking-tight"
+              <h3
+                className="font-sans text-xl sm:text-2xl font-semibold tracking-tight"
                 style={{ color: "var(--c-fg)" }}
               >
                 {cat.name}
-              </h4>
+              </h3>
             </div>
 
             <p

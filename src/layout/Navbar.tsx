@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 function GithubIcon({ size = 14 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -171,7 +170,7 @@ export default function Navbar() {
     <>
       <header
         ref={headerRef}
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-200 backdrop-blur-md border-b"
+        className="fixed top-0 left-0 right-0 z-50 transition-colors duration-200 backdrop-blur-md border-b"
         style={{
           backgroundColor: "rgba(46, 51, 68, 0.88)",
           borderColor: "rgba(247, 241, 226, 0.12)",
@@ -275,87 +274,77 @@ export default function Navbar() {
       </header>
 
       {/* Mobile drawer and backdrop scrim */}
-      <AnimatePresence>
-        {menuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.18 }}
-              className="fixed inset-0 bg-[#181B25]/70 backdrop-blur-sm z-40 md:hidden"
-              onClick={() => setMenuOpen(false)}
-              aria-hidden="true"
-            />
-            <motion.div
-              id="mobile-drawer"
-              data-mobile-drawer
-              role="dialog"
-              aria-modal="true"
-              aria-label="Mobile navigation menu"
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed md:hidden z-50 border-b shadow-2xl"
-              style={{
-                top: "3.5rem",
-                left: 0,
-                right: 0,
-                backgroundColor: "var(--c-bg-deep)",
-                borderColor: "var(--c-border)",
-              }}
-            >
-          <div className="p-6 font-sans text-sm font-medium">
-            <div className="flex flex-col gap-2 mb-6">
-              {NAV_LINKS.map((link) => (
+      {menuOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-[#181B25]/70 backdrop-blur-sm z-40 md:hidden animate-scrim-in"
+            onClick={() => setMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <div
+            id="mobile-drawer"
+            data-mobile-drawer
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
+            className="fixed md:hidden z-50 border-b shadow-2xl animate-drawer-in"
+            style={{
+              top: "3.5rem",
+              left: 0,
+              right: 0,
+              backgroundColor: "var(--c-bg-deep)",
+              borderColor: "var(--c-border)",
+            }}
+          >
+            <div className="p-6 font-sans text-sm font-medium">
+              <div className="flex flex-col gap-2 mb-6">
+                {NAV_LINKS.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => scrollTo(link.id, e)}
+                    className="py-2.5 px-3 border-b border-[var(--c-border)] flex items-center justify-between"
+                    style={{
+                      color:
+                        activeId === link.id
+                          ? "var(--c-emphasis)"
+                          : "var(--c-fg)",
+                    }}
+                  >
+                    <span>{link.label}</span>
+                    <span className="text-[var(--c-accent)]">→</span>
+                  </a>
+                ))}
                 <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => scrollTo(link.id, e)}
-                  className="py-2.5 px-3 border-b border-[var(--c-border)] flex items-center justify-between"
-                  style={{
-                    color:
-                      activeId === link.id
-                        ? "var(--c-emphasis)"
-                        : "var(--c-fg)",
-                  }}
+                  href={`${import.meta.env.BASE_URL}cv-kevin-chansa.pdf`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2.5 px-3 border-b border-[var(--c-border)] flex items-center justify-between font-semibold"
+                  style={{ color: "var(--c-emphasis)" }}
                 >
-                  <span>{link.label}</span>
-                  <span className="text-[var(--c-accent)]">→</span>
+                  <span>Download CV (PDF)</span>
+                  <span>↗</span>
                 </a>
-              ))}
-              <a
-                href={`${import.meta.env.BASE_URL}cv-kevin-chansa.pdf`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-2.5 px-3 border-b border-[var(--c-border)] flex items-center justify-between font-semibold"
-                style={{ color: "var(--c-emphasis)" }}
-              >
-                <span>Download CV (PDF)</span>
-                <span>↗</span>
-              </a>
-            </div>
+              </div>
 
-            <div className="flex items-center gap-4 pt-2 text-[var(--c-accent)]">
-              {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  aria-label={label}
-                  className="p-1.5 hover:text-[var(--c-fg)] transition-colors"
-                >
-                  <Icon size={16} />
-                </a>
-              ))}
+              <div className="flex items-center gap-4 pt-2 text-[var(--c-accent)]">
+                {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    aria-label={label}
+                    className="p-1.5 hover:text-[var(--c-fg)] transition-colors"
+                  >
+                    <Icon size={16} />
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-        </motion.div>
-      </>
-    )}
-  </AnimatePresence>
+        </>
+      )}
   </>
   );
 }

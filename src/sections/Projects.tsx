@@ -248,7 +248,7 @@ export default function Projects({ onSelectProject }: ProjectsProps) {
                         height={project.imgHeight}
                         loading="lazy"
                         decoding="async"
-                        className="w-full h-full object-cover contrast-[1.03] group-hover:scale-[1.02] transition-all duration-300"
+                        className="w-full h-full object-cover contrast-[1.03] group-hover:scale-[1.02] transition-transform duration-300 will-change-transform"
                       />
                     </picture>
                   </a>

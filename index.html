@@ -39,15 +39,30 @@
       "@type": "Person",
       "name": "Kevin Van Diesel Chansa",
       "jobTitle": "Software Engineer",
+      "description": "Full-stack engineer shipping practical software: backend systems, relational database architecture, and accessible web applications.",
       "email": "mailto:kevinvandieselchansa@gmail.com",
       "url": "https://yesterdaygrace.github.io/portfolio/",
       "image": "https://yesterdaygrace.github.io/portfolio/portrait.jpeg",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Salatiga",
+        "addressLocality": "Semarang",
         "addressRegion": "Central Java",
         "addressCountry": "ID"
       },
+      "knowsAbout": [
+        "Backend Architecture",
+        "Go (Golang)",
+        "Laravel",
+        "PHP",
+        "PostgreSQL",
+        "MySQL",
+        "TypeScript",
+        "React",
+        "Vue.js",
+        "Docker",
+        "Linux",
+        "RESTful APIs"
+      ],
       "sameAs": [
         "https://github.com/yesterdaygrace",
         "https://www.linkedin.com/in/kevin-van-diesel-chansa/",
@@ -58,8 +73,16 @@
 
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
 
-    <!-- Preload LCP Hero Portrait (WebP) -->
-    <link rel="preload" as="image" href="%BASE_URL%portrait.webp" type="image/webp" fetchpriority="high" />
+    <!-- Preload LCP Hero Portrait (Responsive WebP) -->
+    <link
+      rel="preload"
+      as="image"
+      href="%BASE_URL%portrait-320w.webp"
+      imagesrcset="%BASE_URL%portrait-320w.webp 320w, %BASE_URL%portrait-640w.webp 640w, %BASE_URL%portrait.webp 864w"
+      imagesizes="(max-width: 640px) 280px, 320px"
+      type="image/webp"
+      fetchpriority="high"
+    />
 
     <!-- Fonts — asynchronous loading with noscript fallback to eliminate render-blocking stylesheet -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
