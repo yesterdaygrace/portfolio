@@ -76,9 +76,230 @@ export interface ProjectCaseStudy {
 
 export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
   {
+    id: "sijisiyu",
+    badge: "LOCAL-FIRST ENGINE · 2026",
+    figNumber: "FIG 01",
+    figCaption: "OLED THREADS VAULT & REAL-TIME SYNC CONSOLE",
+    title: "SijiSiyu: Local-First Threads Archive & Sync Engine",
+    subtitle: "Encrypted OAuth token vault, WAL-mode SQLite ledger, and real-time SSE sync engine",
+    description:
+      "A high-performance local-first Threads library and synchronization backend built with Nuxt 4, Vue 3.5, Nitro Engine, and SQLite in WAL mode. Features AES-256-GCM encryption for Meta OAuth access tokens at rest, SHA-256 session token hashing, real-time Server-Sent Events, dynamic collections, and an OLED minimalist reading interface.",
+    year: "2026",
+    type: "Local-First Social Archive & Engine",
+    status: "PRODUCTION ARCHITECTURE",
+    client: "Personal Open-Source Project",
+    role: "Full-Stack Systems Engineer & Database Architect",
+    tech: [
+      "Nuxt 4",
+      "Vue.js 3.5",
+      "Nitro Engine",
+      "SQLite (WAL)",
+      "better-sqlite3",
+      "Server-Sent Events",
+      "Tailwind CSS",
+      "Meta Threads API",
+      "AES-256-GCM",
+      "TypeScript 5.8",
+    ],
+    thumbnail: `${import.meta.env.BASE_URL}sijisiyu-dashboard.png`,
+    thumbnailWebp: `${import.meta.env.BASE_URL}sijisiyu-dashboard.webp`,
+    imgWidth: 1920,
+    imgHeight: 1080,
+    githubUrl: "https://github.com/yesterdaygrace/SijiSiyu",
+    stats: [
+      {
+        label: "Token Security",
+        value: "AES-256-GCM",
+        detail: "Zero plaintext credentials at rest; separate IV, ciphertext, and authentication tags",
+      },
+      {
+        label: "Storage Engine",
+        value: "SQLite WAL Mode",
+        detail: "Sub-millisecond read/write latency with concurrent readers and atomic transactions",
+      },
+      {
+        label: "Real-Time Push",
+        value: "Server-Sent Events",
+        detail: "Low-overhead unidirectional SSE stream (/api/events) pushing reactive Vue updates",
+      },
+      {
+        label: "Session Hardening",
+        value: "SHA-256 Hash Vault",
+        detail: "HttpOnly SameSite cookies where database stores only cryptographic token hashes",
+      },
+    ],
+    executiveSummary: {
+      problem:
+        "Modern social platforms like Meta Threads lack a robust native saved-post organization system, offer limited categorization, and do not provide an open endpoint for bookmark browsing, while exposing users to credential vulnerabilities and tracking parameters when sharing permalinks. The official API also lacks direct endpoints for bookmarks, requiring private local storage and scanner ingestion.",
+      solution:
+        "Architected SijiSiyu as a local-first archiving engine pairing an official Meta Threads OAuth API backend with an encrypted local SQLite database, WAL-mode concurrency, real-time Server-Sent Events, and an OLED-optimized minimalist Vue 3 interface.",
+      outcome:
+        "Delivers instant sub-millisecond local search across thousands of posts, complete user ownership of saved content, bulletproof cryptographic credential security, and clean parameter-stripped link generation.",
+    },
+    architecture: {
+      topology:
+        "Local-first client-server topology powered by Nuxt 4 and Nitro engine, executing against an embedded SQLite WAL database with unidirectional SSE sync streaming and client-side reactive Pinia/composables state.",
+      stackDetails: [
+        {
+          category: "Full-Stack Framework",
+          tech: "Nuxt 4 & Nitro Engine",
+          rationale:
+            "Unified server routes for SQLite, Meta OAuth flow, and Server-Sent Events with Vue 3 Composition API frontend.",
+        },
+        {
+          category: "Storage Engine",
+          tech: "better-sqlite3 with WAL Mode",
+          rationale:
+            "Enables PRAGMA journal_mode = WAL and PRAGMA foreign_keys = ON for non-blocking concurrent reads and ACID transactions.",
+        },
+        {
+          category: "Real-Time Sync",
+          tech: "Server-Sent Events (SSE)",
+          rationale:
+            "Provides a lightweight unidirectional communication channel from Nitro server to frontend without WebSocket connection overhead.",
+        },
+        {
+          category: "Security & Encryption",
+          tech: "AES-256-GCM & SHA-256",
+          rationale:
+            "Encrypts access tokens at rest using authenticated ciphertext, IV, and tag; sessions store only SHA-256 hashes.",
+        },
+        {
+          category: "Styling & Design System",
+          tech: "Tailwind CSS (OLED Pure Black)",
+          rationale:
+            "Custom dark theme (#000000, #0c0c0c, #141414, #222222) built for low power consumption, clarity, and zero visual clutter.",
+        },
+      ],
+    },
+    keyDecisions: [
+      {
+        title: "Authenticated Token Encryption at Rest (AES-256-GCM)",
+        problem:
+          "Meta Threads OAuth tokens grant access to user profile data and must never be stored in plaintext or exposed to client-side scripts.",
+        decision:
+          "Implemented AES-256-GCM authenticated encryption in security utilities. Each token encryption generates a unique initialization vector (IV) and stores ciphertext, IV, and authentication tag in separate columns.",
+        impact:
+          "Guarantees data confidentiality and tamper detection. Access tokens are decrypted strictly in server memory during outgoing Graph API requests and are never leaked to the client.",
+      },
+      {
+        title: "SQLite WAL Mode & Singleton Account Enforcement",
+        problem:
+          "Standard SQLite rollbacks lock the entire database during write operations, causing UI pauses during bulk post sync, and multi-user contamination must be prevented.",
+        decision:
+          "Enabled PRAGMA journal_mode = WAL and PRAGMA foreign_keys = ON, accompanied by a singleton CHECK constraint (`CHECK (singleton = 1)`) on the account table.",
+        impact:
+          "Concurrent reads and writes proceed without blocking, reducing query latency below 1ms while enforcing single-tenant security invariants at the database level.",
+      },
+      {
+        title: "Unidirectional Server-Sent Events (SSE) for Ingestion Feedback",
+        problem:
+          "Importing large batches of saved posts or syncing via browser extensions requires live progress feedback without heavy bidirectional WebSocket connections.",
+        decision:
+          "Built a dedicated SSE channel (`/api/events`) with heartbeats and event broadcasting integrated directly into Nitro server utilities.",
+        impact:
+          "Clients receive instant optimistic UI updates and progress percentages during sync runs with minimal server memory and zero protocol overhead.",
+      },
+      {
+        title: "Canonical Link Sanitization & Tracking Stripping",
+        problem:
+          "Copying permalinks from social networks includes pervasive marketing query parameters (`?s=...`, `?utm_source=...`) that compromise reader privacy.",
+        decision:
+          "Engineered a 1-click clipboard utility that parses and strips extraneous query parameters, leaving only canonical threads.net permalinks with instant visual feedback.",
+        impact:
+          "Ensures clean, tracking-free links shared to external platforms with guaranteed 2-second inline visual confirmations.",
+      },
+    ],
+    features: [
+      {
+        name: "Local-First Post Vault & Categorization",
+        description:
+          "Instant search, filtering, and multi-tag organization across all saved Threads posts without external server dependencies.",
+        technicalImplementation:
+          "Indexed SQLite queries with dynamic category detection (Development, Design, Articles, Ideas) and custom user collections.",
+      },
+      {
+        name: "Official Meta Threads OAuth Integration",
+        description:
+          "Seamless OAuth 2.0 handshake with Meta Graph API for authenticated profile and post retrieval.",
+        technicalImplementation:
+          "Nitro server handlers manage authorization codes, token exchange, and long-lived token refresh with state parameter validation.",
+      },
+      {
+        name: "Real-Time Ingestion & Sync Monitor",
+        description:
+          "Live progress tracking and status indicators for manual imports, sample population, and scanner syncs.",
+        technicalImplementation:
+          "SyncManager utility broadcasts progress payloads over SSE, updating Vue reactive state in real time.",
+      },
+      {
+        name: "Clean Link Generation & Clipboard Utility",
+        description:
+          "One-click URL sanitization that strips tracking parameters and generates clean canonical permalinks.",
+        technicalImplementation:
+          "URL parsing and regex filtering coupled with browser clipboard API and animated status notifications.",
+      },
+    ],
+    dataIntegrity: {
+      summary:
+        "The relational SQLite database enforces strict relational constraints, foreign keys with cascade deletions, and singleton table constraints.",
+      rules: [
+        "Singleton constraint (singleton = 1) guarantees only one authenticated account exists at any time.",
+        "Foreign key constraints with ON DELETE CASCADE ensure post_collections links are automatically pruned when collections are removed.",
+        "Session tokens stored strictly as SHA-256 hashes to prevent token leakage even during physical database inspection.",
+        "Unique primary keys on post permalinks prevent duplicate imports during repeated sync runs.",
+      ],
+      schemaHighlights: [
+        {
+          table: "account",
+          role: "Stores connected Threads account and encrypted OAuth credentials",
+          constraints: "PRIMARY KEY (singleton CHECK (singleton = 1)), NOT NULL (user_id, access_token_ciphertext)",
+        },
+        {
+          table: "saved_posts",
+          role: "Primary post archive storing author, text content, timestamps, and payload JSON",
+          constraints: "PRIMARY KEY (permalink), INDEX (username), INDEX (timestamp)",
+        },
+        {
+          table: "collections",
+          role: "User-defined categories and auto-tagging keyword definitions",
+          constraints: "PRIMARY KEY (id), NOT NULL (name)",
+        },
+        {
+          table: "post_collections",
+          role: "Join table associating saved posts with user collections",
+          constraints: "PRIMARY KEY (post_permalink, collection_id), FOREIGN KEY ON DELETE CASCADE",
+        },
+        {
+          table: "sessions",
+          role: "Server-side sessions authenticated with HttpOnly cookies",
+          constraints: "PRIMARY KEY (token_hash), NOT NULL (expires_at)",
+        },
+      ],
+    },
+    visuals: [
+      {
+        title: "OLED Threads Vault Dashboard",
+        caption: "Main library view displaying active post collections, category tags, and responsive card layouts.",
+        image: `${import.meta.env.BASE_URL}sijisiyu-dashboard.png`,
+        alt: "SijiSiyu OLED Library Dashboard",
+      },
+    ],
+    verification: {
+      summary:
+        "Validated with comprehensive automated test suites including database tests, clipboard utilities, AES encryption validation, and TypeScript strict checks.",
+      checks: [
+        "Verified database CRUD operations, cascade deletions, and singleton constraints with better-sqlite3 in WAL mode.",
+        "Tested AES-256-GCM encryption and decryption roundtrips verifying IV uniqueness and auth tag tamper rejection.",
+        "Confirmed URL sanitization strips all tracking query parameters (?s=..., ?utm_...) reliably.",
+        "Ran strict TypeScript and Vue typecheck suites confirming zero compilation errors.",
+      ],
+    },
+  },
+  {
     id: "dapense",
     badge: "INSTITUTIONAL PRODUCTION · 2024 - 2025",
-    figNumber: "FIG 01",
+    figNumber: "FIG 02",
     figCaption: "EXECUTIVE GENERAL LEDGER & CASH AUDIT DASHBOARD",
     title: "DAPENSE: Pension Fund Financial Information System",
     subtitle: "Audited double-entry general ledger, period closing, and regulatory reporting platform",
@@ -276,204 +497,6 @@ export const PROJECT_CASE_STUDIES: ProjectCaseStudy[] = [
         "Verified period close process generated identical trial balance sums across 100+ accounts.",
         "Confirmed operator role accounts cannot access posting operations or user management routes.",
         "Executed dual-engine migration scripts on both MySQL 8 and PostgreSQL 16 with zero schema divergence.",
-      ],
-    },
-  },
-  {
-    id: "inventra",
-    badge: "FEATURED PLATFORM · 2026",
-    figNumber: "FIG 02",
-    figCaption: "DARK MODE DASHBOARD & STOCK LEDGER",
-    title: "Inventra: Multi-Warehouse Inventory System",
-    subtitle: "High-integrity inventory management engine with atomic transactions and append-only ledgers",
-    description:
-      "A production-minded inventory management system built with Go 1.24 (Gin), PostgreSQL 17, React 19, and TypeScript. Features multi-warehouse stock ledgers, reservations with lazy expiration, cycle counts, fine-grained RBAC, and append-only transactional audit trails.",
-    year: "2026",
-    type: "Backend Inventory Platform",
-    status: "PRODUCTION ARCHITECTURE",
-    client: "Production Engineering Reference Implementation",
-    role: "Backend Architect & Full-Stack Engineer",
-    tech: ["Go 1.24", "Gin 1.11", "PostgreSQL 17", "GORM", "React 19", "TypeScript", "Docker", "Tailwind CSS 4"],
-    thumbnail: `${import.meta.env.BASE_URL}inventra-dashboard.png`,
-    thumbnailWebp: `${import.meta.env.BASE_URL}inventra-dashboard.webp`,
-    imgWidth: 1905,
-    imgHeight: 1128,
-    githubUrl: "https://github.com/yesterdaygrace/Inventra",
-    stats: [
-      {
-        label: "Relational Schema",
-        value: "17 Tables / 13 Migrations",
-        detail: "30+ check constraints with composite unique product-warehouse keys",
-      },
-      {
-        label: "Atomic Operations",
-        value: "8 Transactional Workflows",
-        detail: "11 row-level locks via SELECT FOR UPDATE preventing race conditions",
-      },
-      {
-        label: "Stock Accuracy",
-        value: "Append-Only Ledger",
-        detail: "Derived balances via window queries; corrections recorded as adjustment rows",
-      },
-      {
-        label: "Audit Coverage",
-        value: "Dual Audit Trails",
-        detail: "activity_logs tracks who/what/IP/diffs; inventory_ledger tracks stock units",
-      },
-    ],
-    executiveSummary: {
-      problem:
-        "Multi-warehouse logistics operations routinely face stock discrepancies, overselling under high concurrency, and unrecorded inventory adjustments. When multiple employees issue stock simultaneously without row locking, database counts diverge from warehouse reality.",
-      solution:
-        "Built a backend inventory management platform in Go 1.24 and PostgreSQL 17. The system models inventory per warehouse using composite keys, executes stock mutations inside atomic database transactions with row-level locks, and isolates reservation holds from available quantities.",
-      outcome:
-        "Eliminated inventory overselling and partial write anomalies. Every physical movement is preserved in an append-only ledger, and all user mutations include complete before/after state diffs with request IDs.",
-    },
-    architecture: {
-      topology:
-        "React 19 single-page application communicates with a Go Gin REST API via JSON. Handlers validate requests with validator/v10 and invoke service layer workflows. Business operations execute inside database transactions holding SELECT ... FOR UPDATE row locks in PostgreSQL 17.",
-      stackDetails: [
-        {
-          category: "Language & Runtime",
-          tech: "Go 1.24",
-          rationale: "Delivers low latency, minimal memory overhead, and typed concurrency safety.",
-        },
-        {
-          category: "Web Framework",
-          tech: "Gin 1.11",
-          rationale: "High-performance HTTP routing, middleware chaining, and structured error responses.",
-        },
-        {
-          category: "Database & Driver",
-          tech: "PostgreSQL 17 via pgx & GORM",
-          rationale: "Row locking primitives, check constraints, composite indexing, and migration isolation.",
-        },
-        {
-          category: "Frontend UI",
-          tech: "React 19 & TypeScript 5.7",
-          rationale: "TanStack Query state management, responsive dark mode layout, and typed form validation.",
-        },
-      ],
-    },
-    keyDecisions: [
-      {
-        title: "Per-Warehouse Composite Keys",
-        problem:
-          "Simple schemas store quantity directly on the product row, preventing tracking across multiple warehouse facilities.",
-        decision:
-          "Separated products from physical inventory by creating an inventory table with UNIQUE(product_id, warehouse_id).",
-        impact:
-          "The same SKU is tracked independently across warehouses (e.g. 10 units in Main, 4 in East Hub) with zero schema changes.",
-      },
-      {
-        title: "Atomic Row-Level Locking (SELECT FOR UPDATE)",
-        problem:
-          "Two concurrent requests to issue 5 units from a stock of 5 would both read available=5, subtract 5, and leave the count at 0 while shipping 10 units.",
-        decision:
-          "Applied GORM clause.Locking{Strength: 'UPDATE'} across 11 mutation paths (receive, issue, transfer, reserve, consume, adjust). Held inside transaction until COMMIT.",
-        impact:
-          "0% oversell risk. Concurrent operations queue in order at the database row level, preventing race conditions.",
-      },
-      {
-        title: "Append-Only Inventory Ledger",
-        problem:
-          "Modifying stock balances in-place erases historical operational context and makes audit reconciliation impossible.",
-        decision:
-          "Engineered an inventory_ledger table where rows are strictly immutable. Corrections require new ADJUSTMENT records.",
-        impact:
-          "Provides a complete financial-grade audit trail. Warehouse balances can be verified at any historical point in time.",
-      },
-    ],
-    features: [
-      {
-        name: "Warehouse-to-Warehouse Stock Transfers",
-        description:
-          "Moves stock between locations while maintaining total quantity conservation across the enterprise.",
-        technicalImplementation:
-          "Locks source and destination warehouse rows in a single transaction, writing two balanced ledger entries sharing one transfer_id.",
-      },
-      {
-        name: "Stock Reservations with Lazy Expiry",
-        description:
-          "Temporarily reserves items for sales orders without immediate deduction from physical warehouse counts.",
-        technicalImplementation:
-          "Calculates available = quantity - active reservations. Stale reservations expire automatically on subsequent queries.",
-      },
-      {
-        name: "Cycle Counts & Discrepancy Workflows",
-        description:
-          "Enables periodic physical inventory audits with manager review for discovered variances.",
-        technicalImplementation:
-          "Generates cycle count plans with item snapshots. Approved variances insert audited ADJUSTMENT ledger entries.",
-      },
-      {
-        name: "Dual-Trail Activity & Security Auditing",
-        description:
-          "Captures user actions with network metadata, payload diffs, and distributed request identifiers.",
-        technicalImplementation:
-          "Asynchronously writes to activity_logs with before_data and after_data JSON payloads without blocking transaction commits.",
-      },
-    ],
-    dataIntegrity: {
-      summary:
-        "PostgreSQL 17 enforces data correctness through 30+ check constraints, foreign keys, and unique indexes managed via 13 golang-migrate migration scripts.",
-      rules: [
-        "CHECK quantity >= 0 on inventory prevents negative stock balances.",
-        "CHECK direction IN ('IN', 'OUT') on ledger enforces valid movement types.",
-        "Idempotency keys with 24-hour TTL prevent duplicate transactions on network retries.",
-        "Database roles and permissions are enforced by Gin middleware prior to handler execution.",
-      ],
-      schemaHighlights: [
-        {
-          table: "inventory",
-          role: "Physical quantity and reserved units per product per warehouse",
-          constraints: "UNIQUE (product_id, warehouse_id), CHECK (quantity >= 0)",
-        },
-        {
-          table: "inventory_ledger",
-          role: "Append-only movement records for receipts, issues, transfers, and adjustments",
-          constraints: "FOREIGN KEY (product_id), FOREIGN KEY (warehouse_id), CHECK (quantity > 0)",
-        },
-        {
-          table: "inventory_reservations",
-          role: "Order reservations with status (ACTIVE, CONSUMED, EXPIRED, RELEASED)",
-          constraints: "FOREIGN KEY (inventory_id), INDEX (status, expires_at)",
-        },
-        {
-          table: "activity_logs",
-          role: "User audit trail recording actions, IP addresses, and state modifications",
-          constraints: "FOREIGN KEY (user_id), INDEX (created_at), JSONB before/after columns",
-        },
-      ],
-    },
-    visuals: [
-      {
-        title: "Per-Warehouse Inventory Ledger",
-        caption: "Stock levels by SKU across locations with low-stock warning indicators.",
-        image: `${import.meta.env.BASE_URL}projects/inventra/demo-13-inventory.png`,
-        alt: "Inventra Inventory Overview",
-      },
-      {
-        title: "Stock Movements & Transfers",
-        caption: "Transactional history displaying receipts, issues, and dual-record transfers.",
-        image: `${import.meta.env.BASE_URL}projects/inventra/demo-14-transactions.png`,
-        alt: "Inventra Stock Transactions",
-      },
-      {
-        title: "Security & Mutation Audit Log",
-        caption: "Detailed event log containing actor IDs, IP origins, and payload state snapshots.",
-        image: `${import.meta.env.BASE_URL}projects/inventra/demo-18-activity.png`,
-        alt: "Inventra Activity Log",
-      },
-    ],
-    verification: {
-      summary:
-        "Validated with automated Go unit tests, database transaction suites using real PostgreSQL containers, and golangci-lint checks.",
-      checks: [
-        "Tested simultaneous checkout routines verifying zero overdraw under concurrent goroutine load.",
-        "Verified transfer workflows conserve total quantity across source and target warehouses.",
-        "Confirmed idempotency middleware returns identical responses for retried request tokens.",
-        "Audited 100% of mutation handlers for activity logging and input validation tags.",
       ],
     },
   },

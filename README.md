@@ -33,15 +33,27 @@ The portfolio documents five software systems across financial, inventory, concu
 ├─────────────────┬──────────────────┬─────────────────┬──────────────────────┤
 │ System          │ Domain           │ Primary Stack   │ Core Guarantee       │
 ├─────────────────┼──────────────────┼─────────────────┼──────────────────────┤
-│ 1. DAPENSE      │ Pension Finance  │ Laravel, MySQL  │ Zero-balance trigger │
-│ 2. Inventra     │ Warehouse Stock  │ Go, Postgres 17 │ 11 row-level locks   │
+│ 1. SijiSiyu     │ Social Archive   │ Nuxt 4, SQLite  │ AES-256-GCM Vault    │
+│ 2. DAPENSE      │ Pension Finance  │ Laravel, MySQL  │ Zero-balance trigger │
 │ 3. CinemaSystem │ Concurrency API  │ Go, Redis Lock  │ btree_gist exclusion │
 │ 4. DevScout     │ Recruitment CRM  │ Vue 3, Supabase │ 6-factor algorithm   │
 │ 5. Nodex        │ Workspace Engine │ Go, Postgres 16 │ Sub-5ms API latency  │
 └─────────────────┴──────────────────┴─────────────────┴──────────────────────┘
 ```
 
-### 1. DAPENSE : Pension Fund Financial Information System
+### 1. SijiSiyu : Local-First Threads Archive & Sync Engine
+- **Classification:** Local-First Social Archive & Backend Engine (2026)
+- **Repository:** [github.com/yesterdaygrace/SijiSiyu](https://github.com/yesterdaygrace/SijiSiyu)
+- **Stack:** Nuxt 4, Vue 3.5, Nitro Engine, TypeScript 5.8, SQLite (`better-sqlite3` in WAL mode), Server-Sent Events, Tailwind CSS, Meta Threads API, AES-256-GCM
+- **Problem Solved:** Social platforms like Meta Threads lack advanced native post categorization, bookmark retrieval endpoints, and exportable personal ownership, while exposing users to credential vulnerabilities and tracking parameters when sharing permalinks.
+- **Architectural Highlights:**
+  - Authenticated token encryption at rest: access tokens are encrypted with AES-256-GCM using unique IVs and stored alongside authentication tags; tokens are decrypted strictly in server memory during outgoing requests.
+  - SQLite WAL mode concurrency: configured with `PRAGMA journal_mode = WAL` and foreign key cascade invariants for sub-millisecond query execution without read/write blocking.
+  - Singleton account constraint (`CHECK (singleton = 1)`) enforcing strict single-tenant credential boundary at the database layer.
+  - Real-time Server-Sent Events stream (`/api/events`) pushing live sync progress and database mutations directly into Vue 3 reactive composables.
+  - Privacy-preserving link generation: 1-click clipboard utility strips tracking parameters (`?s=...`, `?utm_...`) leaving clean canonical permalinks with instant visual feedback.
+
+### 2. DAPENSE : Pension Fund Financial Information System
 - **Classification:** Institutional Production Platform (2024 - 2025)
 - **Target Entity:** Dana Pensiun Sekolah Kristen Salatiga (Salatiga Christian School Pension Fund Foundation)
 - **Stack:** Laravel 11, PHP 8.3, MySQL (3NF) with PostgreSQL 16 portable profile, Tailwind CSS, Nginx, Linux
@@ -51,17 +63,6 @@ The portfolio documents five software systems across financial, inventory, concu
   - Automated period closing (*Tutup Buku*) locks historical transactions against post-closure tampering and captures immutable trial balance snapshots (`neraca_saldos`).
   - Out-of-the-box statutory reporting engine generating 9 regulatory financial statements conforming to Indonesian PSAK 18 and Otoritas Jasa Keuangan (OJK) pension fund guidelines.
   - Four-tier Role-Based Access Control (`rootsuperuser`, `admin`, `operator`, `bod`) enforced by 8 server-side policies and 4 authorization gates.
-
-### 2. Inventra : Multi-Warehouse Inventory System
-- **Classification:** Backend Inventory Management Platform (2026)
-- **Stack:** Go 1.24, Gin 1.11, PostgreSQL 17, GORM (pgx driver), golang-migrate, React 19, TypeScript, Tailwind CSS 4
-- **Problem Solved:** Prevents inventory overselling and ledger drift across multiple physical warehouse branches during simultaneous checkout and stock movement operations.
-- **Architectural Highlights:**
-  - Composite key design (`UNIQUE(product_id, warehouse_id)`) tracks identical SKUs independently per warehouse facility across 17 normalized tables and 13 migrations.
-  - Eight atomic workflows executed inside database transactions with 11 row-level locks (`SELECT ... FOR UPDATE` via `clause.Locking{Strength: "UPDATE"}`) covering receipts, issues, transfers, and adjustments.
-  - Stock availability derived formula (`available = quantity - active reservations`) paired with lazy expiration (`expireStaleReservations`) to prevent double-allocation.
-  - Append-only inventory ledger (`inventory_ledger`) where balances are computed dynamically; physical discrepancies are resolved exclusively through audited adjustment entries.
-  - Dual-trail auditing: `activity_logs` records actors, IP origins, and before/after JSON diffs; `inventory_ledger` records physical item movements.
 
 ### 3. CinemaSystem : High-Concurrency Cinema Ticketing API
 - **Classification:** Distributed Concurrency Engine (2026)
@@ -159,13 +160,12 @@ portfolio/
 │   ├── .well-known/            # security.txt
 │   ├── projects/               # High-res architecture diagrams and screenshots
 │   │   ├── cinemasystem/       # Topology, flowchart, and ERD diagrams
-│   │   ├── dapense/            # COA workspace, journal entries, ledger views
-│   │   └── inventra/           # Inventory stock ledger, transactions, audit logs
+│   │   └── dapense/            # COA workspace, journal entries, ledger views
 │   ├── cinemasystem-dashboard.png
 │   ├── dapense-dashboard.png
 │   ├── devscout-dashboard.png
-│   ├── inventra-dashboard.png
 │   ├── nodex-dashboard.png
+│   ├── sijisiyu-dashboard.png
 │   ├── portrait.jpeg
 │   ├── robots.txt
 │   └── sitemap.xml
