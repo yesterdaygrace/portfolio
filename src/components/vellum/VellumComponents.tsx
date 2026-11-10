@@ -20,14 +20,14 @@ export function PinAnnotation({
       style={{ color: "var(--c-accent)" }}
     >
       {counter && (
-        <div className="font-semibold tracking-wider mb-1 text-[11px]">
+        <div className="font-semibold tracking-wider mb-1 text-[13px]">
           {counter}
         </div>
       )}
       <div className="tracking-wide">{note}</div>
       {secondaryNote && (
         <div
-          className="mt-0.5 text-[11px] tracking-wide"
+          className="mt-0.5 text-[13px] tracking-wide"
           style={{ color: "var(--c-accent)" }}
         >
           {secondaryNote}

@@ -10,7 +10,7 @@ export default function Experience() {
     <section id="experience" ref={sectionRef} className="vellum-section">
       {/* ── Section Header (Normalized Rhythm) ────────────────────────────── */}
       <header className="section-header">
-        <span className="section-label">04 / CHRONOLOGICAL RECORD · 2024 — 2025</span>
+        <span className="section-label">CHRONOLOGICAL RECORD · 2024 — 2025</span>
         <h2 className="section-title">
           Production engineering with <em>documented impact</em>.
         </h2>
@@ -42,7 +42,7 @@ export default function Experience() {
                   {exp.period.replace(/\s*–\s*/, " — ")}
                 </span>
                 <span
-                  className="font-mono text-[11px] block mt-1"
+                  className="font-mono text-[13px] block mt-1"
                   style={{ color: "var(--c-fg-2)" }}
                 >
                   {exp.company} · {exp.location}
@@ -79,7 +79,7 @@ export default function Experience() {
                       {m.value.replace(/–/g, " – ")}
                     </span>
                     <span
-                      className="font-mono text-[11px] uppercase tracking-wider"
+                      className="font-mono text-[13px] uppercase tracking-wider"
                       style={{ color: "var(--c-accent)" }}
                     >
                       {m.label}
@@ -93,7 +93,7 @@ export default function Experience() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 mt-6">
               <div className="lg:col-span-3">
                 <span
-                  className="font-mono text-[11px] uppercase tracking-widest block"
+                  className="font-mono text-[13px] uppercase tracking-widest block"
                   style={{ color: "var(--c-accent)" }}
                 >
                   Key Contributions
@@ -107,7 +107,7 @@ export default function Experience() {
                     <div className="space-y-6 mb-6">
                       {highlights.length > 0 && (
                         <div>
-                          <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--c-emphasis)] block mb-3 font-semibold">
+                          <span className="font-mono text-[13px] uppercase tracking-wider text-[var(--c-emphasis)] block mb-3 font-semibold">
                             Key System Deliverables:
                           </span>
                           <ul className="space-y-3">
@@ -128,7 +128,7 @@ export default function Experience() {
 
                       {exp.description.length > 0 && (
                         <div className="pt-4 border-t border-[var(--c-border)]">
-                          <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--c-accent)] block mb-3 font-medium">
+                          <span className="font-mono text-[13px] uppercase tracking-wider text-[var(--c-accent)] block mb-3 font-medium">
                             Infrastructure &amp; Operational Scope:
                           </span>
                           <ul className="space-y-2.5">
@@ -153,7 +153,7 @@ export default function Experience() {
                 {/* Tech stack items as Vellum mono tags */}
                 <div className="pt-4 border-t border-[var(--c-border)] flex items-center gap-2 flex-wrap">
                   <span
-                    className="font-mono text-[10px] uppercase tracking-wider mr-2"
+                    className="font-mono text-[13px] uppercase tracking-wider mr-2"
                     style={{ color: "var(--c-accent)" }}
                   >
                     Tech Applied:

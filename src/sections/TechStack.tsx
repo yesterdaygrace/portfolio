@@ -11,7 +11,7 @@ export default function TechStack() {
     <section id="stack" ref={sectionRef} className="vellum-section">
       {/* ── Section Header (Normalized Rhythm) ────────────────────────────── */}
       <header className="section-header">
-        <span className="section-label">03 / CAPABILITIES &amp; PRODUCTION STACK</span>
+        <span className="section-label">CAPABILITIES &amp; PRODUCTION STACK</span>
         <h2 className="section-title">
           Tools selected for <em>reliability</em>, not novelty.
         </h2>
@@ -37,7 +37,7 @@ export default function TechStack() {
                 DISCIPLINE 0{idx + 1}
               </span>
               <span
-                className="font-mono text-[11px] tracking-wider uppercase"
+                className="font-mono text-[13px] tracking-wider uppercase"
                 style={{ color: "var(--c-accent)" }}
               >
                 {cat.skills.length} COMPETENCIES

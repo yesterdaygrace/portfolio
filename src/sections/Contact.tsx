@@ -19,7 +19,7 @@ export default function Contact() {
     >
       <div>
         <header className="section-header max-w-4xl">
-          <span className="section-label">05 / CLOSING CHAPTER · CONNECT</span>
+          <span className="section-label">CONNECT</span>
           <h2 className="section-title">
             Let’s build something <em>durable</em>.
           </h2>
@@ -77,7 +77,7 @@ export default function Contact() {
             style={{ color: "var(--c-fg-2)" }}
           >
             <div>
-              <span className="font-mono text-[11px] block text-[var(--c-accent)] mb-1 uppercase">
+              <span className="font-mono text-[13px] block text-[var(--c-accent)] mb-1 uppercase">
                 Typography
               </span>
               <p>
@@ -87,7 +87,7 @@ export default function Contact() {
               </p>
             </div>
             <div>
-              <span className="font-mono text-[11px] block text-[var(--c-accent)] mb-1 uppercase">
+              <span className="font-mono text-[13px] block text-[var(--c-accent)] mb-1 uppercase">
                 Palette
               </span>
               <p>
@@ -96,7 +96,7 @@ export default function Contact() {
               </p>
             </div>
             <div>
-              <span className="font-mono text-[11px] block text-[var(--c-accent)] mb-1 uppercase">
+              <span className="font-mono text-[13px] block text-[var(--c-accent)] mb-1 uppercase">
                 Infrastructure
               </span>
               <p>
@@ -112,14 +112,14 @@ export default function Contact() {
       <footer className="pt-8 border-t border-[var(--c-border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs text-[var(--c-accent)]">
         <PinAnnotation
           counter={`ARCHIVE / ${currentYear}`}
-          note={`${profile.name} — Salatiga, Central Java, Indonesia`}
+          note={`${profile.name} — Semarang, Central Java, Indonesia`}
           secondaryNote="All engineering milestones and performance metrics verified"
         />
 
         <div className="flex items-center gap-4">
           <a
             href="#hero"
-            className="hover:underline"
+            className="hover:underline inline-flex items-center min-h-11 px-1"
             style={{ color: "var(--c-fg-2)" }}
           >
             Return to Top ↑

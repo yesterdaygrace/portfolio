@@ -30,12 +30,15 @@ export default function ProjectDetailPage({
   if (!project) {
     return (
       <div className="min-h-screen bg-[var(--c-bg)] flex flex-col items-center justify-center p-8 text-center">
-        <p className="font-mono text-sm text-[var(--c-emphasis)] mb-4">SPECIFICATION NOT FOUND</p>
+        <h1 className="font-display text-4xl mb-3">Project not found</h1>
+        <p className="text-[var(--c-fg-2)] max-w-md mb-8">
+          There is no project at this address. It may have been renamed or removed.
+        </p>
         <button
           onClick={onBack}
-          className="font-mono text-xs px-4 py-2 border border-[var(--c-border)] text-[var(--c-fg)] hover:border-[var(--c-emphasis)]"
+          className="vellum-btn-solid min-h-11 cursor-pointer"
         >
-          ← Return to Overview
+          ← Back to projects
         </button>
       </div>
     );
@@ -111,7 +114,7 @@ export default function ProjectDetailPage({
             <span className="text-[var(--c-fg-3)]">{project.status}</span>
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-normal leading-[1.1] tracking-tight">
+          <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-normal leading-[1.1] tracking-tight">
             {project.title}
           </h1>
 
@@ -124,7 +127,7 @@ export default function ProjectDetailPage({
           {/* Metadata Block */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6 border border-[var(--c-border)] bg-[var(--c-bg-deep)] font-mono text-xs">
             <div>
-              <div className="text-[var(--c-accent)] mb-1 uppercase tracking-wider text-[11px]">
+              <div className="text-[var(--c-accent)] mb-1 uppercase tracking-wider text-[13px]">
                 Target Entity / Client
               </div>
               <div className="text-[var(--c-fg)] leading-snug">
@@ -133,7 +136,7 @@ export default function ProjectDetailPage({
             </div>
 
             <div>
-              <div className="text-[var(--c-accent)] mb-1 uppercase tracking-wider text-[11px]">
+              <div className="text-[var(--c-accent)] mb-1 uppercase tracking-wider text-[13px]">
                 Engineering Role
               </div>
               <div className="text-[var(--c-fg)] leading-snug">
@@ -142,7 +145,7 @@ export default function ProjectDetailPage({
             </div>
 
             <div>
-              <div className="text-[var(--c-accent)] mb-1 uppercase tracking-wider text-[11px]">
+              <div className="text-[var(--c-accent)] mb-1 uppercase tracking-wider text-[13px]">
                 Timeline & Scope
               </div>
               <div className="text-[var(--c-fg)] leading-snug">
@@ -151,7 +154,7 @@ export default function ProjectDetailPage({
             </div>
 
             <div>
-              <div className="text-[var(--c-accent)] mb-1 uppercase tracking-wider text-[11px]">
+              <div className="text-[var(--c-accent)] mb-1 uppercase tracking-wider text-[13px]">
                 Primary Stack
               </div>
               <div className="text-[var(--c-fg)] leading-snug">
@@ -204,10 +207,10 @@ export default function ProjectDetailPage({
                 className="border border-[var(--c-border)] bg-[var(--c-bg-deep)] p-5 flex flex-col justify-between"
               >
                 <div>
-                  <div className="font-mono text-[11px] uppercase tracking-wider text-[var(--c-accent)] mb-2">
+                  <div className="font-mono text-[13px] uppercase tracking-wider text-[var(--c-accent)] mb-2">
                     {stat.label}
                   </div>
-                  <div className="font-serif text-2xl text-[var(--c-emphasis)] font-medium mb-2">
+                  <div className="font-display text-2xl text-[var(--c-emphasis)] font-medium mb-2">
                     {stat.value}
                   </div>
                 </div>
@@ -263,7 +266,7 @@ export default function ProjectDetailPage({
 
           <div className="border border-[var(--c-border)] bg-[var(--c-bg-deep)] p-6 sm:p-8 space-y-6">
             <div>
-              <h3 className="font-serif text-2xl text-[var(--c-fg)] mb-3">
+              <h3 className="font-display text-2xl text-[var(--c-fg)] mb-3">
                 Request Flow & System Boundary
               </h3>
               <p className="text-sm sm:text-base text-[var(--c-fg-2)] leading-relaxed">
@@ -322,7 +325,7 @@ export default function ProjectDetailPage({
                   <span className="font-mono text-xs px-2 py-0.5 border border-[var(--c-accent)] text-[var(--c-accent)]">
                     DECISION {String(idx + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="font-serif text-xl sm:text-2xl text-[var(--c-fg)]">
+                  <h3 className="font-display text-xl sm:text-2xl text-[var(--c-fg)]">
                     {decision.title}
                   </h3>
                 </div>
@@ -372,7 +375,7 @@ export default function ProjectDetailPage({
                 key={feature.name}
                 className="border border-[var(--c-border)] bg-[var(--c-bg-deep)] p-6 space-y-3"
               >
-                <h3 className="font-serif text-xl text-[var(--c-fg)]">
+                <h3 className="font-display text-xl text-[var(--c-fg)]">
                   {feature.name}
                 </h3>
                 <p className="text-sm text-[var(--c-fg-2)] leading-relaxed font-sans">
@@ -518,10 +521,10 @@ export default function ProjectDetailPage({
                 <div className="font-mono text-xs text-[var(--c-accent)] mb-1 flex items-center gap-1">
                   <span>← Previous System</span>
                 </div>
-                <div className="font-serif text-xl text-[var(--c-fg)] group-hover:text-[var(--c-emphasis)] transition-colors">
+                <div className="font-display text-xl text-[var(--c-fg)] group-hover:text-[var(--c-emphasis)] transition-colors">
                   {prevProject.title.split(":")[0]}
                 </div>
-                <div className="font-mono text-[11px] text-[var(--c-fg-3)] mt-1">
+                <div className="font-mono text-[13px] text-[var(--c-fg-3)] mt-1">
                   {prevProject.type}
                 </div>
               </button>
@@ -537,10 +540,10 @@ export default function ProjectDetailPage({
                 <div className="font-mono text-xs text-[var(--c-accent)] mb-1 flex items-center justify-end gap-1">
                   <span>Next System →</span>
                 </div>
-                <div className="font-serif text-xl text-[var(--c-fg)] group-hover:text-[var(--c-emphasis)] transition-colors">
+                <div className="font-display text-xl text-[var(--c-fg)] group-hover:text-[var(--c-emphasis)] transition-colors">
                   {nextProject.title.split(":")[0]}
                 </div>
-                <div className="font-mono text-[11px] text-[var(--c-fg-3)] mt-1">
+                <div className="font-mono text-[13px] text-[var(--c-fg-3)] mt-1">
                   {nextProject.type}
                 </div>
               </button>

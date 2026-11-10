@@ -46,7 +46,7 @@ export default function About() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start mb-16">
         {/* Left Column: Thesis & Background (7 cols) */}
         <div className="lg:col-span-7">
-          <span className="section-label">01 / ABOUT · ENGINEERING PHILOSOPHY</span>
+          <span className="section-label">ABOUT · ENGINEERING PHILOSOPHY</span>
           <h2 className="section-title">
             Engineering for durability over <em>transient trends</em>.
           </h2>
@@ -97,7 +97,7 @@ export default function About() {
                       {item.num}.
                     </span>
                     <span
-                      className="font-mono text-[11px] uppercase tracking-wider"
+                      className="font-mono text-[13px] uppercase tracking-wider"
                       style={{ color: "var(--c-accent)" }}
                     >
                       {item.label}
@@ -121,7 +121,7 @@ export default function About() {
           </div>
 
           <div className="bg-[var(--c-bg-mid)] border border-[var(--c-border)] p-5">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-[var(--c-emphasis)] block mb-1 font-semibold">
+            <span className="font-mono text-[13px] uppercase tracking-wider text-[var(--c-emphasis)] block mb-1 font-semibold">
               Primary Focus Area
             </span>
             <p className="font-sans text-xs text-[var(--c-fg)] leading-relaxed">

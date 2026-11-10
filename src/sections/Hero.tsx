@@ -67,7 +67,7 @@ export default function Hero() {
           className="font-mono text-xs uppercase tracking-widest font-medium"
           style={{ color: "var(--c-accent)" }}
         >
-          [01] · Curriculum Vitae
+          Curriculum Vitae · Software Engineer
         </span>
       </header>
 
@@ -121,21 +121,17 @@ export default function Hero() {
               </picture>
             </div>
             <figcaption
-              className="mt-2.5 px-1 py-1 flex items-center justify-between font-mono text-[11px]"
+              className="mt-2.5 px-1 py-1 flex items-center justify-between font-mono text-[13px]"
               style={{ color: "var(--c-accent)" }}
             >
-              <span>FIGURE 01</span>
-              <span>SALATIGA · ID</span>
+              <span>Figure 1</span>
+              <span>Semarang, ID</span>
             </figcaption>
           </figure>
         </div>
 
         {/* Primary Column: Name & Credentials (order-2 on mobile, lg:order-1 on desktop) */}
         <div className="lg:col-span-8 order-2 lg:order-1 flex flex-col items-start">
-          <div data-hero-kicker>
-            <span className="hero-label">01 / SOFTWARE ENGINEER · WEB &amp; DISTRIBUTED SYSTEMS</span>
-          </div>
-
           <h1
             data-hero-title
             className="hero-title not-italic"
@@ -149,8 +145,8 @@ export default function Hero() {
             className="hero-description"
           >
             Building <em>practical software</em> that replaces legacy
-            workarounds, scales business workflows, and ships reliably to
-            production.
+            workarounds. I single-handedly replaced a decade-old DOS ledger
+            for a pension fund and shipped it to production.
           </p>
 
           <div data-hero-rule>
@@ -165,7 +161,7 @@ export default function Hero() {
             {facts.map((f) => (
               <div key={f.label} className="flex flex-col">
                 <span
-                  className="font-mono text-xs uppercase tracking-wider mb-1"
+                  className="font-mono text-[13px] uppercase tracking-wider mb-1"
                   style={{ color: "var(--c-accent)" }}
                 >
                   {f.label}
@@ -182,8 +178,8 @@ export default function Hero() {
 
           {/* Direct actions */}
           <div data-hero-actions className="flex flex-wrap gap-4 items-center">
-            <a href="#experience" className="vellum-btn-solid">
-              Explore Work &amp; Systems ↓
+            <a href="#projects" className="vellum-btn-solid">
+              View Projects ↓
             </a>
             <a
               href={`${import.meta.env.BASE_URL}cv-kevin-chansa.pdf`}
@@ -209,14 +205,14 @@ export default function Hero() {
         />
 
         <div
-          className="flex items-center gap-4 font-mono text-xs"
+          className="flex items-center gap-2 font-mono text-[13px]"
           style={{ color: "var(--c-accent)" }}
         >
           <a
             href={socialLinks.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline"
+            className="hover:underline inline-flex items-center min-h-11 px-1"
             style={{ color: "var(--c-fg-2)" }}
           >
             GitHub ↗
@@ -226,7 +222,7 @@ export default function Hero() {
             href={socialLinks.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline"
+            className="hover:underline inline-flex items-center min-h-11 px-1"
             style={{ color: "var(--c-fg-2)" }}
           >
             LinkedIn ↗
@@ -234,7 +230,7 @@ export default function Hero() {
           <span>·</span>
           <a
             href={`mailto:${profile.email}`}
-            className="hover:underline"
+            className="hover:underline inline-flex items-center min-h-11 px-1"
             style={{ color: "var(--c-fg-2)" }}
           >
             Email ↗

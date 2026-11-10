@@ -1,6 +1,5 @@
 import { useRef } from "react";
 import { useSectionReveal } from "@/lib/useSectionReveal";
-import { AccentRule } from "@/components/vellum/VellumComponents";
 
 interface FeaturedProject {
   id: string;
@@ -14,32 +13,11 @@ interface FeaturedProject {
   thumbnailWebp?: string;
   demoUrl?: string;
   githubUrl?: string;
-  figNumber: string;
-  figCaption: string;
-  status: string;
   imgWidth: number;
   imgHeight: number;
 }
 
 const FEATURED_PROJECTS: FeaturedProject[] = [
-  {
-    id: "sijisiyu",
-    badge: "LOCAL-FIRST ENGINE · 2026",
-    title: "SijiSiyu: Local-First Threads Archive & Sync Engine",
-    description:
-      "A high-performance local-first Threads library and synchronization backend built with Nuxt 4, Vue 3.5, Nitro Engine, and SQLite in WAL mode. Features AES-256-GCM encryption for Meta OAuth access tokens at rest, real-time Server-Sent Events, dynamic collections, and an OLED minimalist reading interface.",
-    tech: ["Nuxt 4", "Vue.js 3.5", "Nitro", "SQLite (WAL)", "Server-Sent Events", "Tailwind CSS", "Meta API"],
-    year: "2026",
-    type: "Local-First Social Archive & Engine",
-    thumbnail: `${import.meta.env.BASE_URL}sijisiyu-dashboard.png`,
-    thumbnailWebp: `${import.meta.env.BASE_URL}sijisiyu-dashboard.webp`,
-    githubUrl: "https://github.com/yesterdaygrace/SijiSiyu",
-    figNumber: "FIG 01",
-    figCaption: "OLED THREADS VAULT & REAL-TIME SYNC CONSOLE",
-    status: "PRODUCTION PLATFORM",
-    imgWidth: 1920,
-    imgHeight: 1080,
-  },
   {
     id: "dapense",
     badge: "INSTITUTIONAL PRODUCTION · 2024 - 2025",
@@ -52,11 +30,23 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
     thumbnail: `${import.meta.env.BASE_URL}dapense-dashboard.png`,
     thumbnailWebp: `${import.meta.env.BASE_URL}dapense-dashboard.webp`,
     githubUrl: "https://github.com/yesterdaygrace/DAPENSE",
-    figNumber: "FIG 02",
-    figCaption: "EXECUTIVE GENERAL LEDGER & CASH AUDIT DASHBOARD",
-    status: "INSTITUTIONAL DEPLOYMENT",
     imgWidth: 1800,
     imgHeight: 1125,
+  },
+  {
+    id: "sijisiyu",
+    badge: "LOCAL-FIRST ENGINE · 2026",
+    title: "SijiSiyu: Local-First Threads Archive & Sync Engine",
+    description:
+      "A high-performance local-first Threads library and synchronization backend built with Nuxt 4, Vue 3.5, Nitro Engine, and SQLite in WAL mode. Features AES-256-GCM encryption for Meta OAuth access tokens at rest, real-time Server-Sent Events, dynamic collections, and an OLED minimalist reading interface.",
+    tech: ["Nuxt 4", "Vue.js 3.5", "Nitro", "SQLite (WAL)", "Server-Sent Events", "Tailwind CSS", "Meta API"],
+    year: "2026",
+    type: "Local-First Social Archive & Engine",
+    thumbnail: `${import.meta.env.BASE_URL}sijisiyu-dashboard.png`,
+    thumbnailWebp: `${import.meta.env.BASE_URL}sijisiyu-dashboard.webp`,
+    githubUrl: "https://github.com/yesterdaygrace/SijiSiyu",
+    imgWidth: 1920,
+    imgHeight: 1080,
   },
   {
     id: "cinemasystem",
@@ -70,9 +60,6 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
     thumbnail: `${import.meta.env.BASE_URL}cinemasystem-dashboard.png`,
     thumbnailWebp: `${import.meta.env.BASE_URL}cinemasystem-dashboard.webp`,
     githubUrl: "https://github.com/yesterdaygrace/CinemaSystem",
-    figNumber: "FIG 03",
-    figCaption: "AUDITORIUM SEAT RESERVATION & SHOWTIME CONSOLE",
-    status: "CONCURRENCY ARCHITECTURE",
     imgWidth: 1440,
     imgHeight: 900,
   },
@@ -89,9 +76,6 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
     thumbnailWebp: `${import.meta.env.BASE_URL}devscout-dashboard.webp`,
     demoUrl: "https://dev-scout-lac.vercel.app",
     githubUrl: "https://github.com/yesterdaygrace/DevScout",
-    figNumber: "FIG 04",
-    figCaption: "PIPELINE CRM & CANDIDATE TRACKING",
-    status: "LIVE APPLICATION",
     imgWidth: 1916,
     imgHeight: 1077,
   },
@@ -107,9 +91,6 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
     thumbnail: `${import.meta.env.BASE_URL}nodex-dashboard.png`,
     thumbnailWebp: `${import.meta.env.BASE_URL}nodex-dashboard.webp`,
     githubUrl: "https://github.com/yesterdaygrace/Nodex",
-    figNumber: "FIG 05",
-    figCaption: "REACTIVE NOTE CARDS & TAG WORKSPACE",
-    status: "FULL-STACK WEB APP",
     imgWidth: 1440,
     imgHeight: 900,
   },
@@ -117,6 +98,31 @@ const FEATURED_PROJECTS: FeaturedProject[] = [
 
 interface ProjectsProps {
   onSelectProject?: (id: string) => void;
+}
+
+function Thumb({
+  project,
+  className,
+}: {
+  project: FeaturedProject;
+  className: string;
+}) {
+  return (
+    <picture>
+      {project.thumbnailWebp && (
+        <source srcSet={project.thumbnailWebp} type="image/webp" />
+      )}
+      <img
+        src={project.thumbnail}
+        alt={`${project.title} dashboard`}
+        width={project.imgWidth}
+        height={project.imgHeight}
+        loading="lazy"
+        decoding="async"
+        className={className}
+      />
+    </picture>
+  );
 }
 
 export default function Projects({ onSelectProject }: ProjectsProps) {
@@ -134,139 +140,147 @@ export default function Projects({ onSelectProject }: ProjectsProps) {
     }
   };
 
+  const [lead, ...rest] = FEATURED_PROJECTS;
+
   return (
     <section id="projects" ref={sectionRef} className="vellum-section">
-      {/* ── Section Header ───────────────────────────────────────────────── */}
       <header className="section-header">
-        <span className="section-label">02 / FLAGSHIP SOFTWARE · 2026</span>
+        <span className="section-label">FLAGSHIP SOFTWARE · 2026</span>
         <h2 className="section-title">
           Selected work, <em>tested in production</em>.
         </h2>
         <p className="section-description">
-          Production system architectures, database designs, and verified
-          application implementations. Click any project to inspect its
-          architectural whitepaper and documentation.
+          Production systems, database designs, and the applications built on
+          them. Open any project for its architecture and documentation.
         </p>
       </header>
 
-      {/* ── Featured Flagship Applications ─────────────────────────────────── */}
-      <div className="space-y-12">
-        {FEATURED_PROJECTS.map((project) => (
-          <article
-            key={project.id}
-            className="border border-[var(--c-border)] bg-[var(--c-bg-deep)] p-6 sm:p-8 transition-colors hover:border-[var(--c-border-subtle)]"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              {/* Content Column */}
-              <div className="lg:col-span-6 flex flex-col items-start">
-                <span className="project-meta text-[var(--c-emphasis)] block mb-2 font-semibold">
+      {/* ── Lead project: the production deployment ─────────────────────── */}
+      <article className="border border-[var(--c-border)] bg-[var(--c-bg-deep)] p-6 sm:p-10 transition-colors hover:border-[var(--c-accent)] mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="lg:col-span-5 flex flex-col items-start">
+            <span className="project-meta text-[var(--c-emphasis)] block mb-3 font-semibold">
+              {lead.badge}
+            </span>
+            <h3 className="font-display text-4xl sm:text-5xl leading-[1.05] mb-4">
+              <a
+                href={`#/projects/${lead.id}`}
+                onClick={(e) => handleProjectClick(lead.id, e)}
+                className="hover:text-[var(--c-emphasis)] transition-colors"
+              >
+                {lead.title}
+              </a>
+            </h3>
+            <p className="project-description mb-6">{lead.description}</p>
+            <p className="font-mono text-[13px] text-[var(--c-accent)] mb-8 leading-relaxed">
+              {lead.tech.join(" · ")}
+            </p>
+            <div className="flex flex-wrap gap-3 items-center">
+              <a
+                href={`#/projects/${lead.id}`}
+                onClick={(e) => handleProjectClick(lead.id, e)}
+                className="vellum-btn-solid cursor-pointer"
+              >
+                Case study &amp; architecture →
+              </a>
+              {lead.githubUrl && (
+                <a
+                  href={lead.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="vellum-btn"
+                >
+                  Repository ↗
+                </a>
+              )}
+            </div>
+          </div>
+          <div className="lg:col-span-7">
+            <a
+              href={`#/projects/${lead.id}`}
+              onClick={(e) => handleProjectClick(lead.id, e)}
+              aria-label={`View architecture and documentation for ${lead.title}`}
+              className="block aspect-[16/10] overflow-hidden border border-[var(--c-border)] bg-[var(--c-bg-mid)] p-2 group"
+            >
+              <Thumb
+                project={lead}
+                className="w-full h-full object-cover contrast-[1.03] group-hover:scale-[1.02] transition-transform duration-300"
+              />
+            </a>
+          </div>
+        </div>
+      </article>
+
+      {/* ── Other projects: compact rows ───────────────────────────────── */}
+      <h3 className="font-display text-2xl mb-2">More projects</h3>
+      <ul className="divide-y divide-[var(--c-border)] border-y border-[var(--c-border)]">
+        {rest.map((project) => (
+          <li key={project.id} className="py-6 sm:py-8">
+            <div className="grid grid-cols-1 sm:grid-cols-[160px_1fr] gap-5 sm:gap-8 items-start">
+              <a
+                href={`#/projects/${project.id}`}
+                onClick={(e) => handleProjectClick(project.id, e)}
+                aria-label={`View architecture and documentation for ${project.title}`}
+                className="hidden sm:block aspect-[16/10] overflow-hidden border border-[var(--c-border)] bg-[var(--c-bg-mid)] group"
+              >
+                <Thumb
+                  project={project}
+                  className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-300"
+                />
+              </a>
+              <div className="min-w-0">
+                <span className="project-meta text-[var(--c-accent)] block mb-1">
                   {project.badge}
                 </span>
-
-                <h3 className="project-title mb-3">
+                <h4 className="font-display text-2xl sm:text-3xl leading-tight mb-2">
                   <a
                     href={`#/projects/${project.id}`}
                     onClick={(e) => handleProjectClick(project.id, e)}
-                    className="hover:text-[var(--c-emphasis)] transition-colors focus-visible:outline-none"
+                    className="hover:text-[var(--c-emphasis)] transition-colors"
                   >
                     {project.title}
                   </a>
-                </h3>
-
-                <p className="project-description mb-6">
+                </h4>
+                <p className="text-[15px] leading-relaxed text-[var(--c-fg-2)] max-w-[56ch] line-clamp-3 mb-3">
                   {project.description}
                 </p>
-
-                <AccentRule />
-
-                {/* Tech metadata: Courier Prime string */}
-                <div className="font-mono text-xs uppercase tracking-wider text-[var(--c-accent)] mb-8 flex flex-wrap items-center gap-x-2 gap-y-1">
-                  {project.tech.map((t, idx) => (
-                    <span key={t} className="flex items-center gap-2">
-                      <span>{t}</span>
-                      {idx < project.tech.length - 1 && (
-                        <span className="opacity-40 select-none">·</span>
-                      )}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Actions */}
-                <div className="flex flex-wrap gap-3 items-center">
+                <p className="font-mono text-[13px] text-[var(--c-accent)] mb-4">
+                  {project.tech.join(" · ")}
+                </p>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm font-semibold">
                   <a
                     href={`#/projects/${project.id}`}
                     onClick={(e) => handleProjectClick(project.id, e)}
-                    className="vellum-btn-solid cursor-pointer"
+                    className="inline-flex items-center min-h-11 text-[var(--c-fg)] hover:text-[var(--c-emphasis)]"
                   >
-                    Case Study & Architecture →
+                    Case study →
                   </a>
-
                   {project.demoUrl && (
                     <a
                       href={project.demoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="vellum-btn"
+                      className="inline-flex items-center min-h-11 text-[var(--c-fg)] hover:text-[var(--c-emphasis)]"
                     >
-                      Live Demo ↗
+                      Live demo ↗
                     </a>
                   )}
-
                   {project.githubUrl && (
                     <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="vellum-btn"
+                      className="inline-flex items-center min-h-11 text-[var(--c-fg)] hover:text-[var(--c-emphasis)]"
                     >
                       Repository ↗
                     </a>
                   )}
                 </div>
               </div>
-
-              {/* Screenshot Column */}
-              <div className="lg:col-span-6">
-                <figure className="border border-[var(--c-border)] bg-[var(--c-bg-mid)] p-2">
-                  <a
-                    href={`#/projects/${project.id}`}
-                    onClick={(e) => handleProjectClick(project.id, e)}
-                    aria-label={`View architecture and documentation for ${project.title}`}
-                    className="block aspect-[16/10] overflow-hidden bg-[var(--c-bg-deep)] group cursor-pointer focus-visible:outline-none"
-                  >
-                    <picture>
-                      {project.thumbnailWebp && (
-                        <source
-                          srcSet={project.thumbnailWebp}
-                          type="image/webp"
-                        />
-                      )}
-                      <img
-                        src={project.thumbnail}
-                        alt={`${project.title} Dashboard`}
-                        width={project.imgWidth}
-                        height={project.imgHeight}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover contrast-[1.03] group-hover:scale-[1.02] transition-transform duration-300 will-change-transform"
-                      />
-                    </picture>
-                  </a>
-                  <figcaption
-                    className="mt-2 px-1 flex items-center justify-between font-mono text-[11px]"
-                    style={{ color: "var(--c-accent)" }}
-                  >
-                    <span>
-                      {project.figNumber} · {project.figCaption}
-                    </span>
-                    <span>STATUS: {project.status}</span>
-                  </figcaption>
-                </figure>
-              </div>
             </div>
-          </article>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

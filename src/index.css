@@ -9,35 +9,6 @@
   --font-sans:    'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono:    'Courier Prime', 'Courier New', monospace;
 
-  /* Slate, terracotta, and warm ivory palette */
-  --color-vellum-bg:      #2E3344;
-  --color-vellum-bg-alt:  #353A4A;
-  --color-vellum-deep:    #252A37;
-  --color-vellum-mid:     #3B4051;
-
-  --color-vellum-fg:      #F7F1E2;
-  --color-vellum-fg-2:    rgba(247, 241, 226, 0.84);
-  --color-vellum-fg-3:    rgba(247, 241, 226, 0.68);
-  --color-vellum-emphasis:#F3C8B4;
-  --color-vellum-accent:  #D8A08A;
-  --color-vellum-border:  rgba(247, 241, 226, 0.20);
-
-  /* Semantic mappings */
-  --color-surface-0:      #2E3344;
-  --color-surface-1:      #353A4A;
-  --color-surface-2:      #252A37;
-  --color-surface-3:      #3B4051;
-
-  --color-fg:             #F7F1E2;
-  --color-fg-muted:       rgba(247, 241, 226, 0.84);
-  --color-fg-faint:       rgba(247, 241, 226, 0.68);
-
-  --color-line:           rgba(247, 241, 226, 0.20);
-  --color-line-hover:     rgba(247, 241, 226, 0.38);
-
-  --color-accent:         #D8A08A;
-  --color-accent-deep:    #7E5246;
-  --color-accent-dim:     rgba(126, 82, 70, 0.26);
 }
 
 :root {
@@ -53,6 +24,7 @@
   --c-accent: #D8A08A;
   --c-accent-deep: #7E5246;
   --c-border: rgba(247, 241, 226, 0.20);
+  --c-border-hover: rgba(247, 241, 226, 0.38);
 
   --f-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --f-body: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -165,6 +137,14 @@
   }
 
   /* Headline emphasis in Cormorant Garamond 400 italic + terracotta */
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
   h1 em, h2 em, h3 em, .font-display em {
     font-family: var(--f-display);
     font-style: italic;
@@ -425,17 +405,7 @@
 }
 
 .prose {
-  max-width: 680px;
-}
-
-@layer utilities {
-  .text-fg        { color: var(--c-fg); }
-  .text-fg-muted  { color: var(--c-fg-2); }
-  .text-fg-faint  { color: var(--c-fg-3); }
-  .border-line    { border-color: var(--c-border); }
-  .bg-vellum-navy { background-color: var(--c-bg); }
-  .bg-vellum-deep { background-color: var(--c-bg-deep); }
-  .bg-vellum-mid  { background-color: var(--c-bg-mid); }
+  max-width: 60ch;
 }
 
 /* Mobile Drawer Keyframe Animations (Composited, Zero-JS) */
@@ -467,6 +437,12 @@
 .animate-scrim-in {
   animation: scrimFadeIn 0.18s ease-out forwards;
   will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Print Styles */

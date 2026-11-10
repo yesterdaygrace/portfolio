@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useEffect, useCallback } from "react";
+import { lazy, Suspense, useState, useEffect, useCallback, useRef } from "react";
 import Navbar from "@/layout/Navbar";
 import { sections } from "@/sections";
 import { SectionTransition } from "@/components/vellum/SectionTransition";
@@ -21,6 +21,7 @@ function parseHashRoute(): { view: "home" | "project"; projectId?: string } {
 
 function App() {
   const [route, setRoute] = useState(parseHashRoute);
+  const scrollToProjects = useRef(false);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -42,22 +43,27 @@ function App() {
   }, []);
 
   const handleBackToHome = useCallback(() => {
+    scrollToProjects.current = true;
     window.location.hash = "#projects";
-    setTimeout(() => {
-      const el = document.getElementById("projects");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 50);
   }, []);
+
+  // Once the home view has rendered after "back", bring the projects list into view.
+  useEffect(() => {
+    if (route.view !== "home" || !scrollToProjects.current) return;
+    scrollToProjects.current = false;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document
+      .getElementById("projects")
+      ?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+  }, [route.view]);
 
   if (route.view === "project" && route.projectId) {
     return (
       <Suspense
         fallback={
           <div className="min-h-screen bg-[var(--c-bg)] flex items-center justify-center p-8">
-            <div className="font-mono text-xs text-[var(--c-accent)] tracking-wider">
-              LOADING ARCHITECTURAL SPECIFICATION...
+            <div role="status" className="font-mono text-[13px] text-[var(--c-accent)] tracking-wider">
+              Loading project…
             </div>
           </div>
         }
