@@ -5,6 +5,7 @@ import {
   AccentRule,
 } from "@/components/vellum/VellumComponents";
 import { gsap } from "@/lib/motion";
+import { splitWords } from "@/lib/splitWords";
 
 export default function Hero() {
   const [isColor, setIsColor] = useState(false);
@@ -28,7 +29,7 @@ export default function Hero() {
           defaults: { ease: "power2.out", clearProps: "all" },
         });
         tl.from(
-          "[data-hero-header], [data-hero-portrait], [data-hero-kicker], [data-hero-title], [data-hero-lead], [data-hero-rule], [data-hero-facts], [data-hero-actions]",
+          "[data-hero-header], [data-hero-portrait], [data-hero-kicker], [data-hero-lead], [data-hero-rule], [data-hero-facts], [data-hero-actions]",
           {
             autoAlpha: 0,
             y: 8,
@@ -43,6 +44,27 @@ export default function Hero() {
           },
           "-=0.15",
         );
+
+        // Headline: words rise in one by one, un-blurring as they land.
+        const title = heroRef.current?.querySelector<HTMLElement>("[data-hero-title]");
+        let restoreTitle: (() => void) | undefined;
+        if (title) {
+          const { words, restore } = splitWords(title);
+          restoreTitle = restore;
+          gsap.from(words, {
+            y: 60,
+            opacity: 0,
+            filter: "blur(10px)",
+            rotate: 4,
+            transformOrigin: "0% 100%",
+            duration: 0.9,
+            stagger: 0.1,
+            delay: 0.1,
+            ease: "expo.out",
+            clearProps: "transform,opacity,filter",
+          });
+        }
+        return () => restoreTitle?.();
       }, heroRef);
 
       return () => ctx.revert();

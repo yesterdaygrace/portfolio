@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { gsap, ScrollTrigger } from "@/lib/motion";
 import { useSectionReveal } from "@/lib/useSectionReveal";
 import { skillCategories } from "@/data/skills";
 import { SkillLogo, CategoryStackIcon } from "@/components/StackIcon";
@@ -6,6 +7,42 @@ import { SkillLogo, CategoryStackIcon } from "@/components/StackIcon";
 export default function TechStack() {
   const sectionRef = useRef<HTMLElement>(null);
   useSectionReveal(sectionRef);
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const names = skillCategories.flatMap((c) => c.skills.map((k) => k.name));
+
+  // Infinite marquee that speeds up with scroll velocity and pauses on hover.
+  useEffect(() => {
+    const track = marqueeRef.current;
+    if (!track) return;
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const tween = gsap.to(track, {
+        xPercent: -50,
+        duration: 40,
+        ease: "none",
+        repeat: -1,
+      });
+      const st = ScrollTrigger.create({
+        onUpdate: (self) => {
+          const boost = 1 + Math.min(Math.abs(self.getVelocity()) / 300, 5);
+          gsap.to(tween, { timeScale: boost * (self.direction || 1), duration: 0.2, overwrite: true });
+          gsap.to(tween, { timeScale: self.direction || 1, duration: 1, delay: 0.2 });
+        },
+      });
+      const wrap = track.parentElement!;
+      const pause = () => gsap.to(tween, { timeScale: 0, duration: 0.4 });
+      const play = () => gsap.to(tween, { timeScale: 1, duration: 0.4 });
+      wrap.addEventListener("mouseenter", pause);
+      wrap.addEventListener("mouseleave", play);
+      return () => {
+        wrap.removeEventListener("mouseenter", pause);
+        wrap.removeEventListener("mouseleave", play);
+        st.kill();
+        tween.kill();
+      };
+    });
+    return () => mm.revert();
+  }, []);
 
   return (
     <section id="stack" ref={sectionRef} className="vellum-section">
@@ -20,6 +57,29 @@ export default function TechStack() {
           predictability, and accessible web client interfaces.
         </p>
       </header>
+
+      {/* Marquee */}
+      <div
+        data-reveal
+        aria-hidden="true"
+        className="overflow-hidden border-y border-[var(--c-border)] py-4 mb-10"
+      >
+        <div ref={marqueeRef} className="flex w-max whitespace-nowrap will-change-transform">
+          {[0, 1].map((k) => (
+            <div key={k} className="flex shrink-0">
+              {names.map((n) => (
+                <span
+                  key={`${k}-${n}`}
+                  className="font-mono text-xs uppercase tracking-widest px-6"
+                  style={{ color: "var(--c-fg-2)" }}
+                >
+                  {n} <span style={{ color: "var(--c-accent)" }}>✦</span>
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* 2x2 Ledger Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 border-t border-[var(--c-border)] pt-8">
